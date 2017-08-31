@@ -13,6 +13,9 @@
     <!-- 리소스 설정 -->
     <!-- mapping : 가상 경로(상대경로), location : 리소스가 실제로 저장된 경로 -->
     <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <mvc:resources mapping="/bootstrap/**" location="/resources/bootstrap/" />
+    <mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
+    <mvc:resources mapping="/dist/**" location="/resources/dist/" />
 
     <!--뷰리졸버 설정-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
