@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
+    <%-- 사이드바 --%>
     <section class="sidebar">
-        <!-- Sidebar user panel -->
+        <%-- 사이드바 회원 패널 --%>
         <div class="user-panel">
             <c:choose>
+
+                <%--관리자--%>
                 <c:when test="${sessionScope.adminName != null}">
                     <div class="pull-left image">
                         <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
@@ -14,15 +16,19 @@
                         <a href="#"><i class="fa fa-circle text-success"></i> ONLINE</a>
                     </div>
                 </c:when>
-                <c:when test="${sessionScope.userName != null}">
+
+                <%--회원--%>
+                <c:when test="${sessionScope.userNickName != null}">
                     <div class="pull-left image">
                         <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>${sessionScope.userName} 님</p>
+                        <p>${sessionScope.userNickName} 님</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> ONLINE</a>
                     </div>
                 </c:when>
+
+                <%--비회원--%>
                 <c:otherwise>
                     <div class="pull-left image">
                         <img src="/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
@@ -32,10 +38,11 @@
                         <a href="#"><i class="fa fa-circle text-danger"></i> OFFLINE</a>
                     </div>
                 </c:otherwise>
-            </c:choose>
 
+            </c:choose>
         </div>
-        <!-- search form -->
+
+        <%-- 빠른 채용 검색폼 --%>
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="빠른 채용 검색...">
@@ -45,10 +52,12 @@
               </span>
             </div>
         </form>
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
+
+        <%-- 사이드바 메뉴 --%>
         <ul class="sidebar-menu">
             <c:choose>
+
+                <%--관리자--%>
                 <c:when test="${sessionScope.adminId != null}">
                     <li class="header">관리자</li>
                     <li class="treeview">
@@ -187,6 +196,8 @@
                         </ul>
                     </li>
                 </c:when>
+
+                <%--회원--%>
                 <c:otherwise>
                     <li class="header">메뉴</li>
                     <li class="treeview">
@@ -271,9 +282,6 @@
                     </li>
                 </c:otherwise>
             </c:choose>
-
-
         </ul>
     </section>
-    <!-- /.sidebar -->
 </aside>

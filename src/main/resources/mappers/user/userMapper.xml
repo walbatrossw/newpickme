@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--회원 관련 Mapper-->
+<mapper namespace="user">
+
+    <!--이메일 중복체크-->
+    <select id="selectCountByEmail" resultType="int">
+        SELECT COUNT(*)
+        FROM t_user
+        WHERE USER_EMAIL = #{userEmail}
+    </select>
+
+    <!--닉네임 중복체크-->
+    <select id="selectCountByNickName" resultType="int">
+        SELECT COUNT(*)
+        FROM t_user
+        WHERE USER_NICK_NM = #{userNickName}
+    </select>
+
+    <!--회원가입-->
+    <insert id="insertUser">
+        INSERT INTO t_user (
+            USER_EMAIL
+            , USER_NICK_NM
+            , USER_PW
+            , USER_JN_DT
+            , USER_UDT_DT
+            , USER_LOG_DT
+        ) VALUES (
+            #{userEmail}
+            , #{userNickName}
+            , #{userPassword}
+            , NOW()
+            , NOW()
+            , NOW())
+    </insert>
+
+    <!--회원정보 조회-->
+    <select id="selectOneByUserId" resultMap="userResultMap">
+        SELECT
+            USER_ID
+            , USER_EMAIL
+            , USER_NICK_NM
+            , USER_JN_DT
+            , USER_UDT_DT
+            , USER_LOG_DT
+        FROM t_user
+        WHERE USER_ID = #{userId}
+    </select>
+
+    <!--회원 닉네임 변경-->
+    <update id="updateUserNickName">
+        UPDATE t_user
+        SET USER_NICK_NM = #{userNickName},
+            USER_UDT_DT = NOW()
+        WHERE USER_EMAIL = #{userEmail}
+    </update>
+
+    <!--회원 비밀번호 변경-->
+    <update id="updateUserPassword">
+        UPDATE t_user
+        SET USER_PW = #{userPassword},
+            USER_UDT_DT = NOW()
+        WHERE USER_EMAIL = #{userEmail}
+    </update>
+
+    <!--회원 탈퇴-->
+    <delete id="deleteUser">
+        DELETE FROM t_user
+        WHERE USER_EMAIL = #{userEmail}
+    </delete>
+
+    <!--회원 비밀번호 확인-->
+    <select id="getPassword" resultType="String">
+        SELECT
+            USER_PW
+        FROM t_user
+        WHERE USER_EMAIL = #{userEmail}
+    </select>
+
+    <!--회원 로그인-->
+    <select id="login" resultMap="userResultMap">
+        SELECT
+            USER_ID
+            , USER_EMAIL
+            , USER_NICK_NM
+            , USER_PW
+            , USER_JN_DT
+            , USER_UDT_DT
+            , USER_LOG_DT
+        FROM t_user
+        WHERE USER_EMAIL = #{userEmail}
+    </select>
+
+    <!--회원 로그인시간 수정-->
+    <select id="updateLoginDate" parameterType="String">
+        UPDATE t_user
+        SET
+            USER_LOG_DT = NOW()
+        WHERE
+            USER_EMAIL = #{userEamil}
+    </select>
+
+    <!--회원 resultMap-->
+    <resultMap id="userResultMap" type="User">
+        <id column="USER_ID" property="userId"/>
+        <result column="USER_EMAIL" property="userEmail"/>
+        <result column="USER_NICK_NM" property="userNickName"/>
+        <result column="USER_PW" property="userPassword"/>
+        <result column="USER_JN_DT" property="userJoinDate"/>
+        <result column="USER_UDT_DT" property="userUpdateDate"/>
+        <result column="USER_LOG_DT" property="userLoginDate"/>
+    </resultMap>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

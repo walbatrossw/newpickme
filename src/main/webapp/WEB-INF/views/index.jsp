@@ -61,7 +61,7 @@
         <br>
         <div>
             <a href="${path}/admin/login" class="btn btn-dark btn-lg">관리자 LOGIN</a>
-            <a href="${path}/index" class="btn btn-dark btn-lg">메인으로 GO!</a>
+            <a href="${path}/main" class="btn btn-dark btn-lg">메인으로 GO!</a>
             <a href="${path}/user/login" class="btn btn-dark btn-lg">사용자 LOGIN</a>
         </div>
     </div>

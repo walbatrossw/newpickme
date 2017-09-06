@@ -2,19 +2,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <%@ include file="include/header.jsp" %>
+    <!--헤드(CSS) include-->
+    <%@ include file="include/head.jsp" %>
 </head>
 <body class="fixed skin-blue-light sidebar-mini">
 <div class="wrapper">
 
-    <%@ include file="include/main_header.jsp" %>
+    <!--헤더 네비바 include-->
+    <%@ include file="include/navbar.jsp" %>
 
-    <!-- Left side column. contains the logo and sidebar -->
-    <%@ include file="include/main_sidebar.jsp" %>
+    <!--사이드 메뉴 include-->
+    <%@ include file="include/left_column.jsp" %>
 
-    <!-- Content Wrapper. Contains page content -->
+    <!--본문 페이지-->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
+        <!--본문 페이지 헤더-->
         <section class="content-header">
             <h1>
                 임시 메인페이지
@@ -26,29 +28,27 @@
             </ol>
         </section>
 
-        <!-- Main content -->
+        <!--본문 페이지 내용-->
         <section class="content">
-            <!-- Main row -->
+            <!-- 페이지 내용 -->
             <div class="row">
                 <section class="col-lg-12">
                     임시 메인 페이지 입니다....
                 </section>
             </div>
-            <!-- /.row (main row) -->
-
         </section>
-        <!-- /.content -->
+
     </div>
-    <!-- /.content-wrapper -->
 
-    <%@ include file="include/main_footer.jsp" %>
+    <!--풋터 include-->
+    <%@ include file="include/footer.jsp" %>
 
-    <!-- Control Sidebar -->
+    <!--컨트롤 사이드바 -->
     <%@ include file="include/control_sidebar.jsp" %>
-    <!-- /.control-sidebar -->
 
 </div>
-<!-- ./wrapper -->
-<%@ include file="include/footer.jsp" %>
+
+<!-- 풋(JS) include-->
+<%@ include file="include/js.jsp" %>
 </body>
 </html>

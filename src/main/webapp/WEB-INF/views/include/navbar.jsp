@@ -2,39 +2,42 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <header class="main-header">
 
-    <!-- Logo -->
+    <%-- 로고 --%>
     <a href="/main" class="logo">
-        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <%-- 미니로고 mini 50x50 pixels --%>
         <span class="logo-mini"><b>!</b>Me</span>
-        <!-- logo for regular state and mobile devices -->
+        <%-- 일반로고 & 모바일화면 --%>
         <span class="logo-lg"><b>P!ck</b> Me</span>
     </a>
 
-    <!-- Header Navbar: style can be found in header.less -->
+    <%-- 헤더 네비바 (옵션: 고정) --%>
     <nav class="navbar navbar-static-top">
 
-        <!-- Sidebar toggle button-->
+        <%-- 사이드바 토클 버튼--%>
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
 
-        <!-- Administer button-->
+        <%-- 관리자 권한으로 접속여부 확인--%>
         <c:if test="${sessionScope.adminId != null}">
-        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+            <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
             <ul class="nav navbar-nav">
                 <li>
-                    <a>관리자권한으로 접속중입니다...</a>
+                    <a>관리자권한으로 접속중...</a>
                 </li>
             </ul>
         </div>
         </c:if>
 
-
+        <%-- 헤더 네비바 --%>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <c:choose>
-                    <c:when test="${sessionScope.adminName != null}">
-                        <!-- Messages: style can be found in dropdown.less-->
+
+                    <%--관리자 권한으로 로그인--%>
+                    <c:when test="${sessionScope.adminNickName != null}">
+
+                        <%--메시지 메뉴--%>
                         <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-envelope-o"></i>
@@ -43,9 +46,9 @@
                             <ul class="dropdown-menu">
                                 <li class="header">2개의 메시지</li>
                                 <li>
-                                    <!-- inner menu: contains the actual data -->
+                                    <%-- inner menu: contains the actual data --%>
                                     <ul class="menu">
-                                        <!-- start message -->
+                                        <%-- start message --%>
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
@@ -59,7 +62,7 @@
                                                 <p>문의사항입니다....</p>
                                             </a>
                                         </li>
-                                        <!-- end message -->
+                                        <%-- end message --%>
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
@@ -79,7 +82,7 @@
                             </ul>
                         </li>
 
-                        <!-- Notifications: style can be found in dropdown.less -->
+                        <%--알림 메뉴--%>
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
@@ -88,7 +91,7 @@
                             <ul class="dropdown-menu">
                                 <li class="header">35개의 알람이 있습니다.</li>
                                 <li>
-                                    <!-- inner menu: contains the actual data -->
+                                    <%-- inner menu: contains the actual data --%>
                                     <ul class="menu">
                                         <li>
                                             <a href="#">
@@ -106,7 +109,7 @@
                             </ul>
                         </li>
 
-                        <!-- Tasks: style can be found in dropdown.less -->
+                        <%--해야할 일 메뉴--%>
                         <li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-flag-o"></i>
@@ -115,9 +118,9 @@
                             <ul class="dropdown-menu">
                                 <li class="header">나의 업무</li>
                                 <li>
-                                    <!-- inner menu: contains the actual data -->
+                                    <%-- inner menu: contains the actual data --%>
                                     <ul class="menu">
-                                        <!-- Task item -->
+                                        <%-- Task item --%>
                                         <li>
                                             <a href="#">
                                                 <h3>
@@ -133,8 +136,8 @@
                                                 </div>
                                             </a>
                                         </li>
-                                        <!-- end task item -->
-                                        <!-- Task item -->
+                                        <%-- end task item --%>
+                                        <%-- Task item --%>
                                         <li>
                                             <a href="#">
                                                 <h3>
@@ -150,7 +153,7 @@
                                                 </div>
                                             </a>
                                         </li>
-                                        <!-- end task item -->
+                                        <%-- end task item --%>
                                     </ul>
                                 </li>
                                 <li class="footer">
@@ -159,14 +162,14 @@
                             </ul>
                         </li>
 
-                        <!-- User Account: style can be found in dropdown.less -->
+
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                                 <span class="hidden-xs">${sessionScope.adminName}</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <!-- User image -->
+                                <%-- User image --%>
                                 <li class="user-header">
                                     <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                     <p>
@@ -174,7 +177,7 @@
                                         <small>수정요망</small>
                                     </p>
                                 </li>
-                                <!-- Menu Body -->
+                                <%-- Menu Body --%>
                                 <li class="user-body">
                                     <div class="row">
                                         <div class="col-xs-4 text-center">
@@ -187,9 +190,9 @@
                                             <a href="#">게시판</a>
                                         </div>
                                     </div>
-                                    <!-- /.row -->
+                                    <%-- /.row --%>
                                 </li>
-                                <!-- Menu Footer-->
+                                <%-- Menu Footer--%>
                                 <li class="user-footer">
                                     <div class="pull-left">
                                         <a href="${path}/admin/view?id=${sessionScope.adminId}"
@@ -202,8 +205,9 @@
                             </ul>
                         </li>
                     </c:when>
-                    <c:when test="${sessionScope.userName != null}">
-                        <!-- Messages: style can be found in dropdown.less-->
+
+                    <%--회원 권한으로 로그인--%>
+                    <c:when test="${sessionScope.userNickName != null}">
                         <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-envelope-o"></i>
@@ -212,9 +216,9 @@
                             <ul class="dropdown-menu">
                                 <li class="header">2개의 메시지</li>
                                 <li>
-                                    <!-- inner menu: contains the actual data -->
+                                    <%-- inner menu: contains the actual data --%>
                                     <ul class="menu">
-                                        <!-- start message -->
+                                        <%-- start message --%>
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
@@ -228,7 +232,7 @@
                                                 <p>문의사항 답변입니다.</p>
                                             </a>
                                         </li>
-                                        <!-- end message -->
+                                        <%-- end message --%>
                                         <li>
                                             <a href="#">
                                                 <div class="pull-left">
@@ -248,7 +252,7 @@
                             </ul>
                         </li>
 
-                        <!-- Notifications: style can be found in dropdown.less -->
+                        <%-- 알림 메뉴 --%>
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
@@ -257,7 +261,7 @@
                             <ul class="dropdown-menu">
                                 <li class="header">2개의 알람이 있습니다.</li>
                                 <li>
-                                    <!-- inner menu: contains the actual data -->
+                                    <%-- inner menu: contains the actual data --%>
                                     <ul class="menu">
                                         <li>
                                             <a href="#">
@@ -275,7 +279,7 @@
                             </ul>
                         </li>
 
-                        <!-- Tasks: style can be found in dropdown.less -->
+                        <%-- 해야할일 메뉴 --%>
                         <li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-flag-o"></i>
@@ -284,9 +288,9 @@
                             <ul class="dropdown-menu">
                                 <li class="header">나의 할일</li>
                                 <li>
-                                    <!-- inner menu: contains the actual data -->
+                                    <%-- inner menu: contains the actual data --%>
                                     <ul class="menu">
-                                        <!-- Task item -->
+                                        <%-- Task item --%>
                                         <li>
                                             <a href="#">
                                                 <h3>
@@ -302,8 +306,8 @@
                                                 </div>
                                             </a>
                                         </li>
-                                        <!-- end task item -->
-                                        <!-- Task item -->
+                                        <%-- end task item --%>
+                                        <%-- Task item --%>
                                         <li>
                                             <a href="#">
                                                 <h3>
@@ -319,7 +323,7 @@
                                                 </div>
                                             </a>
                                         </li>
-                                        <!-- end task item -->
+                                        <%-- end task item --%>
                                     </ul>
                                 </li>
                                 <li class="footer">
@@ -328,14 +332,14 @@
                             </ul>
                         </li>
 
-                        <!-- User Account: style can be found in dropdown.less -->
+                        <%-- 계정 관련 메뉴 --%>
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs">${sessionScope.userName}</span>
+                                <span class="hidden-xs">${sessionScope.userNickName}</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <!-- User image -->
+                                <%-- 회원 이미지 --%>
                                 <li class="user-header">
                                     <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                     <p>
@@ -343,7 +347,7 @@
                                         <small>수정요망</small>
                                     </p>
                                 </li>
-                                <!-- Menu Body -->
+                                <%-- Menu Body --%>
                                 <li class="user-body">
                                     <div class="row">
                                         <div class="col-xs-4 text-center">
@@ -356,12 +360,12 @@
                                             <a href="#">자소서</a>
                                         </div>
                                     </div>
-                                    <!-- /.row -->
+                                    <%-- /.row --%>
                                 </li>
-                                <!-- Menu Footer-->
+                                <%-- Menu Footer--%>
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="${path}/user/view?userId=${sessionScope.userId}"
+                                        <a href="${path}/user/profile/${sessionScope.userId}"
                                            class="btn btn-default btn-flat">내 프로필</a>
                                     </div>
                                     <div class="pull-right">
@@ -371,6 +375,8 @@
                             </ul>
                         </li>
                     </c:when>
+
+                    <%--비로그인 --%>
                     <c:otherwise>
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -378,7 +384,7 @@
                                 <span class="hidden-xs">회원가입 또는 로그인</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <!-- Menu Header : User image -->
+                                <%-- 메뉴헤더 : 비회원 기본이미지 --%>
                                 <li class="user-header">
                                     <img src="/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
                                     <p>
@@ -386,12 +392,14 @@
                                         <small></small>
                                     </p>
                                 </li>
-                                <!-- Menu Footer-->
+                                <%-- 메뉴 풋터--%>
                                 <li class="user-footer">
+                                    <%--회원가입으로 이동 버튼--%>
                                     <div class="pull-left">
                                         <a href="${path}/user/register" class="btn btn-default btn-flat"><i
                                                 class="fa fa-user-plus"></i><b> 회원가입</b></a>
                                     </div>
+                                    <%--로그인으로 이동 버튼--%>
                                     <div class="pull-right">
                                         <a href="${path}/user/login" class="btn btn-default btn-flat"><i
                                                 class="fa fa-sign-in"></i><b> 로그인</b></a>
@@ -400,12 +408,14 @@
                             </ul>
                         </li>
                     </c:otherwise>
+
                 </c:choose>
-                <!-- Control Sidebar Toggle Button -->
+                <%-- 컨트롤 사이드바 토글 버튼 --%>
                 <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                 </li>
             </ul>
         </div>
+
     </nav>
 </header>
