@@ -13,7 +13,7 @@
     <div class="register-box-body">
         <p class="login-box-msg">P!ck Me의 회원이 되세요!</p>
 
-        <form id="userCreate" action="${path}/user/register" method="post">
+        <form id="userCreateForm" action="${path}/user/register" method="post">
             <div class="form-group has-feedback">
                 <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="이메일 (아이디)">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -39,19 +39,19 @@
 
                     <div class="checkbox icheck">
                         <label>
-                            <input type="checkbox" id="userTerms"> <a data-toggle="modal" data-target="#terms">이용약관에 대한
+                            <input type="checkbox" id="userTerms"> <a data-toggle="modal" data-target="#userTermsModal">이용약관에 대한
                             동의</a>
                         </label>
                     </div>
 
                     <%-- 이용약관 Modal --%>
-                    <div class="modal fade" id="terms" tabindex="-1" role="dialog" aria-labelledby="myInfoModalLabel">
+                    <div class="modal fade" id="userTermsModal" tabindex="-1" role="dialog" aria-labelledby="userTermsModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="myInfoModalLabel">개인정보 수집 및 이용에 관한 약관</h4>
+                                    <h4 class="modal-title" id="userTermsModalLabel">개인정보 수집 및 이용에 관한 약관</h4>
                                 </div>
                                 <div class="modal-body">
                                     개인정보 수집 및 이용에 관한 약관 내용.........
@@ -96,7 +96,7 @@
                 data: userEmail,
                 success: function (data) {
                     if (data == 1) {
-                        $("#warningText").text("중복된 이메일 주소입니다.");
+                        $("#warningText").text("이미 가입한 이메일 주소입니다.");
                         $("input[type=text]").attr("disabled", "");
                         $("input[type=password]").attr("disabled", "");
                     } else {
@@ -117,7 +117,7 @@
                 data: userNickName,
                 success: function (data) {
                     if (data == 1) {
-                        $("#warningText").text("중복된 이름입니다.");
+                        $("#warningText").text("이미 가입된 닉네임입니다.");
                         $("input[type=email]").attr("disabled", "");
                         $("input[type=password]").attr("disabled", "");
                     } else {
@@ -157,10 +157,17 @@
             } else if (!userTerms.is(":checked")) {
                 warningText.text("약관에 동의해주세요!");
             } else {
-                $("#userCreate").submit();
+                $("#userCreateForm").submit();
             }
 
         });
+
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
+
     })
 </script>
 </body>

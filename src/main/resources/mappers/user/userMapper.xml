@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <!--회원 비밀번호 확인-->
-    <select id="getPassword" resultType="String">
+    <select id="selectUserPasswordByUserEmail" resultType="String">
         SELECT
             USER_PW
         FROM t_user

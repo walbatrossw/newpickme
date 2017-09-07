@@ -13,16 +13,19 @@ public class UserDaoImpl implements UserDao {
     @Autowired
     SqlSession sqlSession;
 
+    /*회원 가입 처리*/
     @Override
     public void insert(User user) {
         sqlSession.insert("user.insertUser", user);
     }
 
+    /*회원 이메일 중복 확인*/
     @Override
     public int selectCountByEmail(String userEmail) {
         return sqlSession.selectOne("user.selectCountByEmail", userEmail);
     }
 
+    /*회원 닉네임 중복 확인*/
     @Override
     public int selectCountByNickName(String userNickName) {
         return sqlSession.selectOne("user.selectCountByNickName", userNickName);
@@ -33,36 +36,43 @@ public class UserDaoImpl implements UserDao {
         return null;
     }
 
+    /*회원 정보 상세 조회*/
     @Override
     public User selectOneById(int userId) {
         return sqlSession.selectOne("user.selectOneByUserId", userId);
     }
 
+    /*회원 닉네임 변경*/
     @Override
     public void updateUserNickName(User user) {
         sqlSession.update("user.updateUserNickName", user);
     }
 
+    /*회원 비밀번호 변경*/
     @Override
     public void updateUserPassword(User user) {
         sqlSession.update("user.updateUserPassword", user);
     }
 
+    /*회원 탈퇴*/
     @Override
     public void delete(User user) {
         sqlSession.delete("user.deleteUser", user);
     }
 
+    /*회원 비밀번호 확인*/
     @Override
-    public String getPassword(String userEmail) {
-        return sqlSession.selectOne("user.getPassword", userEmail);
+    public String selectPasswordByUserEmail(String userEmail) {
+        return sqlSession.selectOne("user.selectUserPasswordByUserEmail", userEmail);
     }
 
+    /*회원 로그인 처리*/
     @Override
     public User login(User user) {
         return sqlSession.selectOne("user.login", user);
     }
 
+    /*회원 로그인 시간 수정*/
     @Override
     public void updateLoginDate(String userEmail) {
         sqlSession.update("user.updateLoginDate", userEmail);

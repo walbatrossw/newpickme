@@ -31,7 +31,7 @@ public interface UserDao {
     void delete(User user);
 
     /*회원 정보 수정, 삭제를 위한 비밀번호 확인*/
-    String getPassword(String userEmail);
+    String selectPasswordByUserEmail(String userEmail);
 
     /*로그인*/
     User login(User user);

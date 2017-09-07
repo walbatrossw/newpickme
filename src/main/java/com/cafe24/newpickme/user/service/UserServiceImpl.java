@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     /*회원 닉네임, 비밀번호 수정 또는 탈퇴를 위한 비밀번호 확인*/
     @Override
     public boolean checkPassword(String userEmail, String userPassword) {
-        return BCrypt.checkpw(userPassword, userDao.getPassword(userEmail));
+        return BCrypt.checkpw(userPassword, userDao.selectPasswordByUserEmail(userEmail));
     }
 
     /*로그인 처리*/
