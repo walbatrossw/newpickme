@@ -132,7 +132,7 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="companySales">매출액 (단위: 백만원)</label>
-                                                <input type="number" class="form-control" id="companySales" name="companySales" min="1">
+                                                <input type="text" class="form-control" id="companySales" name="companySales">
                                             </div>
                                         </div>
                                         <div class="col-sm-9">
@@ -155,6 +155,7 @@
                             <button type="reset" class="btn btn-default pull-right">초기화</button>
                             <button type="button" class="btn btn-primary pull-right" id="companyRegBtn">등록</button>
                         </div>
+
                     </div>
                 </section>
             </div>
@@ -230,8 +231,8 @@
             } else if ( companyAddress.val() === "" ) {
                 warningText.text("기업 본사주소를 기재해주세요.");
                 companyAddress.focus();
-            } else if ( companySales.val() === "" || isNaN(companySales.val()) ) {
-                warningText.text("매출액을 숫자로 기재해주세요.");
+            } else if ( companySales.val() === "") {
+                warningText.text("매출액을 기재해주세요.");
                 companySales.focus();
             } else {
                 $("#companyCreateForm").submit();

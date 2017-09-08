@@ -42,7 +42,7 @@ public class CompanyDaoImpl implements CompanyDao{
     /*기업정보 상세조회*/
     @Override
     public Company selectCompanyByCompanyId(int companyId) {
-        return null;
+        return sqlSession.selectOne("company.selectCompanyByCompanyId", companyId);
     }
 
     /*기업정보 수정*/

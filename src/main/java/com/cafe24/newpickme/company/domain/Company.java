@@ -17,7 +17,7 @@ public class Company {
     private String companyAddress;
     private String companyPhone;
     private String companyHomePage;
-    private int companySales;
+    private String companySales;
     private Date companyRegisterDate;
     private Date companyUpdateDate;
 
@@ -91,11 +91,11 @@ public class Company {
         this.companyHomePage = companyHomePage;
     }
 
-    public int getCompanySales() {
+    public String getCompanySales() {
         return companySales;
     }
 
-    public void setCompanySales(int companySales) {
+    public void setCompanySales(String companySales) {
         this.companySales = companySales;
     }
 
@@ -158,7 +158,7 @@ public class Company {
                 ", companyAddress='" + companyAddress + '\'' +
                 ", companyPhone='" + companyPhone + '\'' +
                 ", companyHomePage='" + companyHomePage + '\'' +
-                ", companySales=" + companySales +
+                ", companySales='" + companySales + '\'' +
                 ", companyRegisterDate=" + companyRegisterDate +
                 ", companyUpdateDate=" + companyUpdateDate +
                 ", industryCategory2Id=" + industryCategory2Id +

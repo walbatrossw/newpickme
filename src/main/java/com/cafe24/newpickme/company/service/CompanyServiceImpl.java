@@ -42,7 +42,7 @@ public class CompanyServiceImpl implements CompanyService {
     /*기업정보 상세조회*/
     @Override
     public Company getCompany(int companyId) {
-        return null;
+        return companyDao.selectCompanyByCompanyId(companyId);
     }
 
     /*기업정보 수정*/

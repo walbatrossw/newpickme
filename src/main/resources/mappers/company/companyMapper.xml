@@ -79,7 +79,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <!--기업정보 상세조회-->
-
+    <select id="selectCompanyByCompanyId" resultMap="companyResultMap">
+        SELECT
+            CPY.COMP_ID
+            , CPY.INDU_CATE2_ID
+            , CPY.COMP_TYPE
+            , CPY.COMP_NM
+            , CPY.COMP_BIRTH_DT
+            , CPY.COMP_CEO
+            , CPY.COMP_ADDR
+            , CPY.COMP_PHONE
+            , CPY.COMP_HOMEPAGE
+            , CPY.COMP_SALES
+            , CPY.COMP_REG_DT
+            , CPY.COMP_UDT_DT
+            , CPY.ADMIN_ID
+            , CT1.INDU_CATE1_NM
+            , CT2.INDU_CATE2_NM
+            , AD.ADMIN_NICK_NM
+        FROM
+            t_company AS CPY,
+            t_industry_category1 AS CT1,
+            t_industry_category2 AS CT2,
+            t_admin AS AD
+        WHERE
+            CPY.INDU_CATE2_ID = CT2.INDU_CATE2_ID
+            AND AD.ADMIN_ID = CPY.ADMIN_ID
+            AND CT1.INDU_CATE1_ID = CT2.INDU_CATE1_ID
+            AND CPY.COMP_ID = #{companyId};
+    </select>
 
     <!--기업정보 수정-->
 

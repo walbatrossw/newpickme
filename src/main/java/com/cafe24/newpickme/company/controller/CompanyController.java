@@ -61,7 +61,6 @@ public class CompanyController {
     * */
     @RequestMapping(value = "/info/list", method = RequestMethod.GET)
     public String list(Model model) {
-        System.out.println(companyService.list());
         model.addAttribute("companies", companyService.list());
         return "/company/list";
     }
@@ -73,7 +72,8 @@ public class CompanyController {
     * Method Name :
     * */
     @RequestMapping(value = "/info/{companyId}", method = RequestMethod.GET)
-    public String companyInfo(@PathVariable int companyId) {
+    public String companyInfo(@PathVariable int companyId, Model model) {
+        model.addAttribute("companyInfo", companyService.getCompany(companyId));
         return "/company/info";
     }
 
