@@ -3,9 +3,135 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
-<mapper namespace="sample">
-	
+<mapper namespace="company">
+    
+    <!--기업정보 등록 페이지 : 업종대분류 목록-->
+    <select id="selectListIndustryCategory1" resultMap="industryCategory1ResultMap">
+        SELECT
+            INDU_CATE1_ID,
+            INDU_CATE1_NM
+        FROM t_industry_category1
+    </select>
+
+    <!--기업정보 등록 페이지 : 업종소분류 목록-->
+    <select id="selectListIndustryCategory2ByIndustryCategory1Id"
+            resultMap="industryCategory2ResultMap">
+        SELECT
+            INDU_CATE2_ID,
+            INDU_CATE1_ID,
+            INDU_CATE2_NM
+        FROM t_industry_category2
+        WHERE INDU_CATE1_ID = #{industryCategory1Id}
+    </select>
+
+    <!--기업정보 등록 처리-->
+    <insert id="insertCompany" parameterType="Company">
+        INSERT INTO t_company (
+            INDU_CATE2_ID
+            , COMP_TYPE
+            , COMP_NM
+            , COMP_BIRTH_DT
+            , COMP_CEO
+            , COMP_ADDR
+            , COMP_PHONE
+            , COMP_HOMEPAGE
+            , COMP_SALES
+            , COMP_REG_DT
+            , COMP_UDT_DT
+            , ADMIN_ID
+        ) VALUES (
+            #{industryCategory2Id}
+            , #{companyType}
+            , #{companyName}
+            , #{companyBirthDate}
+            , #{companyCeo}
+            , #{companyAddress}
+            , #{companyPhone}
+            , #{companyHomePage}
+            , #{companySales}
+            , NOW()
+            , NOW()
+            , #{adminId}
+        )
+    </insert>
+
+    <!--기업정보 목록-->
+    <select id="selectList" resultMap="companyResultMap">
+        SELECT
+            CPY.COMP_ID,
+            CT1.INDU_CATE1_NM,
+            CT2.INDU_CATE2_NM,
+            CPY.COMP_NM,
+            CPY.COMP_TYPE,
+            CPY.COMP_SALES,
+            CPY.COMP_REG_DT,
+            CPY.COMP_UDT_DT,
+            AD.ADMIN_NICK_NM
+        FROM
+            t_company AS CPY,
+            t_industry_category1 AS CT1,
+            t_industry_category2 AS CT2,
+            t_admin AS AD
+        WHERE
+            CPY.INDU_CATE2_ID = CT2.INDU_CATE2_ID
+            AND AD.ADMIN_ID = CPY.ADMIN_ID
+            AND CT1.INDU_CATE1_ID = CT2.INDU_CATE1_ID
+    </select>
+
+    <!--기업정보 상세조회-->
+
+
+    <!--기업정보 수정-->
+
+
+    <!--기업정보 삭제-->
+
+
+    <!--기업 resultMap-->
+    <resultMap id="companyResultMap" type="Company">
+        <id column="COMP_ID" property="companyId"/>
+        <result column="INDU_CATE2_ID" property="industryCategory2Id"/>
+        <result column="COMP_NM" property="companyName"/>
+        <result column="COMP_TYPE" property="companyType"/>
+        <result column="COMP_HOMEPAGE" property="companyHomePage"/>
+        <result column="COMP_BIRTH_DT" property="companyBirthDate" javaType="java.sql.Date"/>
+        <result column="COMP_ADDR" property="companyAddress"/>
+        <result column="COMP_CEO" property="companyCeo"/>
+        <result column="COMP_PHONE" property="companyPhone"/>
+        <result column="COMP_PHOTO_URL" property="companyPhotoUrl"/>
+        <result column="COMP_SALES" property="companySales"/>
+        <result column="COMP_REG_DT" property="companyRegisterDate"/>
+        <result column="COMP_UDT_DT" property="companyUpdateDate"/>
+        <result column="ADMIN_ID" property="adminId"/>
+        <association property="admin" resultMap="adminResultMap"/>
+        <association property="industryCategory2" resultMap="industryCategory2ResultMap"/>
+    </resultMap>
+
+    <!--관리자 resultMap-->
+    <resultMap id="adminResultMap" type="Admin">
+        <id column="ADMIN_ID" property="adminId"/>
+        <result column="ADMIN_EMAIL" property="adminEmail"/>
+        <result column="ADMIN_NICK_NM" property="adminNickName"/>
+        <result column="ADMIN_PW" property="adminPassword"/>
+        <result column="ADMIN_JN_DT" property="adminJoinDate"/>
+        <result column="ADMIN_UDT_DT" property="adminUpdateDate"/>
+        <result column="ADMIN_LOG_DT" property="adminLoginDate"/>
+    </resultMap>
+
+    <!--업종 대분류 resultMap-->
+    <resultMap id="industryCategory1ResultMap" type="IndustryCategory1">
+        <id column="INDU_CATE1_ID" property="industryCategory1Id"/>
+        <result column="INDU_CATE1_NM" property="industryCategory1Name"/>
+    </resultMap>
+
+    <!--업종 소분류 resultMap-->
+    <resultMap id="industryCategory2ResultMap" type="IndustryCategory2">
+        <id column="INDU_CATE2_ID" property="industryCategory2Id"/>
+        <result column="INDU_CATE1_ID" property="industryCategory1Id"/>
+        <result column="INDU_CATE2_NM" property="industryCategory2Name"/>
+        <association property="industryCategory1" resultMap="industryCategory1ResultMap"/>
+    </resultMap>
+
 </mapper>
 
 

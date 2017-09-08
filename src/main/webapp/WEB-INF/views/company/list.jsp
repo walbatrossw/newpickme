@@ -20,8 +20,8 @@
         <!--본문 페이지 헤더-->
         <section class="content-header">
             <h1>
-                기업 등록
-                <small>기업 등록 페이지</small>
+                기업 목록
+                <small>기업 목록 페이지</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 기업</a></li>
@@ -34,7 +34,40 @@
             <!-- 페이지 내용 -->
             <div class="row">
                 <section class="col-lg-12">
-                    기업 등록 폼
+                    기업 목록 테이블
+                    <table id="companiesTable" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>기업명</th>
+                            <th>기업 분류</th>
+                            <th>업종 대분류</th>
+                            <th>업종 소분류</th>
+                            <th>등록일시</th>
+                            <th>수정일시</th>
+                            <th>작성자</th>
+                            <th>수정삭제</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="companies" varStatus="i" items="${companies}">
+                            <tr>
+                                <td>${i.index+1}</td>
+                                <td><a href="${path}/company/info/${companies.companyId}">${companies.companyName}</a></td>
+                                <td>${companies.companyType}</td>
+                                <td>${companies.industryCategory2.industryCategory1.industryCategory1Name}</td>
+                                <td>${companies.industryCategory2.industryCategory2Name}</td>
+                                <td><fmt:formatDate value="${companies.companyRegisterDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
+                                <td><fmt:formatDate value="${companies.companyUpdateDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
+                                <td>${companies.admin.adminNickName}</td>
+                                <td>
+                                    <input type="button" class="btn btn-primary" value="수정">
+                                    <input type="button" class="btn btn-danger" value="삭제">
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
                 </section>
             </div>
         </section>
@@ -51,5 +84,8 @@
 </div>
 <!-- 풋(JS) include-->
 <%@ include file="../include/js.jsp" %>
+<script>
+    $("#companiesTable").DataTable();
+</script>
 </body>
 </html>

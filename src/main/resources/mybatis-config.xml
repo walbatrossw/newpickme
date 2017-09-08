@@ -7,6 +7,9 @@
     <typeAliases>
         <typeAlias type="com.cafe24.newpickme.user.domain.User" alias="User"/>
         <typeAlias type="com.cafe24.newpickme.admin.domain.Admin" alias="Admin"/>
+        <typeAlias type="com.cafe24.newpickme.company.domain.Company" alias="Company"/>
+        <typeAlias type="com.cafe24.newpickme.company.domain.IndustryCategory1" alias="IndustryCategory1"/>
+        <typeAlias type="com.cafe24.newpickme.company.domain.IndustryCategory2" alias="IndustryCategory2"/>
         <package name="com.cafe24.newpickme"/>
     </typeAliases>
 
