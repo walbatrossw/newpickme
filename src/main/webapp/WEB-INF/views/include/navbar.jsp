@@ -162,18 +162,18 @@
                             </ul>
                         </li>
 
-                        <%-- 계정 관련 메뉴 --%>
+
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs">${sessionScope.adminName}</span>
+                                <span class="hidden-xs">${sessionScope.adminNickName}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <%-- User image --%>
                                 <li class="user-header">
                                     <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                     <p>
-                                            ${sessionScope.adminName}
+                                            ${sessionScope.adminNickName}
                                         <small>수정요망</small>
                                     </p>
                                 </li>

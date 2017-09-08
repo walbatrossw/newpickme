@@ -53,7 +53,7 @@
     <!--관리자 닉네임 변경-->
     <update id="updateAdminNickName">
         UPDATE t_admin
-        SET ADMIN_NICK_NM = #{userNickName},
+        SET ADMIN_NICK_NM = #{adminNickName},
             ADMIN_UDT_DT = NOW()
         WHERE ADMIN_EMAIL = #{adminEmail}
     </update>
@@ -102,6 +102,18 @@
         WHERE
             ADMIN_EMAIL = #{adminEmail}
     </update>
+
+    <!--관리자 목록-->
+    <select id="selectListAdmins" resultMap="adminResultMap">
+        SELECT
+            ADMIN_ID
+            , ADMIN_EMAIL
+            , ADMIN_NICK_NM
+            , ADMIN_JN_DT
+            , ADMIN_UDT_DT
+            , ADMIN_LOG_DT
+        FROM t_admin
+    </select>
 
     <!--관리자 resultMap-->
     <resultMap id="adminResultMap" type="Admin">

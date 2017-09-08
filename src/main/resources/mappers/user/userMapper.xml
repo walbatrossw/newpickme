@@ -104,6 +104,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             USER_EMAIL = #{userEamil}
     </select>
 
+    <!--회원 목록-->
+    <select id="selectListUsers" resultMap="userResultMap">
+        SELECT
+            USER_ID
+            , USER_EMAIL
+            , USER_NICK_NM
+            , USER_JN_DT
+            , USER_UDT_DT
+            , USER_LOG_DT
+        FROM t_user
+    </select>
+
     <!--회원 resultMap-->
     <resultMap id="userResultMap" type="User">
         <id column="USER_ID" property="userId"/>

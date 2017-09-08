@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -67,7 +68,6 @@ public class AdminServiceImpl implements AdminService {
     public boolean login(Admin admin, HttpSession session) {
         //
         Admin loginAdmin = adminDao.login(admin);
-        System.out.println(loginAdmin+"loginAdmin===================================================");
         if (loginAdmin != null && BCrypt.checkpw(admin.getAdminPassword(), loginAdmin.getAdminPassword())) {
             session.setAttribute("adminId", loginAdmin.getAdminId());
             session.setAttribute("adminEmail", loginAdmin.getAdminEmail());
@@ -87,6 +87,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void logout(HttpSession session) {
         session.invalidate();
+    }
+
+    /*관리자 리스트*/
+    @Override
+    public List<Admin> getAdmins() {
+        return adminDao.selectListAdmins();
     }
 
 }

@@ -2,6 +2,8 @@ package com.cafe24.newpickme.admin.repository;
 
 import com.cafe24.newpickme.admin.domain.Admin;
 
+import java.util.List;
+
 public interface AdminDao {
 
     /*관리자 가입 처리*/
@@ -34,4 +36,6 @@ public interface AdminDao {
     /*관리자 로그인 시간 수정*/
     void updateLoginDate(String adminEmail);
 
+    /*관리자 리스트*/
+    List<Admin> selectListAdmins();
 }

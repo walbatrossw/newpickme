@@ -5,6 +5,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class AdminDaoImpl implements AdminDao {
 
@@ -62,7 +64,6 @@ public class AdminDaoImpl implements AdminDao {
     /*관리자 로그인 처리*/
     @Override
     public Admin login(Admin admin) {
-        System.out.println(sqlSession.selectOne("admin.login", admin)+"------------------asdasd");
         return sqlSession.selectOne("admin.login", admin);
     }
 
@@ -70,6 +71,11 @@ public class AdminDaoImpl implements AdminDao {
     @Override
     public void updateLoginDate(String adminEmail) {
         sqlSession.update("admin.updateLoginDate", adminEmail);
+    }
+
+    @Override
+    public List<Admin> selectListAdmins() {
+        return sqlSession.selectList("admin.selectListAdmins");
     }
 
 }

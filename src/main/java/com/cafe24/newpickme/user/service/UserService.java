@@ -42,4 +42,7 @@ public interface UserService {
 
     /*로그아웃*/
     void logout(HttpSession session);
+
+    /*회원 목록*/
+    List<User> getUsers();
 }

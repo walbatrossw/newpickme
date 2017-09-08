@@ -77,4 +77,10 @@ public class UserDaoImpl implements UserDao {
     public void updateLoginDate(String userEmail) {
         sqlSession.update("user.updateLoginDate", userEmail);
     }
+
+    /*회원 목록*/
+    @Override
+    public List<User> selectListUsers() {
+        return sqlSession.selectList("user.selectListUsers");
+    }
 }

@@ -4,6 +4,7 @@ import com.cafe24.newpickme.admin.domain.Admin;
 
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 public interface AdminService {
 
@@ -40,4 +41,6 @@ public interface AdminService {
     /*관리자 로그아웃 처리*/
     void logout(HttpSession session);
 
+    /*관리자 리스트*/
+    List<Admin> getAdmins();
 }

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -105,7 +107,7 @@ public class AdminController {
         adminService.modifyAdminNickName(admin);
         // 변경된 닉네임 session에 적용
         session.setAttribute("adminNickName", admin.getAdminNickName());
-        return "redirect:/admin/profile";
+        return "redirect:/admin/profile/"+adminId;
     }
 
     /*
@@ -133,10 +135,10 @@ public class AdminController {
     /*
     * 관리자 탈퇴
     * Method : POST
-    * URL : /profile/{adminId}/withdraw
+    * URL : /profile/{adminId}/withdrawal
     * Method Name : adminWithdraw()
     * */
-    @RequestMapping(value = "/profile/{adminId}/withdraw", method = RequestMethod.POST)
+    @RequestMapping(value = "/profile/{adminId}/withdrawal", method = RequestMethod.POST)
     public ModelAndView adminWithdraw(@PathVariable int adminId, @ModelAttribute Admin admin, HttpSession session) {
         // 관리자 삭제 처리
         adminService.remove(admin);
@@ -155,7 +157,7 @@ public class AdminController {
     * Method : POST
     * URL : /profile/password/check
     * */
-    @RequestMapping(value = "/profile/password/check", method = RequestMethod.POST)
+    @RequestMapping(value = "/password/check", method = RequestMethod.POST)
     @ResponseBody
     public boolean userPwCheck(@RequestParam String adminEmail, @RequestParam String adminPassword) {
         return adminService.getPassword(adminEmail, adminPassword);
@@ -210,5 +212,10 @@ public class AdminController {
     * Method : GET
     * URL : /list
     * */
-
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String admins(Model model) {
+        List<Admin> admins = adminService.getAdmins();
+        model.addAttribute("admins", admins);
+        return "/admin/list";
+    }
 }

@@ -38,4 +38,7 @@ public interface UserDao {
 
     /*로그인시간 수정*/
     void updateLoginDate(String userEmail);
+
+    /*회원 목록*/
+    List<User> selectListUsers();
 }

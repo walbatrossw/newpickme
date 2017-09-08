@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /*회원 컨트롤러*/
 @Controller
@@ -221,4 +222,10 @@ public class UserController {
     * Method : GET
     * URL : /list
     * */
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String users(Model model) {
+        List<User> users = userService.getUsers();
+        model.addAttribute("users", users);
+        return "/user/list";
+    }
 }

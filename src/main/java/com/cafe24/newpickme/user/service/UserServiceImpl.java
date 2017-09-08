@@ -94,4 +94,10 @@ public class UserServiceImpl implements UserService {
     public void logout(HttpSession session) {
         session.invalidate();
     }
+
+    /*회원 목록*/
+    @Override
+    public List<User> getUsers() {
+        return userDao.selectListUsers();
+    }
 }
