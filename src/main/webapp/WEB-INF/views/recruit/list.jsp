@@ -20,12 +20,12 @@
         <!--본문 페이지 헤더-->
         <section class="content-header">
             <h1>
-                페이지 제목
+                채용 목록
                 <small>페이지 소제목</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> 대분류</a></li>
-                <li class="active"> 소분류</li>
+                <li><a href="#"><i class="fa fa-dashboard"></i> 채용</a></li>
+                <li class="active"> 목록</li>
             </ol>
         </section>
 
@@ -34,7 +34,7 @@
             <!-- 페이지 내용 -->
             <div class="row">
                 <section class="col-lg-12">
-                    내용....
+                    채용 목록 페이지....
                 </section>
             </div>
         </section>
