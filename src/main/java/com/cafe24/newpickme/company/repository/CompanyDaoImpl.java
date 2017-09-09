@@ -47,14 +47,14 @@ public class CompanyDaoImpl implements CompanyDao{
 
     /*기업정보 수정*/
     @Override
-    public void update(Company company) {
-
+    public void updateCompanyInfo(Company company) {
+        sqlSession.update("company.updateCompanyInfo", company);
     }
 
     /*기업정보 삭제*/
     @Override
-    public void delete(int companyId) {
-
+    public void deleteCompanyInfo(int companyId) {
+        sqlSession.delete("company.deleteCompanyInfo", companyId);
     }
 
 }

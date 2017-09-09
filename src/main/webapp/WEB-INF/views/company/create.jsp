@@ -113,7 +113,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label for="companyCeo">대표이사</label>
+                                                <label for="companyCeo">대표자</label>
                                                 <input type="text" class="form-control" id="companyCeo" name="companyCeo" placeholder="예) 홍길동">
                                             </div>
                                         </div>
@@ -131,7 +131,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
-                                                <label for="companySales">매출액 (단위: 백만원)</label>
+                                                <label for="companySales">매출액</label>
                                                 <input type="text" class="form-control" id="companySales" name="companySales">
                                             </div>
                                         </div>

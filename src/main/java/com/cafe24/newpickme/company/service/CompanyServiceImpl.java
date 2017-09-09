@@ -35,26 +35,26 @@ public class CompanyServiceImpl implements CompanyService {
 
     /*기업정보 목록*/
     @Override
-    public List<Company> list() {
+    public List<Company> getCompanies() {
         return companyDao.selectList();
     }
 
     /*기업정보 상세조회*/
     @Override
-    public Company getCompany(int companyId) {
+    public Company getCompanyInfo(int companyId) {
         return companyDao.selectCompanyByCompanyId(companyId);
     }
 
     /*기업정보 수정*/
     @Override
-    public void modifyCompany(Company company) {
-
+    public void modifyCompanyInfo(Company company) {
+        companyDao.updateCompanyInfo(company);
     }
 
     /*기업정보 삭제*/
     @Override
-    public void removeCompany(int companyId) {
-
+    public void removeCompanyInfo(int companyId) {
+        companyDao.deleteCompanyInfo(companyId);
     }
 
 }

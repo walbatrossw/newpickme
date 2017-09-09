@@ -4,12 +4,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="company">
-    
+
     <!--기업정보 등록 페이지 : 업종대분류 목록-->
     <select id="selectListIndustryCategory1" resultMap="industryCategory1ResultMap">
         SELECT
-            INDU_CATE1_ID,
-            INDU_CATE1_NM
+            INDU_CATE1_ID
+            ,INDU_CATE1_NM
         FROM t_industry_category1
     </select>
 
@@ -17,9 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectListIndustryCategory2ByIndustryCategory1Id"
             resultMap="industryCategory2ResultMap">
         SELECT
-            INDU_CATE2_ID,
-            INDU_CATE1_ID,
-            INDU_CATE2_NM
+            INDU_CATE2_ID
+            , INDU_CATE1_ID
+            , INDU_CATE2_NM
         FROM t_industry_category2
         WHERE INDU_CATE1_ID = #{industryCategory1Id}
     </select>
@@ -58,20 +58,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!--기업정보 목록-->
     <select id="selectList" resultMap="companyResultMap">
         SELECT
-            CPY.COMP_ID,
-            CT1.INDU_CATE1_NM,
-            CT2.INDU_CATE2_NM,
-            CPY.COMP_NM,
-            CPY.COMP_TYPE,
-            CPY.COMP_SALES,
-            CPY.COMP_REG_DT,
-            CPY.COMP_UDT_DT,
-            AD.ADMIN_NICK_NM
+            CPY.COMP_ID
+            , CT1.INDU_CATE1_NM
+            , CT2.INDU_CATE2_NM
+            , CPY.COMP_NM
+            , CPY.COMP_TYPE
+            , CPY.COMP_SALES
+            , CPY.COMP_REG_DT
+            , CPY.COMP_UDT_DT
+            , AD.ADMIN_NICK_NM
         FROM
-            t_company AS CPY,
-            t_industry_category1 AS CT1,
-            t_industry_category2 AS CT2,
-            t_admin AS AD
+            t_company AS CPY
+            , t_industry_category1 AS CT1
+            , t_industry_category2 AS CT2
+            , t_admin AS AD
         WHERE
             CPY.INDU_CATE2_ID = CT2.INDU_CATE2_ID
             AND AD.ADMIN_ID = CPY.ADMIN_ID
@@ -94,14 +94,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             , CPY.COMP_REG_DT
             , CPY.COMP_UDT_DT
             , CPY.ADMIN_ID
+            , CT1.INDU_CATE1_ID
             , CT1.INDU_CATE1_NM
+            , CT2.INDU_CATE2_ID
             , CT2.INDU_CATE2_NM
             , AD.ADMIN_NICK_NM
         FROM
-            t_company AS CPY,
-            t_industry_category1 AS CT1,
-            t_industry_category2 AS CT2,
-            t_admin AS AD
+            t_company AS CPY
+            , t_industry_category1 AS CT1
+            , t_industry_category2 AS CT2
+            , t_admin AS AD
         WHERE
             CPY.INDU_CATE2_ID = CT2.INDU_CATE2_ID
             AND AD.ADMIN_ID = CPY.ADMIN_ID
@@ -110,10 +112,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <!--기업정보 수정-->
-
+    <update id="updateCompanyInfo" parameterType="Company">
+        UPDATE t_company
+        SET
+            INDU_CATE2_ID   = #{industryCategory2Id}
+            , COMP_TYPE     = #{companyType}
+            , COMP_NM       = #{companyName}
+            , COMP_BIRTH_DT = #{companyBirthDate}
+            , COMP_CEO      = #{companyCeo}
+            , COMP_ADDR     = #{companyAddress}
+            , COMP_PHONE    = #{companyPhone}
+            , COMP_HOMEPAGE = #{companyHomePage}
+            , COMP_SALES    = #{companySales}
+            , COMP_UDT_DT   = NOW()
+            , ADMIN_ID      = #{adminId}
+        WHERE
+            COMP_ID = #{companyId}
+    </update>
 
     <!--기업정보 삭제-->
-
+    <delete id="deleteCompanyInfo">
+        DELETE FROM t_company
+        WHERE COMP_ID = #{companyId}
+    </delete>
 
     <!--기업 resultMap-->
     <resultMap id="companyResultMap" type="Company">
@@ -161,17 +182,3 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

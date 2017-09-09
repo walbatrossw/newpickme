@@ -24,15 +24,15 @@ public class CompanyController {
     * Method Name : create()
     * */
     @RequestMapping(value = "/info/create", method = RequestMethod.GET)
-    public String create(Model model) {
+    public String companyCreate(Model model) {
         model.addAttribute("IndustryCategory1", companyService.getListIndustryCategory1());
         return "/company/create";
     }
 
     /* 업종 소분류 조회
-    * URL : /company
-    * Method :
-    * Method Name :
+    * URL : /company/info/industry/category2/{industryCategory1Id}
+    * Method : GET
+    * Method Name : getIndustryCategory2()
     * */
     @RequestMapping(value = "/info/industry/category2/{industryCategory1Id}", method = RequestMethod.GET)
     @ResponseBody
@@ -42,11 +42,11 @@ public class CompanyController {
 
     /* 기업 등록 처리
     * URL : /company/create
-    * Method :
-    * Method Name :
+    * Method : POST
+    * Method Name : companyCreate()
     * */
     @RequestMapping(value = "/info/create", method = RequestMethod.POST)
-    public String create(@ModelAttribute Company company, HttpSession session) {
+    public String companyCreate(@ModelAttribute Company company, HttpSession session) {
         int writerId = (Integer) session.getAttribute("adminId");
         company.setAdminId(writerId);
         companyService.create(company);
@@ -56,45 +56,52 @@ public class CompanyController {
 
     /* 기업 목록
     * URL : /company/info/list
-    * Method :
-    * Method Name :
+    * Method : GET
+    * Method Name : companyList()
     * */
     @RequestMapping(value = "/info/list", method = RequestMethod.GET)
-    public String list(Model model) {
-        model.addAttribute("companies", companyService.list());
+    public String companyList(Model model) {
+        model.addAttribute("companies", companyService.getCompanies());
         return "/company/list";
     }
 
 
     /* 기업 상세 조회
     * URL : /company/info/{companyId}
-    * Method :
-    * Method Name :
+    * Method : GET
+    * Method Name : companyInfo()
     * */
     @RequestMapping(value = "/info/{companyId}", method = RequestMethod.GET)
     public String companyInfo(@PathVariable int companyId, Model model) {
-        model.addAttribute("companyInfo", companyService.getCompany(companyId));
+        model.addAttribute("companyInfo", companyService.getCompanyInfo(companyId));
+        model.addAttribute("IndustryCategory1", companyService.getListIndustryCategory1());
         return "/company/info";
     }
-
-    /* 기업 수정 페이지
-    * URL : /company/info/{companyId}/update
-    * Method : GET
-    * Method Name :
-    * */
 
     /* 기업 수정 처리
     * URL : /company/info/{companyId}/update
     * Method : POST
-    * Method Name :
+    * Method Name : companyInfoUpdate()
     * */
+    @RequestMapping(value = "/info/{companyId}/update", method = RequestMethod.POST)
+    public String companyInfoUpdate(@PathVariable int companyId, @ModelAttribute Company company, HttpSession session) {
+        company.setCompanyId(companyId);
+        int writerId = (Integer) session.getAttribute("adminId");
+        company.setAdminId(writerId);
+        companyService.modifyCompanyInfo(company);
+        return "redirect:/company/info/list";
+    }
 
     /* 기업 삭제 처리
     * URL : /company/info/{companyId}/delete
     * Method :
     * Method Name :
     * */
-
+    @RequestMapping(value = "/info/{companyId}/delete", method = RequestMethod.GET)
+    public String companyInfoDelete(@PathVariable int companyId) {
+        companyService.removeCompanyInfo(companyId);
+        return "redirect:/company/info/list";
+    }
 
 
 }

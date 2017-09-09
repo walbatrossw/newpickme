@@ -101,10 +101,89 @@
                             </ul>
                             <c:if test="${sessionScope.adminId != null}">
                             <div class="btn-group btn-group-justified">
-                                <a href="${path}/company/info/${companyInfo.companyId}/update" class="btn btn-primary"> 수정 </a>
-                                <a href="${path}/company/info/${companyInfo.companyId}/delete" class="btn btn-primary"> 삭제 </a>
+                                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#companyInfoUpdateModal">수정</a>
+                                <a class="btn btn-primary" id="companyDeleteBtn">삭제</a>
                             </div>
                             </c:if>
+
+
+                            <%--기업정보 수정 Modal--%>
+                            <div class="modal fade" id="companyInfoUpdateModal" tabindex="-1" role="dialog" aria-labelledby="companyInfoUpdateLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="companyInfoUpdateLabel">기업 정보 수정</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form role="form" id="companyInfoUpdateForm" method="post" action="${path}/company/info/${companyInfo.companyId}/update">
+                                                <div class="form-group">
+                                                    <label for="companyName">기업명</label>
+                                                    <input type="text" class="form-control" id="companyName" name="companyName" value="${companyInfo.companyName}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="industryCategory1">업종 대분류</label>
+                                                    <select class="form-control" id="industryCategory1">
+                                                        <c:forEach var="i" items="${IndustryCategory1}">
+                                                            <option value="${i.industryCategory1Id}">${i.industryCategory1Name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="industryCategory2">업종 소분류</label>
+                                                    <select class="form-control" id="industryCategory2" name="industryCategory2Id">
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="companyType">기업형태</label>
+                                                    <select class="form-control" id="companyType" name="companyType">
+                                                        <option value="">::::선택::::</option>
+                                                        <option value="대기업">대기업</option>
+                                                        <option value="중견기업">중견기업</option>
+                                                        <option value="중소기업">중소기업</option>
+                                                        <option value="외국계">외국계</option>
+                                                        <option value="스타트업">스타트업</option>
+                                                        <option value="공공기관">공공기관</option>
+                                                        <option value="공기업">공기업</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="companyBirthDate">설립일자</label>
+                                                    <input type="date" class="form-control" id="companyBirthDate" name="companyBirthDate" value="${companyInfo.companyBirthDate}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="companyCeo">대표자</label>
+                                                    <input type="text" class="form-control" name="companyCeo" id="companyCeo" value="${companyInfo.companyCeo}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="companyHomePage">공식홈페이지</label>
+                                                    <input type="text" class="form-control" id="companyHomePage" name="companyHomePage" value="${companyInfo.companyHomePage}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="companyPhone">대표번호</label>
+                                                    <input type="text" class="form-control" id="companyPhone" name="companyPhone" value="${companyInfo.companyPhone}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="companySales">매출액</label>
+                                                    <input type="text" class="form-control" id="companySales" value="${companyInfo.companySales}" name="companySales">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="companyAddress">본사주소</label>
+                                                    <input type="text" class="form-control" id="companyAddress" name="companyAddress" value="${companyInfo.companyAddress}">
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <div class="form-group" id="warningText" style="color: red"></div>
+                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기</button>
+                                            <button type="button" class="btn btn-primary" id="companyInfoUpdateBtn">저장</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -158,5 +237,102 @@
 </div>
 <!-- 풋(JS) include-->
 <%@ include file="../include/js.jsp" %>
+<script>
+    $(function () {
+
+        // 기업형태 SELECT BOX에 출력처리
+        $("#companyType").val("${companyInfo.companyType}").attr("selected", "selected");
+
+        // 업종 대분류 id (DB에 저장된 값 저장)
+        var industryCt1Id = "${companyInfo.industryCategory2.industryCategory1.industryCategory1Id}";
+        
+        // 업종 소분류 id (DB에 저장된 값 저장)
+        var industryCt2Id = "${companyInfo.industryCategory2Id}";
+
+        // 업종 대분류 SELECT BOX에 출력 처리
+        $("#industryCategory1").val(industryCt1Id).attr("selected", "selected");
+
+        // 업종 소분류 SELECT BOX에 출력 처리
+        if ($("#industryCategory1").val() !== null) { // 업종 대분류 SELECTBOX의 값이 존재하면
+            getIndustryCt2List(industryCt1Id); // 업종 소분류 list 값 불러오기
+            $("#industryCategory2").val(industryCt2Id).attr("selected", "selected"); // 업종 소분류 SELECT BOX에 출력
+        }
+
+        // 업종 대분류 값이 변경되면 업종 소분류 값도 같이 변경하도록 처리
+        $("#industryCategory1").change(function () {
+            $("#industryCategory2 option").remove();
+            var industryCt1IdChangeValue = $("#industryCategory1").val();
+            getIndustryCt2List(industryCt1IdChangeValue);
+        });
+
+        // 업종 대분류 id 값으로 업종 소분류 list를 ajax 요청으로 가져오기
+        function getIndustryCt2List(param) {
+            $.ajax({
+                type: "get",
+                url: "${path}/company/info/industry/category2/" + param,
+                success: function (data) {
+                    // 가져온 값을 append
+                    for (var i in data) {
+                        $("#industryCategory2").append(
+                            "<option value='" + data[i].industryCategory2Id + "'>" + data[i].industryCategory2Name + "</option>")
+                    }
+                }
+            });
+        }
+
+        // 기업등록 버튼 클릭시 유효성검사
+        $("#companyInfoUpdateBtn").on("click", function () {
+
+            var companyName = $("#companyName");
+            var industryCategory1 = $("#industryCategory1");
+            var companyType = $("#companyType");
+            var companyBirthDate = $("#companyBirthDate");
+            var companyCeo = $("#companyCeo");
+            var companyHomePage = $("#companyHomePage");
+            var companyPhone = $("#companyPhone");
+            var companyAddress = $("#companyAddress");
+            var companySales = $("#companySales");
+            var warningText = $("#warningText");
+
+            if (companyName.val() === "") {
+                warningText.text("기업명을 기재해주세요.");
+                companyName.focus();
+            } else if ( industryCategory1.val() === "" ) {
+                warningText.text("업종을 선택해주세요.");
+                industryCategory1.focus();
+            } else if ( companyType.val() === "" ) {
+                warningText.text("기업 규모를 선택해주세요.");
+                companyType.focus();
+            } else if ( companyBirthDate.val() === "" ) {
+                warningText.text("설립입을 기재해주세요.");
+                companyBirthDate.focus();
+            } else if ( companyCeo.val() === "" ) {
+                warningText.text("대표자를 기재해주세요.");
+                companyCeo.focus();
+            } else if ( companyHomePage.val() === "" ) {
+                warningText.text("기업홈페이지를 기재해주세요.");
+                companyHomePage.focus();
+            } else if ( companyPhone.val() === "" ) {
+                warningText.text("기업 대표번호를 기재해주세요.");
+                companyPhone.focus();
+            } else if ( companyAddress.val() === "" ) {
+                warningText.text("기업 본사주소를 기재해주세요.");
+                companyAddress.focus();
+            } else if ( companySales.val() === "" ) {
+                warningText.text("매출액을 기재해주세요.");
+                companySales.focus();
+            } else {
+                $("#companyInfoUpdateForm").submit();
+            }
+        });
+
+        // 삭제 확인 팝업, 삭제 처리 진행
+        $("#companyDeleteBtn").on("click", function () {
+            if (confirm("기업정보를 삭제하시겠습니까?")) {
+                location.href = "${path}/company/info/${companyInfo.companyId}/delete";
+            }
+        })
+    })
+</script>
 </body>
 </html>

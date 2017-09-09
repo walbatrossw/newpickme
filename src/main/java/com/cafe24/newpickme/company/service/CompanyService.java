@@ -18,15 +18,15 @@ public interface CompanyService {
     void create(Company company);
 
     /*기업정보 목록*/
-    List<Company> list();
+    List<Company> getCompanies();
 
     /*기업정보 상세조회*/
-    Company getCompany(int companyId);
+    Company getCompanyInfo(int companyId);
 
     /*기업정보 수정*/
-    void modifyCompany(Company company);
+    void modifyCompanyInfo(Company company);
 
     /*기업정보 삭제*/
-    void removeCompany(int companyId);
+    void removeCompanyInfo(int companyId);
 
 }

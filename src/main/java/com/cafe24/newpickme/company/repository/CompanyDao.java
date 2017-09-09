@@ -24,9 +24,9 @@ public interface CompanyDao {
     Company selectCompanyByCompanyId(int companyId);
 
     /*기업정보 수정*/
-    void update(Company company);
+    void updateCompanyInfo(Company company);
 
     /*기업정보 삭제*/
-    void delete(int companyId);
+    void deleteCompanyInfo(int companyId);
 
 }
