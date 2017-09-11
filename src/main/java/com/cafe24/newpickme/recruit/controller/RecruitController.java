@@ -1,14 +1,13 @@
 package com.cafe24.newpickme.recruit.controller;
 
-import com.cafe24.newpickme.recruit.domain.JobCategory2;
-import com.cafe24.newpickme.recruit.domain.Recruit;
-import com.cafe24.newpickme.recruit.domain.RecruitJob;
-import com.cafe24.newpickme.recruit.domain.CoverLetterArticle;
+import com.cafe24.newpickme.company.domain.Company;
+import com.cafe24.newpickme.company.service.CompanyService;
+import com.cafe24.newpickme.recruit.domain.*;
+import com.cafe24.newpickme.recruit.service.RecruitService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -17,13 +16,26 @@ import java.util.List;
 @RequestMapping("/recruit")
 public class RecruitController {
 
+    @Autowired
+    RecruitService recruitService;
+
+    @Autowired
+    CompanyService companyService;
+
     /*채용 입력 페이지
     * Method : GET
     * Method Name : create()
     * URL : /recruit/create
     * */
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String create() {
+    public String create(Model model) {
+        // 직무 대분류 리스트
+        List<JobCategory1> jobCategory1s = recruitService.getJobCategory1List();
+        model.addAttribute("jobCategory1s", jobCategory1s);
+        // 기업 명
+        List<Company> companies = companyService.getCompanies();
+        model.addAttribute("companies", companies);
+
         return "/recruit/create";
     }
 
@@ -33,8 +45,10 @@ public class RecruitController {
     * URL : /recruit/job/category1/{jobCategory1Id}/list
     * */
     @RequestMapping(value = "/job/category1/{jobCategory1Id}/list", method = RequestMethod.GET)
+    @ResponseBody
     public List<JobCategory2> getJobCategory2List(@PathVariable int jobCategory1Id) {
-        return null;
+        System.out.println(recruitService.getJobCategory2List(jobCategory1Id));
+        return recruitService.getJobCategory2List(jobCategory1Id);
     }
 
     /*채용 입력 처리
@@ -44,9 +58,49 @@ public class RecruitController {
     * */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@ModelAttribute Recruit recruit,
-                         @ModelAttribute RecruitJob recruitJob,
-                         @ModelAttribute CoverLetterArticle coverletterArticle,
                          HttpSession session) {
+        // 기업 아이디
+        int companyId = recruitService.getCompanyIdByCompanyName(recruit.getCompanyName());
+        recruit.setCompanyId(companyId);
+
+        // 관리자 아이디
+        int adminId = (Integer) session.getAttribute("adminId");
+        recruit.setAdminId(adminId);
+        // 채용 입력
+        recruitService.create(recruit);
+        // 채용 ID
+        int recruitId = recruit.getRecruitId();
+        System.out.println(recruitId);
+        // 채용 직무의 갯수
+        int size = recruit.getRecruitJobs().size();
+
+        // 채용 직무의 갯수만큼 반복
+        for (int i = 0; i < size; i++){
+            // 채용 아이디 Setting
+            recruit.getRecruitJobs().get(i).setRecruitId(recruitId);
+            RecruitJob recruitJob = recruit.getRecruitJobs().get(i);
+            recruitService.create(recruitJob);
+
+            int recruitJobId = recruit.getRecruitJobs().get(i).getRecruitJobId();
+            // 채용 직무별 자기소개서 항목의 갯수
+            int articleSize = recruit.getRecruitJobs().get(i).getCoverLetterArticles().size();
+            // 채용 직무별 자기소개서 항목의 갯수만큼 반복
+            for (int j = 0; j < articleSize; j++){
+                // 채용 직무 아이디 Setting
+                recruit.getRecruitJobs().get(i).getCoverLetterArticles().get(j).setRecruitJobId(recruitJobId);
+                CoverLetterArticle coverLetterArticle = recruit.getRecruitJobs().get(i).getCoverLetterArticles().get(j);
+                recruitService.create(coverLetterArticle);
+            }
+        }
+
+
+
+
+        // 채용 입력
+        // 채용 기본키 --> 채용 직무의 채용 외래키에 세팅
+        // 채용 직무 입력
+        // 채용 직무 기본키 --> 채용 직무 자소서항목의 채용직무 외래키에 세팅
+        // 채용 직무 자기소개서 항목 입력
         return "redirect:/recruit/list";
     }
 

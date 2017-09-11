@@ -12,8 +12,8 @@ public class RecruitJob {
     private int recruitId;          // 채용 아이디
     private Recruit recruit;        // 채용
 
-    private int jobCategory2Id;         // 직무 대분류 아이디
-    private JobCategory2 jobCategory2;  // 직무 대분류
+    private int jobCategory2Id;         // 직무 소분류 아이디
+    private JobCategory2 jobCategory2;  // 직무 소분류
 
     private List<CoverLetterArticle> coverLetterArticles; // 채용직무 자기소개서 항목 리스트
 

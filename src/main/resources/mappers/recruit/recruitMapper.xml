@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="recruit">
+
+    <!--채용 입력-->
+    <insert id="insertRecruit" parameterType="Recruit" useGeneratedKeys="true" keyProperty="recruitId">
+        INSERT INTO t_recruit (
+            COMP_ID
+            , RECR_NM
+            , RECR_BEG_DT
+            , RECR_END_DT
+            , RECR_WRT_DT
+            , RECR_UDT_DT
+            , ADMIN_ID
+        ) VALUES (
+            #{companyId}
+            , #{recruitName}
+            , #{recruitBeginDate}
+            , #{recruitEndDate}
+            , NOW()
+            , NOW(),
+            #{adminId}
+        )
+    </insert>
+
+    <!--채용 직무 입력-->
+    <insert id="insertRecruitJob" parameterType="RecruitJob" useGeneratedKeys="true" keyProperty="recruitJobId">
+        INSERT INTO t_recruit_job (
+            RECR_ID
+            , JOB_CATE2_ID
+            , RECR_JOB_TYPE
+            , RECR_JOB_EDU
+            , RECR_JOB_DETAIL
+        ) VALUES (
+            #{recruitId}
+            , #{jobCategory2Id}
+            , #{recruitJobType}
+            , #{recruitJobEdu}
+            , #{recruitJobDetail}
+        )
+    </insert>
+
+    <!--채용 직무별 자기소개서 항목 입력-->
+    <insert id="insertCoverLetterArticle" parameterType="CoverLetterArticle" useGeneratedKeys="true" keyProperty="coverLetterArticleId">
+        INSERT INTO t_recruit_job_coverletter_article (
+            RECR_JOB_ID
+            , CVLT_ARTICLE_TITLE
+        ) VALUES (
+            #{recruitJobId}
+            , #{coverLetterArticleTitle}
+        )
+    </insert>
+
+
+    <!--직무 대분류 목록-->
+    <select id="selectListJobCategory1" resultMap="jobCategory1ResultMap">
+
+        SELECT * FROM t_job_category1
+
+    </select>
+
+    <!--직무 소분류 목록-->
+    <select id="selectListJobCategory2" resultMap="jobCategory2ResultMap">
+
+        SELECT * FROM t_job_category2
+        WHERE JOB_CATE1_ID = #{jobCategory1Id}
+
+    </select>
+
+    <!--기업 아이디-->
+    <select id="selectCompanyIdByCompanyName" resultType="int">
+
+        SELECT
+            COMP_ID
+        FROM t_company
+        WHERE COMP_NM = #{companyName}
+
+    </select>
+
+    <!--채용 목록-->
+    <select id="selectListRecruits">
+
+    </select>
+
+    <!--채용 상세-->
+    <select id="selectOneByRecruitId" resultMap="recruitResultMap">
+
+        SELECT
+            RECR_ID
+            , COMP_ID
+            , RECR_NM
+            , RECR_BEG_DT
+            , RECR_END_DT
+            , RECR_WRT_DT
+            , RECR_UDT_DT
+            , ADMIN_ID
+        FROM t_recruit
+        WHERE RECR_ID = #{recruitId}
+
+    </select>
+
+    <!--채용 직무 목록-->
+    <select id="selectListRecruitJobs" resultMap="recruitJobResultMap">
+
+        SELECT
+            RECR_JOB_ID
+            , RECR_ID
+            , JOB_CATE2_ID
+            , RECR_JOB_TYPE
+            , RECR_JOB_EDU
+            , RECR_JOB_DETAIL
+        FROM t_recruit_job
+        WHERE RECR_ID = #{recruitId}
+
+    </select>
+
+    <!--채용 직무별 자소서항목 목록-->
+    <select id="selectListCoverLetterArticles" resultMap="coverLetterArticleResultMap">
+
+        SELECT
+            CVLT_ARTICLE_ID
+            , RECR_JOB_ID
+            , CVLT_ARTICLE_TITLE
+        FROM t_recruit_job_coverletter_article
+        WHERE RECR_JOB_ID = #{recruitJobId}
+
+    </select>
+
+    <!--채용 수정-->
+    <update id="update">
+
+    </update>
+
+    <!--채용 삭제-->
+    <delete id="delete">
+
+    </delete>
+
+
+    <!-- ==== ResultMaps ==== -->
+
+
+    <!--채용 resultMap-->
+    <resultMap id="recruitResultMap" type="Recruit">
+
+        <id column="RECR_ID" property="recruitId"/>
+
+        <result column="RECR_NM" property="recruitName"/>
+        <result column="RECR_BEG_DT" property="recruitBeginDate"/>
+        <result column="RECR_END_DT" property="recruitEndDate"/>
+        <result column="RECR_WRT_DT" property="recruitWriteDate"/>
+        <result column="RECR_UDT_DT" property="recruitUpdateDate"/>
+        <result column="COMP_ID" property="companyId"/>
+        <result column="ADMIN_ID" property="adminId"/>
+
+        <association property="company" resultMap="companyResultMap"/>
+        <association property="admin" resultMap="adminResultMap"/>
+
+        <collection property="recruitJobs"
+                    javaType="java.util.ArrayList"
+                    column="RECR_ID"
+                    ofType="RecruitJob"
+                    select="selectListRecruitJobs"
+        />
+
+    </resultMap>
+
+    <!--채용직무 resultMap-->
+    <resultMap id="recruitJobResultMap" type="RecruitJob">
+
+        <id column="RECR_JOB_ID" property="recruitJobId"/>
+
+        <result column="RECR_JOB_TYPE" property="recruitJobType"/>
+        <result column="RECR_JOB_EDU" property="recruitJobEdu"/>
+        <result column="RECR_JOB_DETAIL" property="recruitJobDetail"/>
+        <result column="RECR_ID" property="recruitId"/>
+        <result column="JOB_CATE2_ID" property="jobCategory2Id"/>
+
+        <association property="Recruit" resultMap="recruitResultMap"/>
+        <association property="JobCategory2" resultMap="jobCategory2ResultMap"/>
+
+        <collection property="coverLetterArticles"
+                    javaType="java.util.ArrayList"
+                    column="RECR_JOB_ID"
+                    ofType="CoverLetterArticle"
+                    select="selectListCoverLetterArticles"
+        />
+
+    </resultMap>
+
+    <!--채용직무별자소서항목 resultMap-->
+    <resultMap id="coverLetterArticleResultMap" type="CoverLetterArticle">
+
+        <id column="CVLT_ARTICLE_ID" property="coverLetterArticleId"/>
+
+        <result column="CVLT_ARTICLE_TITLE" property="coverLetterArticleTitle"/>
+        <result column="RECR_JOB_ID" property="recruitJobId"/>
+
+        <association property="recruitJob" resultMap="recruitJobResultMap"/>
+
+    </resultMap>
+
+    <!--직무 대분류 resultMap-->
+    <resultMap id="jobCategory1ResultMap" type="JobCategory1">
+
+        <id column="JOB_CATE1_ID" property="jobCategory1Id"/>
+
+        <result column="JOB_CATE1_NM" property="jobCategory1Name"/>
+
+    </resultMap>
+
+    <!--직무 소분류 resultMap-->
+    <resultMap id="jobCategory2ResultMap" type="JobCategory2">
+
+        <id column="JOB_CATE2_ID" property="jobCategory2Id"/>
+
+        <result column="JOB_CATE2_NM" property="jobCategory2Name"/>
+        <result column="JOB_CATE1_ID" property="jobCategory1Id"/>
+
+        <association property="jobCategory1" resultMap="jobCategory1ResultMap"/>
+
+    </resultMap>
+
+    <!--기업 resultMap-->
+    <resultMap id="companyResultMap" type="Company">
+
+        <id column="COMP_ID" property="companyId"/>
+
+        <result column="COMP_NM" property="companyName"/>
+        <result column="COMP_TYPE" property="companyType"/>
+        <result column="COMP_HOMEPAGE" property="companyHomePage"/>
+        <result column="COMP_BIRTH_DT" property="companyBirthDate" javaType="java.sql.Date"/>
+        <result column="COMP_ADDR" property="companyAddress"/>
+        <result column="COMP_CEO" property="companyCeo"/>
+        <result column="COMP_PHONE" property="companyPhone"/>
+        <result column="COMP_PHOTO_URL" property="companyPhotoUrl"/>
+        <result column="COMP_SALES" property="companySales"/>
+        <result column="COMP_REG_DT" property="companyRegisterDate"/>
+        <result column="COMP_UDT_DT" property="companyUpdateDate"/>
+
+        <result column="INDU_CATE2_ID" property="industryCategory2Id"/>
+        <result column="ADMIN_ID" property="adminId"/>
+        <association property="admin" resultMap="adminResultMap"/>
+        <association property="industryCategory2" resultMap="industryCategory2ResultMap"/>
+
+    </resultMap>
+
+    <!--관리자 resultMap-->
+    <resultMap id="adminResultMap" type="Admin">
+
+        <id column="ADMIN_ID" property="adminId"/>
+
+        <result column="ADMIN_EMAIL" property="adminEmail"/>
+        <result column="ADMIN_NICK_NM" property="adminNickName"/>
+        <result column="ADMIN_PW" property="adminPassword"/>
+        <result column="ADMIN_JN_DT" property="adminJoinDate"/>
+        <result column="ADMIN_UDT_DT" property="adminUpdateDate"/>
+        <result column="ADMIN_LOG_DT" property="adminLoginDate"/>
+
+    </resultMap>
+
+    <!--업종 대분류 resultMap-->
+    <resultMap id="industryCategory1ResultMap" type="IndustryCategory1">
+        <id column="INDU_CATE1_ID" property="industryCategory1Id"/>
+        <result column="INDU_CATE1_NM" property="industryCategory1Name"/>
+    </resultMap>
+
+    <!--업종 소분류 resultMap-->
+    <resultMap id="industryCategory2ResultMap" type="IndustryCategory2">
+        <id column="INDU_CATE2_ID" property="industryCategory2Id"/>
+        <result column="INDU_CATE1_ID" property="industryCategory1Id"/>
+        <result column="INDU_CATE2_NM" property="industryCategory2Name"/>
+        <association property="industryCategory1" resultMap="industryCategory1ResultMap"/>
+    </resultMap>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

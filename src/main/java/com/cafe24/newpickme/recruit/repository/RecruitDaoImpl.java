@@ -16,55 +16,61 @@ public class RecruitDaoImpl implements RecruitDao{
     /*채용 입력*/
     @Override
     public void insert(Recruit recruit) {
-
+        sqlSession.insert("recruit.insertRecruit", recruit);
     }
 
     /*채용 직무 입력*/
     @Override
     public void insert(RecruitJob recruitJob) {
-
+        sqlSession.insert("recruit.insertRecruitJob", recruitJob);
     }
 
     /*채용 직무별 자기소개서 항목*/
     @Override
     public void insert(CoverLetterArticle coverLetterArticle) {
-
+        sqlSession.insert("recruit.insertCoverLetterArticle", coverLetterArticle);
     }
 
     /*직무 대분류 목록*/
     @Override
     public List<JobCategory1> selectListJobCategory1() {
-        return null;
+        return sqlSession.selectList("recruit.selectListJobCategory1");
     }
 
     /*직무 소분류 목록*/
     @Override
-    public List<JobCategory2> selectListJobCategory2ByjobCategory1Id(int jobCategory1Id) {
-        return null;
+    public List<JobCategory2> selectListJobCategory2(int jobCategory1Id) {
+        return sqlSession.selectList("recruit.selectListJobCategory2", jobCategory1Id);
     }
 
-    /*채용 직무 목록*/
+    /*기업 아이디*/
     @Override
-    public List<Recruit> selectListRecruit() {
-        return null;
+    public int selectCompanyIdByCompanyName(String companyName) {
+        return sqlSession.selectOne("recruit.selectCompanyIdByCompanyName", companyName);
+    }
+
+    /*채용 목록*/
+    @Override
+    public List<Recruit> selectListRecruits() {
+        return sqlSession.selectList("recruit.selectListRecruits");
     }
 
     /*채용 상세*/
     @Override
     public Recruit selectOneByRecruitId(int recruitId) {
-        return null;
+        return sqlSession.selectOne("recruit.selectOneByRecruitId", recruitId);
     }
 
     /*채용 수정*/
     @Override
     public void update(int recruitId) {
-
+        sqlSession.update("recruit.update");
     }
 
     /*채용 삭제*/
     @Override
     public void delete(int recruitId) {
-
+        sqlSession.delete("recruit.delete", recruitId);
     }
 
 }

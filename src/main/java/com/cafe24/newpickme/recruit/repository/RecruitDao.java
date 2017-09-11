@@ -19,10 +19,13 @@ public interface RecruitDao {
     List<JobCategory1> selectListJobCategory1();
 
     /*직무 소분류 목록*/
-    List<JobCategory2> selectListJobCategory2ByjobCategory1Id(int jobCategory1Id);
+    List<JobCategory2> selectListJobCategory2(int jobCategory1Id);
 
-    /*채용 직무 목록*/
-    List<Recruit> selectListRecruit();
+    /*기업 아이디*/
+    int selectCompanyIdByCompanyName(String companyName);
+
+    /*채용 목록*/
+    List<Recruit> selectListRecruits();
 
     /*채용 상세*/
     Recruit selectOneByRecruitId(int recruitId);

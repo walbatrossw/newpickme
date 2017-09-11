@@ -21,7 +21,10 @@ public interface RecruitService {
     /*직무 소분류 목록*/
     List<JobCategory2> getJobCategory2List(int jobCategory1Id);
 
-    /*채용 직무 목록*/
+    /*기업 아이디*/
+    int getCompanyIdByCompanyName(String companyName);
+
+    /*채용 목록*/
     List<Recruit> getRecruits();
 
     /*채용 상세*/

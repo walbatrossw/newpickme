@@ -10,12 +10,13 @@ public class Recruit {
 
     private int recruitId;          // 채용 아이디
     private String recruitName;     // 채용 이름
-    private Date recruitBeginDate;  // 채용 시작일시
-    private Date recruitEndDate;    // 채용 마감일시
+    private String recruitBeginDate;  // 채용 시작일시
+    private String recruitEndDate;    // 채용 마감일시
     private Date recruitWriteDate;  // 채용 등록일시
     private Date recruitUpdateDate; // 채용 수정일시
 
     private int companyId;          // 기업 아이디
+    private String companyName;          // 기업 명
     private Company company;        // 기업
 
     private int adminId;            // 관리자 아이디
@@ -39,19 +40,19 @@ public class Recruit {
         this.recruitName = recruitName;
     }
 
-    public Date getRecruitBeginDate() {
+    public String getRecruitBeginDate() {
         return recruitBeginDate;
     }
 
-    public void setRecruitBeginDate(Date recruitBeginDate) {
+    public void setRecruitBeginDate(String recruitBeginDate) {
         this.recruitBeginDate = recruitBeginDate;
     }
 
-    public Date getRecruitEndDate() {
+    public String getRecruitEndDate() {
         return recruitEndDate;
     }
 
-    public void setRecruitEndDate(Date recruitEndDate) {
+    public void setRecruitEndDate(String recruitEndDate) {
         this.recruitEndDate = recruitEndDate;
     }
 
@@ -77,6 +78,14 @@ public class Recruit {
 
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public Company getCompany() {
@@ -116,11 +125,12 @@ public class Recruit {
         return "Recruit{" +
                 "recruitId=" + recruitId +
                 ", recruitName='" + recruitName + '\'' +
-                ", recruitBeginDate=" + recruitBeginDate +
-                ", recruitEndDate=" + recruitEndDate +
+                ", recruitBeginDate='" + recruitBeginDate + '\'' +
+                ", recruitEndDate='" + recruitEndDate + '\'' +
                 ", recruitWriteDate=" + recruitWriteDate +
                 ", recruitUpdateDate=" + recruitUpdateDate +
                 ", companyId=" + companyId +
+                ", companyName='" + companyName + '\'' +
                 ", company=" + company +
                 ", adminId=" + adminId +
                 ", admin=" + admin +

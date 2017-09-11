@@ -46,8 +46,6 @@ public class JobCategory2 {
         return "JobCategory2{" +
                 "jobCategory2Id=" + jobCategory2Id +
                 ", jobCategory2Name='" + jobCategory2Name + '\'' +
-                ", jobCategory1Id=" + jobCategory1Id +
-                ", jobCategory1=" + jobCategory1 +
                 '}';
     }
 }
