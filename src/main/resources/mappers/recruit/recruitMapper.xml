@@ -81,7 +81,28 @@
     </select>
 
     <!--채용 목록-->
-    <select id="selectListRecruits">
+    <select id="selectListRecruits" resultMap="recruitResultMap">
+
+        SELECT
+            REC.RECR_ID
+            , REC.COMP_ID
+            , REC.RECR_NM
+            , REC.RECR_BEG_DT
+            , REC.RECR_END_DT
+            , REC.RECR_WRT_DT
+            , REC.RECR_UDT_DT
+            , REC.ADMIN_ID
+            , CPY.COMP_NM
+            , ADM.ADMIN_NICK_NM
+        FROM
+            t_recruit AS REC
+            , t_company AS CPY
+            , t_admin AS ADM
+        WHERE
+            REC.COMP_ID = CPY.COMP_ID
+            AND REC.ADMIN_ID = ADM.ADMIN_ID
+        ORDER BY REC.RECR_WRT_DT DESC
+
 
     </select>
 
@@ -163,7 +184,7 @@
                     javaType="java.util.ArrayList"
                     column="RECR_ID"
                     ofType="RecruitJob"
-                    select="selectListRecruitJobs"
+
         />
 
     </resultMap>
@@ -179,14 +200,14 @@
         <result column="RECR_ID" property="recruitId"/>
         <result column="JOB_CATE2_ID" property="jobCategory2Id"/>
 
-        <association property="Recruit" resultMap="recruitResultMap"/>
-        <association property="JobCategory2" resultMap="jobCategory2ResultMap"/>
+        <association property="recruit" resultMap="recruitResultMap"/>
+        <association property="jobCategory2" resultMap="jobCategory2ResultMap"/>
 
         <collection property="coverLetterArticles"
                     javaType="java.util.ArrayList"
                     column="RECR_JOB_ID"
                     ofType="CoverLetterArticle"
-                    select="selectListCoverLetterArticles"
+
         />
 
     </resultMap>

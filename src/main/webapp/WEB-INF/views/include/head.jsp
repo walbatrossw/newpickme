@@ -27,6 +27,9 @@
 <link rel="stylesheet" href="/plugins/datatables/dataTables.bootstrap.css">
 <%-- 이미지 업로드 --%>
 <link href="/dist/css/imageUpload/jasny-bootstrap.min.css" rel="stylesheet" media="screen">
+<!-- fullCalendar 2.2.5-->
+<link rel="stylesheet" href="/plugins/fullcalendar2/fullcalendar.min.css">
+<link rel="stylesheet" href="/plugins/fullcalendar2/fullcalendar.print.css" media="print">
 
 <%-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries --%>
 <%-- WARNING: Respond.js doesn't work if you view the page via file:// --%>

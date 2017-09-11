@@ -1,6 +1,7 @@
 package com.cafe24.newpickme.recruit.controller;
 
 import com.cafe24.newpickme.company.domain.Company;
+import com.cafe24.newpickme.company.domain.IndustryCategory1;
 import com.cafe24.newpickme.company.service.CompanyService;
 import com.cafe24.newpickme.recruit.domain.*;
 import com.cafe24.newpickme.recruit.service.RecruitService;
@@ -110,7 +111,11 @@ public class RecruitController {
     * URL : /recruit/list
     * */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String getRecruits() {
+    public String getRecruits(Model model) {
+
+        List<Recruit> recruits = recruitService.getRecruits();
+        model.addAttribute("recruits", recruits);
+
         return "/recruit/list";
     }
 
@@ -157,8 +162,29 @@ public class RecruitController {
     * Method Name : recruitCalendar()
     * URL : /recruit/calendar
     * */
-    @RequestMapping(value = "/calendar", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/calendar", method = RequestMethod.GET)
     public String recruitCalendar() {
+        return "/recruit/calendar";
+    }*/
+
+
+    /*채용 달력 페이지
+    * Method : GET
+    * Method Name : recruitCalendar()
+    * URL : /recruit/calendar
+    * */
+    @RequestMapping(value = "/calendar", method = RequestMethod.GET)
+    public String getRecruitsForCalendar(Model model) {
+        // 채용리스트
+        List<Recruit> recruits = recruitService.getRecruits();
+        model.addAttribute("recruits", recruits);
+        // 직무 대분류 리스트
+        List<JobCategory1> jobCategory1s = recruitService.getJobCategory1List();
+        model.addAttribute("jobCategory1s", jobCategory1s);
+        // 업종 대분류 리스트
+        List<IndustryCategory1> industryCategory1s = companyService.getListIndustryCategory1();
+        model.addAttribute("industryCategory1s", industryCategory1s);
+
         return "/recruit/calendar";
     }
 }

@@ -52,7 +52,7 @@ public class RecruitServiceImpl implements RecruitService{
     /*채용 목록*/
     @Override
     public List<Recruit> getRecruits() {
-        return null;
+        return recruitDao.selectListRecruits();
     }
 
     /*채용 상세*/
