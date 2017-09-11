@@ -58,7 +58,7 @@ public class RecruitServiceImpl implements RecruitService{
     /*채용 상세*/
     @Override
     public Recruit getRecruit(int recruitId) {
-        return null;
+        return recruitDao.selectOneByRecruitId(recruitId);
     }
 
     /*채용 수정*/

@@ -34,7 +34,10 @@
             <!-- 페이지 내용 -->
             <div class="row">
                 <section class="col-lg-12">
-                    채용 상세 페이지....
+                        ${recruit.recruitName}<br/>
+                        ${recruit.company.companyName}<br/>
+                        ${recruit.recruitBeginDate}<br/>
+                        ${recruit.recruitEndDate}<br/>
                 </section>
             </div>
         </section>

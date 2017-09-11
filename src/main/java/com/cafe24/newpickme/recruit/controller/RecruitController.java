@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -94,9 +95,6 @@ public class RecruitController {
             }
         }
 
-
-
-
         // 채용 입력
         // 채용 기본키 --> 채용 직무의 채용 외래키에 세팅
         // 채용 직무 입력
@@ -125,8 +123,12 @@ public class RecruitController {
     * URL : /recruit/{recruitId}
     * */
     @RequestMapping(value = "/{recruitId}", method = RequestMethod.GET)
-    public String getRecruit(@PathVariable int recruitId) {
-        return "/recruit/info";
+    public ModelAndView getRecruit(@PathVariable int recruitId) {
+        ModelAndView mav = new ModelAndView();
+        Recruit recruit = recruitService.getRecruit(recruitId);
+        mav.addObject("recruit", recruit);
+        mav.setViewName("/recruit/info");
+        return mav;
     }
 
     /*채용 수정 처리
