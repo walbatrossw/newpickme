@@ -61,6 +61,18 @@ public class RecruitServiceImpl implements RecruitService{
         return recruitDao.selectOneByRecruitId(recruitId);
     }
 
+    /*채용 직무 목록*/
+    @Override
+    public List<RecruitJob> getRecruitJobsByRecruitId(int recruitId) {
+        return recruitDao.selectRecruitJobsByRecruitId(recruitId);
+    }
+
+    /*채용 직무별 자소서 목록*/
+    @Override
+    public List<CoverLetterArticle> getCoverLetterArticlesByRecruitJobId(int recruitJobId) {
+        return recruitDao.selectCoverLetterArticlesByRecruitJobId(recruitJobId);
+    }
+
     /*채용 수정*/
     @Override
     public void modify(int recruitId) {

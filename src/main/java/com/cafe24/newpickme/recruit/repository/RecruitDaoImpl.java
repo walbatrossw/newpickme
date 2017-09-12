@@ -55,10 +55,22 @@ public class RecruitDaoImpl implements RecruitDao{
         return sqlSession.selectList("recruit.selectListRecruits");
     }
 
-    /*채용 상세*/
+    /*채용 상세 페이지 : 채용*/
     @Override
     public Recruit selectOneByRecruitId(int recruitId) {
         return sqlSession.selectOne("recruit.selectOneByRecruitId", recruitId);
+    }
+
+    /*채용 상세 페이지 : 채용 직무 목록*/
+    @Override
+    public List<RecruitJob> selectRecruitJobsByRecruitId(int recruitId) {
+        return sqlSession.selectList("recruit.selectRecruitJobsByRecruitId", recruitId);
+    }
+
+    /*채용 상세 페이지 : 채용 직무별 자기소개서 항목 */
+    @Override
+    public List<CoverLetterArticle> selectCoverLetterArticlesByRecruitJobId(int recruitJobId) {
+        return sqlSession.selectList("recruit.selectCoverLetterArticlesByRecruitJobId", recruitJobId);
     }
 
     /*채용 수정*/

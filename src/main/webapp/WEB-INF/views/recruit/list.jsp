@@ -33,41 +33,44 @@
         <section class="content">
             <!-- 페이지 내용 -->
             <div class="row">
-                <section class="col-lg-12">
-                    채용 목록 테이블
-                    <table id="recruitTable" class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>기업명</th>
-                            <th>채용명</th>
-                            <th>채용시작일시</th>
-                            <th>채용마감일시</th>
-                            <th>등록일시</th>
-                            <th>수정일시</th>
-                            <th>작성자</th>
-                            <th>수정삭제</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="recruits" varStatus="i" items="${recruits}">
-                            <tr>
-                                <td>${i.index+1}</td>
-                                <td><a href="">${recruits.company.companyName}</a></td>
-                                <td>${recruits.recruitName}</td>
-                                <td><fmt:formatDate value="${recruits.recruitBeginDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
-                                <td><fmt:formatDate value="${recruits.recruitEndDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
-                                <td><fmt:formatDate value="${recruits.recruitWriteDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
-                                <td><fmt:formatDate value="${recruits.recruitUpdateDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
-                                <td>${recruits.admin.adminNickName}</td>
-                                <td>
-                                    <input type="button" class="btn btn-primary" value="수정">
-                                    <input type="button" class="btn btn-danger" value="삭제">
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+                <section class="col-xs-12">
+                    <div class="box">
+                        <div class="box-body">
+                            <table id="recruitTable" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>기업명</th>
+                                    <th>채용명</th>
+                                    <th>채용시작일시</th>
+                                    <th>채용마감일시</th>
+                                    <th>등록일시</th>
+                                    <th>수정일시</th>
+                                    <th>작성자</th>
+                                    <th>수정</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="recruits" varStatus="i" items="${recruits}">
+                                    <tr>
+                                        <td>${i.index+1}</td>
+                                        <td><a href="${path}/company/info/${recruits.company.companyId}">${recruits.company.companyName}</a></td>
+                                        <td><a href="${path}/recruit/${recruits.recruitId}">${recruits.recruitName}</td>
+                                        <td><fmt:formatDate value="${recruits.recruitBeginDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
+                                        <td><fmt:formatDate value="${recruits.recruitEndDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
+                                        <td><fmt:formatDate value="${recruits.recruitWriteDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
+                                        <td><fmt:formatDate value="${recruits.recruitUpdateDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
+                                        <td>${recruits.admin.adminNickName}</td>
+                                        <td>
+                                            <a href="${path}/recruit/${recruits.recruitId}/update" methods="GET" class="btn btn-primary btn-xs" role="button">수정</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </section>
             </div>
         </section>

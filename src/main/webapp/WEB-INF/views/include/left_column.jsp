@@ -9,7 +9,7 @@
                 <%--관리자--%>
                 <c:when test="${sessionScope.adminNickName != null}">
                     <div class="pull-left image">
-                        <img src="${path}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
                         <p>${sessionScope.adminNickName} 관리자 님</p>
@@ -20,7 +20,7 @@
                 <%--회원--%>
                 <c:when test="${sessionScope.userNickName != null}">
                     <div class="pull-left image">
-                        <img src="${path}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
                     </div>
                     <div class="pull-left info">
                         <p>${sessionScope.userNickName} 님</p>
@@ -109,7 +109,6 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="${path}/recruit/create"><i class="fa fa-pencil"></i> 채용 등록</a></li>
-                            <li><a href="${path}/recruit/create/article"><i class="fa fa-pencil"></i> 자소서 항목 등록</a></li>
                             <li><a href="${path}/recruit/list"><i class="fa fa-list"></i> 채용 목록</a></li>
                         </ul>
                     </li>

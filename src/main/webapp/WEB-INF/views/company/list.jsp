@@ -34,40 +34,38 @@
             <!-- 페이지 내용 -->
             <div class="row">
                 <section class="col-lg-12">
-                    기업 목록 테이블
-                    <table id="companiesTable" class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>기업명</th>
-                            <th>기업 분류</th>
-                            <th>업종 대분류</th>
-                            <th>업종 소분류</th>
-                            <th>등록일시</th>
-                            <th>수정일시</th>
-                            <th>작성자</th>
-                            <th>수정삭제</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="companies" varStatus="i" items="${companies}">
-                            <tr>
-                                <td>${i.index+1}</td>
-                                <td><a href="${path}/company/info/${companies.companyId}">${companies.companyName}</a></td>
-                                <td>${companies.companyType}</td>
-                                <td>${companies.industryCategory2.industryCategory1.industryCategory1Name}</td>
-                                <td>${companies.industryCategory2.industryCategory2Name}</td>
-                                <td><fmt:formatDate value="${companies.companyRegisterDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
-                                <td><fmt:formatDate value="${companies.companyUpdateDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
-                                <td>${companies.admin.adminNickName}</td>
-                                <td>
-                                    <input type="button" class="btn btn-primary" value="수정">
-                                    <input type="button" class="btn btn-danger" value="삭제">
-                                </td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+                    <div class="box">
+                        <div class="box-body">
+                            <table id="companiesTable" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>기업명</th>
+                                    <th>기업 분류</th>
+                                    <th>업종 대분류</th>
+                                    <th>업종 소분류</th>
+                                    <th>등록일시</th>
+                                    <th>수정일시</th>
+                                    <th>작성자</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="companies" varStatus="i" items="${companies}">
+                                    <tr>
+                                        <td>${i.index+1}</td>
+                                        <td><a href="${path}/company/info/${companies.companyId}">${companies.companyName}</a></td>
+                                        <td>${companies.companyType}</td>
+                                        <td>${companies.industryCategory2.industryCategory1.industryCategory1Name}</td>
+                                        <td>${companies.industryCategory2.industryCategory2Name}</td>
+                                        <td><fmt:formatDate value="${companies.companyRegisterDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
+                                        <td><fmt:formatDate value="${companies.companyUpdateDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
+                                        <td>${companies.admin.adminNickName}</td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </section>
             </div>
         </section>

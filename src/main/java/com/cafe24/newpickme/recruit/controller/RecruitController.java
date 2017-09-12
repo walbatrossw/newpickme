@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -123,12 +124,20 @@ public class RecruitController {
     * URL : /recruit/{recruitId}
     * */
     @RequestMapping(value = "/{recruitId}", method = RequestMethod.GET)
-    public ModelAndView getRecruit(@PathVariable int recruitId) {
-        ModelAndView mav = new ModelAndView();
+    public String getRecruitAll(@PathVariable int recruitId, Model model) {
+        // 채용
         Recruit recruit = recruitService.getRecruit(recruitId);
-        mav.addObject("recruit", recruit);
-        mav.setViewName("/recruit/info");
-        return mav;
+        // 채용 직무 리스트
+        List<RecruitJob> recruitJobs = recruitService.getRecruitJobsByRecruitId(recruitId);
+        // 기업 정보
+        Company companyInfo = companyService.getCompanyInfo(recruit.getCompanyId());
+        // 직무 대분류 리스트
+        List<JobCategory1> jobCategory1s = recruitService.getJobCategory1List();
+        model.addAttribute("recruit", recruit);
+        model.addAttribute("recruitJobs", recruitJobs);
+        model.addAttribute("companyInfo", companyInfo);
+        model.addAttribute("jobCategory1s", jobCategory1s);
+        return "/recruit/info";
     }
 
     /*채용 수정 처리
@@ -158,17 +167,6 @@ public class RecruitController {
                                 HttpSession session) {
         return "redirect:/recruit/list";
     }
-
-    /*채용 달력 페이지
-    * Method : GET
-    * Method Name : recruitCalendar()
-    * URL : /recruit/calendar
-    * */
-    /*@RequestMapping(value = "/calendar", method = RequestMethod.GET)
-    public String recruitCalendar() {
-        return "/recruit/calendar";
-    }*/
-
 
     /*채용 달력 페이지
     * Method : GET

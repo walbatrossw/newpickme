@@ -30,6 +30,12 @@ public interface RecruitDao {
     /*채용 상세*/
     Recruit selectOneByRecruitId(int recruitId);
 
+    /*채용 직무 리스트*/
+    List<RecruitJob> selectRecruitJobsByRecruitId(int recruitId);
+
+    /*채용 직무별 자소서 리스트*/
+    List<CoverLetterArticle> selectCoverLetterArticlesByRecruitJobId(int recruitJobId);
+
     /*채용 수정*/
     void update(int recruitId);
 

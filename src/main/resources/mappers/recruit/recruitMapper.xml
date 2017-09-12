@@ -101,40 +101,59 @@
         WHERE
             REC.COMP_ID = CPY.COMP_ID
             AND REC.ADMIN_ID = ADM.ADMIN_ID
-        ORDER BY REC.RECR_WRT_DT DESC
+        ORDER BY REC.RECR_WRT_DT ASC
 
 
     </select>
+
 
     <!--채용 상세-->
     <select id="selectOneByRecruitId" resultMap="recruitResultMap">
 
         SELECT
-            RECR_ID
-            , COMP_ID
-            , RECR_NM
-            , RECR_BEG_DT
-            , RECR_END_DT
-            , RECR_WRT_DT
-            , RECR_UDT_DT
-            , ADMIN_ID
-        FROM t_recruit
-        WHERE RECR_ID = #{recruitId}
+            REC.RECR_ID
+            , REC.COMP_ID
+            , REC.RECR_NM
+            , REC.RECR_BEG_DT
+            , REC.RECR_END_DT
+            , REC.RECR_WRT_DT
+            , REC.RECR_UDT_DT
+            , REC.ADMIN_ID
+            , CPY.COMP_NM
+            , ADM.ADMIN_NICK_NM
+        FROM
+            t_recruit AS REC
+            , t_company AS CPY
+            , t_admin AS ADM
+        WHERE
+            REC.COMP_ID = CPY.COMP_ID
+            AND REC.ADMIN_ID = ADM.ADMIN_ID
+            AND RECR_ID = #{recruitId}
 
     </select>
 
     <!--채용 직무 목록-->
-    <select id="selectListRecruitJobs" resultMap="recruitJobResultMap">
+    <select id="selectRecruitJobsByRecruitId" resultMap="recruitJobResultMap">
 
         SELECT
-            RECR_JOB_ID
-            , RECR_ID
-            , JOB_CATE2_ID
-            , RECR_JOB_TYPE
-            , RECR_JOB_EDU
-            , RECR_JOB_DETAIL
-        FROM t_recruit_job
-        WHERE RECR_ID = #{recruitId}
+            RECJ.RECR_JOB_ID
+            , RECJ.RECR_ID
+            , RECJ.JOB_CATE2_ID
+            , RECJ.RECR_JOB_TYPE
+            , RECJ.RECR_JOB_EDU
+            , RECJ.RECR_JOB_DETAIL
+            , JCT1.JOB_CATE1_NM
+            , JCT1.JOB_CATE1_ID
+            , JCT2.JOB_CATE2_NM
+        FROM
+            t_recruit_job AS RECJ
+            , t_job_category1 AS JCT1
+            , t_job_category2 AS JCT2
+
+        WHERE
+            RECJ.JOB_CATE2_ID = JCT2.JOB_CATE2_ID
+            AND JCT2.JOB_CATE1_ID = JCT1.JOB_CATE1_ID
+            AND RECJ.RECR_ID = #{recruitId}
 
     </select>
 
@@ -207,7 +226,7 @@
                     javaType="java.util.ArrayList"
                     column="RECR_JOB_ID"
                     ofType="CoverLetterArticle"
-
+                    select="selectListCoverLetterArticles"
         />
 
     </resultMap>
@@ -285,16 +304,22 @@
 
     <!--업종 대분류 resultMap-->
     <resultMap id="industryCategory1ResultMap" type="IndustryCategory1">
+
         <id column="INDU_CATE1_ID" property="industryCategory1Id"/>
+
         <result column="INDU_CATE1_NM" property="industryCategory1Name"/>
     </resultMap>
 
     <!--업종 소분류 resultMap-->
     <resultMap id="industryCategory2ResultMap" type="IndustryCategory2">
+
         <id column="INDU_CATE2_ID" property="industryCategory2Id"/>
+
         <result column="INDU_CATE1_ID" property="industryCategory1Id"/>
         <result column="INDU_CATE2_NM" property="industryCategory2Name"/>
+
         <association property="industryCategory1" resultMap="industryCategory1ResultMap"/>
+
     </resultMap>
 
 </mapper>

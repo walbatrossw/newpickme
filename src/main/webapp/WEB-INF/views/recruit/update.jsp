@@ -20,7 +20,7 @@
         <!--본문 페이지 헤더-->
         <section class="content-header">
             <h1>
-                채용 등록
+                채용 수정 페이지
                 <small>페이지 소제목</small>
             </h1>
             <ol class="breadcrumb">
@@ -73,6 +73,7 @@
                                                 <label for="companyName">기업명</label>
                                                 <input type="text" class="form-control" id="companyName"
                                                        name="companyName"
+                                                       value="${recruit.company.companyName}"
                                                        placeholder="예) 삼성전자">
                                             </div>
                                         </div>
@@ -81,6 +82,7 @@
                                                 <label for="recruitName">채용공고명</label>
                                                 <input type="text" class="form-control" id="recruitName"
                                                        name="recruitName"
+                                                       value="${recruit.recruitName}"
                                                        placeholder="예) 2017 상반기 대졸 신입사원 공채">
                                             </div>
                                         </div>
@@ -89,6 +91,7 @@
                                                 <label for="recruitBeginDate">채용시작일</label>
                                                 <input type="datetime-local" class="form-control"
                                                        id="recruitBeginDate"
+                                                       value="<fmt:formatDate value="${recruit.recruitBeginDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>"
                                                        name="recruitBeginDate">
                                             </div>
                                         </div>
@@ -97,6 +100,7 @@
                                                 <label for="recruitEndDate">채용마감일</label>
                                                 <input type="datetime-local" class="form-control"
                                                        id="recruitEndDate"
+                                                       value="<fmt:formatDate value="${recruit.recruitEndDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>"
                                                        name="recruitEndDate">
                                             </div>
                                         </div>
@@ -197,13 +201,9 @@
                                         <hr>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
                 </div>
             </form>
         </section>

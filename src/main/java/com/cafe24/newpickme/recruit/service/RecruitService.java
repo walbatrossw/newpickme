@@ -30,6 +30,12 @@ public interface RecruitService {
     /*채용 상세*/
     Recruit getRecruit(int recruitId);
 
+    /*채용 직무 리스트*/
+    List<RecruitJob> getRecruitJobsByRecruitId(int recruitId);
+
+    /*채용 직무별 자소서 리스트*/
+    List<CoverLetterArticle> getCoverLetterArticlesByRecruitJobId(int recruitJobId);
+
     /*채용 수정*/
     void modify(int recruitId);
 
