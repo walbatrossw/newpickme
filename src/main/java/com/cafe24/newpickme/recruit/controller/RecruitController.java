@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -83,7 +81,7 @@ public class RecruitController {
             recruit.getRecruitJobs().get(i).setRecruitId(recruitId);
             RecruitJob recruitJob = recruit.getRecruitJobs().get(i);
             recruitService.create(recruitJob);
-
+            // 채용 직무 ID
             int recruitJobId = recruit.getRecruitJobs().get(i).getRecruitJobId();
             // 채용 직무별 자기소개서 항목의 갯수
             int articleSize = recruit.getRecruitJobs().get(i).getCoverLetterArticles().size();
@@ -138,6 +136,29 @@ public class RecruitController {
         model.addAttribute("companyInfo", companyInfo);
         model.addAttribute("jobCategory1s", jobCategory1s);
         return "/recruit/info";
+    }
+
+    /*채용 수정 페이지
+    * Method : GET
+    * Method Name : updateRecruit()
+    * URL : /recruit/{recruitId}/update
+    * */
+    @RequestMapping(value = "/{recruitId}/update", method = RequestMethod.GET)
+    public String updateRecruit(@PathVariable int recruitId, Model model,
+                                HttpSession session) {
+        // 채용
+        Recruit recruit = recruitService.getRecruit(recruitId);
+        // 채용 직무 리스트
+        List<RecruitJob> recruitJobs = recruitService.getRecruitJobsByRecruitId(recruitId);
+        // 기업 정보
+        Company companyInfo = companyService.getCompanyInfo(recruit.getCompanyId());
+        // 직무 대분류 리스트
+        List<JobCategory1> jobCategory1s = recruitService.getJobCategory1List();
+        model.addAttribute("recruit", recruit);
+        model.addAttribute("recruitJobs", recruitJobs);
+        model.addAttribute("companyInfo", companyInfo);
+        model.addAttribute("jobCategory1s", jobCategory1s);
+        return "/recruit/update";
     }
 
     /*채용 수정 처리
