@@ -37,10 +37,16 @@ public interface RecruitDao {
     List<CoverLetterArticle> selectCoverLetterArticlesByRecruitJobId(int recruitJobId);
 
     /*채용 수정*/
-    void update(int recruitId);
+    void updateRecruit(Recruit recruit);
 
     /*채용 삭제*/
     void deleteRecruit(int recruitId);
+
+    /*채용직무 수정*/
+    void updateRecruitJob(RecruitJob recruitJob);
+
+    /*채용직무별 자기소개서 항목 삭제*/
+    void deleteCoverLetterArticles(int recruitJobId);
 
     /*채용 직무 삭제*/
     void deleteRecruitJob(int recruitJobId);

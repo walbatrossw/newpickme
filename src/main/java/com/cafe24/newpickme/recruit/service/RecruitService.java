@@ -37,11 +37,17 @@ public interface RecruitService {
     List<CoverLetterArticle> getCoverLetterArticlesByRecruitJobId(int recruitJobId);
 
     /*채용 수정*/
-    void modify(int recruitId);
+    void modifyRecruit(Recruit recruit);
 
     /*채용 삭제*/
     void removeRecruit(int recruitId);
 
-    /*채용 직무 삭제*/
+    /*채용직무 수정*/
+    void modifyRecruitJob(RecruitJob recruitJob);
+
+    /*채용직무별 자기소개서 삭제*/
+    void removeCoverLetterArticles(int recruitJobId);
+
+    /*채용직무 삭제*/
     void removeRecruitJob(int recruitJobId);
 }

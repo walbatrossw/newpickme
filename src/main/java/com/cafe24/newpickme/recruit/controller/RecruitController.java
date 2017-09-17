@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -165,6 +166,8 @@ public class RecruitController {
         return mav;
     }
 
+    // 채용 수정
+
     // 채용직무 추가
     @RequestMapping(value = "/{recruitId}/job/add", method = RequestMethod.POST)
     public String addRecruitJob(@PathVariable int recruitId, RecruitJob recruitJob) {
@@ -180,12 +183,42 @@ public class RecruitController {
         return "redirect:/recruit/"+recruitId+"/update";
     }
 
+    // 채용직무 수정
+    @RequestMapping(value = "/{recruitId}/jobs/update", method = RequestMethod.POST)
+    public String updateRecruitJob(@PathVariable int recruitId, Recruit recruit) {
+        int recruitJobSize = recruit.getRecruitJobs().size();
+        for (int i = 0; i < recruitJobSize; i++) {
+            RecruitJob recruitJob = recruit.getRecruitJobs().get(i);
+            recruitService.modifyRecruitJob(recruitJob);
+        }
+
+        return "redirect:/recruit/"+recruitId+"/update";
+    }
+
     // 채용직무 삭제
     @RequestMapping(value = "/{recruitId}/job/{recruitJobId}/delete", method = RequestMethod.GET)
     public String deleteRecruitJob(@PathVariable int recruitId, @PathVariable int recruitJobId) {
         System.out.println(recruitJobId);
         recruitService.removeRecruitJob(recruitJobId);
         return "redirect:/recruit/"+recruitId+"/update";
+    }
+
+    // 채용직무별 자소서 항목 수정
+    @RequestMapping(value = "/{recruitId}/job/{recruitJobId}/articles/update", method = RequestMethod.POST)
+    public String articlesUpdate(@PathVariable int recruitId, @PathVariable int recruitJobId, RecruitJob recruitJob) {
+
+        // 기존의 자소서 항목 삭제
+        recruitService.removeCoverLetterArticles(recruitJobId);
+
+        // 수정된 자소서 항목 새로 입력
+        int coverLetterArticleSize = recruitJob.getCoverLetterArticles().size();
+        for (int i = 0; i < coverLetterArticleSize; i++) {
+            recruitJob.getCoverLetterArticles().get(i).setRecruitJobId(recruitJobId);
+            CoverLetterArticle coverLetterArticle = recruitJob.getCoverLetterArticles().get(i);
+            recruitService.create(coverLetterArticle);
+        }
+
+        return "redirect:/recruit/" + recruitId + "/update";
     }
 
     /*채용 수정 처리

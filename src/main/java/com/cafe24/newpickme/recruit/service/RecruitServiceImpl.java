@@ -75,14 +75,26 @@ public class RecruitServiceImpl implements RecruitService{
 
     /*채용 수정*/
     @Override
-    public void modify(int recruitId) {
-
+    public void modifyRecruit(Recruit recruit) {
+        recruitDao.updateRecruit(recruit);
     }
 
     /*채용 삭제*/
     @Override
     public void removeRecruit(int recruitId) {
+        recruitDao.deleteRecruit(recruitId);
+    }
 
+    /*채용직무 수정*/
+    @Override
+    public void modifyRecruitJob(RecruitJob recruitJob) {
+        recruitDao.updateRecruitJob(recruitJob);
+    }
+
+    /*채용직무별 자기소개서 삭제*/
+    @Override
+    public void removeCoverLetterArticles(int recruitJobId) {
+        recruitDao.deleteCoverLetterArticles(recruitJobId);
     }
 
     /*채용 직무 삭제*/
