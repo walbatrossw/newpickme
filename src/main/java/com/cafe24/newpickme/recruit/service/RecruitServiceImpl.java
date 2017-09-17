@@ -81,8 +81,15 @@ public class RecruitServiceImpl implements RecruitService{
 
     /*채용 삭제*/
     @Override
-    public void remove(int recruitId) {
+    public void removeRecruit(int recruitId) {
 
     }
+
+    /*채용 직무 삭제*/
+    @Override
+    public void removeRecruitJob(int recruitJobId) {
+        recruitDao.deleteRecruitJob(recruitJobId);
+    }
+
 
 }

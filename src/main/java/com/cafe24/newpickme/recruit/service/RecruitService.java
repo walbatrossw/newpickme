@@ -40,5 +40,8 @@ public interface RecruitService {
     void modify(int recruitId);
 
     /*채용 삭제*/
-    void remove(int recruitId);
+    void removeRecruit(int recruitId);
+
+    /*채용 직무 삭제*/
+    void removeRecruitJob(int recruitJobId);
 }

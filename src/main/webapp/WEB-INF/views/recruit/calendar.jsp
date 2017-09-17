@@ -122,25 +122,25 @@
                         <div class="box-body">
                             <div class="checkbox">
                                 <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
+                                    <input type="checkbox" class="minimal" id="companyType" value="">
                                     신입
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
+                                    <input type="checkbox" class="minimal" id="companyType" value="">
                                     경력
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
+                                    <input type="checkbox" class="minimal" id="companyType" value="">
                                     인턴
                                 </label>
                             </div>
                             <div class="checkbox">
                                 <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
+                                    <input type="checkbox" class="minimal" id="companyType" value="">
                                     계약직
                                 </label>
                             </div>
@@ -213,19 +213,25 @@
 <%@ include file="../include/js.jsp" %>
 <script>
 
-    var data = [
-        <c:forEach var="recruits" varStatus="i" items="${recruits}" >
-        {
-            "id": + "${recruits.recruitId}"
-            , "title": "${recruits.company.companyName} " + " ${recruits.recruitName}"
-            , "start": "<fmt:formatDate value="${recruits.recruitBeginDate}" pattern="yyyy-MM-dd"/>"
-            , "end": "<fmt:formatDate value="${recruits.recruitEndDate}" pattern="yyyy-MM-dd"/>"
-            , url: "/recruit/${recruits.recruitId}"
-        }<c:if test="${!i.last}">,</c:if>
-        </c:forEach>
-    ];
+
 
     $(function () {
+
+        $("input[type='checkbox']").iCheck({
+            checkboxClass: 'icheckbox_square-blue'
+        });
+
+        var data = [
+            <c:forEach var="recruits" varStatus="i" items="${recruits}" >
+            {
+                "id": + "${recruits.recruitId}"
+                , "title": "${recruits.company.companyName} " + " ${recruits.recruitName}"
+                , "start": "<fmt:formatDate value="${recruits.recruitBeginDate}" pattern="yyyy-MM-dd"/>"
+                , "end": "<fmt:formatDate value="${recruits.recruitEndDate}" pattern="yyyy-MM-dd"/>"
+                , url: "/recruit/${recruits.recruitId}"
+            }<c:if test="${!i.last}">,</c:if>
+            </c:forEach>
+        ];
 
         $("#calendar").fullCalendar({
             locale: "ko",

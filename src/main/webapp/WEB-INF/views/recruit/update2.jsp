@@ -94,64 +94,66 @@
                                         <div class="recruitJob">
                                             <div class="row">
                                                 <div class="col-sm-12">
-                                                    <div class="form-group">
-                                                        <label for="recruitJobType">채용형태</label>
-                                                        <select class="form-control" id="recruitJobType"
-                                                                name="recruitJobType">
-                                                            <option value="">:::선택:::</option>
-                                                            <option value="인턴">인턴</option>
-                                                            <option value="계약직">계약직</option>
-                                                            <option value="신입">신입</option>
-                                                            <option value="경력">경력</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recruitJobEdu">채용학력</label>
-                                                        <select class="form-control" id="recruitJobEdu"
-                                                                name="recruitJobEdu">
-                                                            <option value="">:::선택:::</option>
-                                                            <option value="학력무관">학력무관</option>
-                                                            <option value="전문대졸">전문대졸</option>
-                                                            <option value="대졸">대졸</option>
-                                                            <option value="석사">석사</option>
-                                                            <option value="박사">박사</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="jobCategory1Id">직무 대분류</label>
-                                                        <select class="form-control" id="jobCategory1Id">
-                                                            <option value="">:::직무대분류:::</option>
-                                                            <c:forEach var="i" items="${jobCategory1s}">
-                                                                <option value="${i.jobCategory1Id}">${i.jobCategory1Name}</option>
-                                                            </c:forEach>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recruitJobCategory2">직무 소분류</label>
-                                                        <select class="form-control" id="recruitJobCategory2"
-                                                                name="jobCategory2Id">
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="recruitJobDetail">상세 직무</label>
-                                                        <input type="text" class="form-control" id="recruitJobDetail"
-                                                               name="recruitJobDetail" placeholder="예) 자바개발자">
-                                                    </div>
-                                                    <div class="form-group articles">
-                                                        <label for="coverLetterArticleTitle">직무별 자기소개서 항목</label>
-                                                        <button type="button" class="btn btn-default btn-xs articleAddBtn">
-                                                            <i class="fa fa-plus"></i> 항목 추가
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-xs articleDelBtn">
-                                                            <i class="fa fa-minus"></i> 항목 삭제
-                                                        </button>
-                                                        <div class="form-group article">
-                                                            <input type="text" class="form-control"
-                                                                   id="coverLetterArticleTitle"
-                                                                   name="coverLetterArticleTitle"
-                                                                   placeholder="예) 자신의 지원동기 및 입사후 포부를 기술해주세요">
+                                                    <form id="recruitJobAddForm" action="${path}/recruit/${recruit.recruitId}/job/add" method="post">
+                                                        <div class="form-group">
+                                                            <label for="recruitJobType">채용형태</label>
+                                                            <select class="form-control" id="recruitJobType"
+                                                                    name="recruitJobType">
+                                                                <option value="">:::선택:::</option>
+                                                                <option value="인턴">인턴</option>
+                                                                <option value="계약직">계약직</option>
+                                                                <option value="신입">신입</option>
+                                                                <option value="경력">경력</option>
+                                                            </select>
                                                         </div>
-                                                    </div>
+                                                        <div class="form-group">
+                                                            <label for="recruitJobEdu">채용학력</label>
+                                                            <select class="form-control" id="recruitJobEdu"
+                                                                    name="recruitJobEdu">
+                                                                <option value="">:::선택:::</option>
+                                                                <option value="학력무관">학력무관</option>
+                                                                <option value="전문대졸">전문대졸</option>
+                                                                <option value="대졸">대졸</option>
+                                                                <option value="석사">석사</option>
+                                                                <option value="박사">박사</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="jobCategory1Id">직무 대분류</label>
+                                                            <select class="form-control" id="jobCategory1Id">
+                                                                <option value="">:::직무대분류:::</option>
+                                                                <c:forEach var="i" items="${jobCategory1s}">
+                                                                    <option value="${i.jobCategory1Id}">${i.jobCategory1Name}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="recruitJobCategory2">직무 소분류</label>
+                                                            <select class="form-control" id="recruitJobCategory2"
+                                                                    name="jobCategory2Id">
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="recruitJobDetail">상세 직무</label>
+                                                            <input type="text" class="form-control" id="recruitJobDetail"
+                                                                   name="recruitJobDetail" placeholder="예) 자바개발자">
+                                                        </div>
+                                                        <div class="form-group articles">
+                                                            <label for="coverLetterArticleTitle">직무별 자기소개서 항목</label>
+                                                            <button type="button" class="btn btn-default btn-xs articleAddBtn">
+                                                                <i class="fa fa-plus"></i> 항목 추가
+                                                            </button>
+                                                            <button type="button" class="btn btn-default btn-xs articleDelBtn">
+                                                                <i class="fa fa-minus"></i> 항목 삭제
+                                                            </button>
+                                                            <div class="form-group article">
+                                                                <input type="text" class="form-control"
+                                                                       id="coverLetterArticleTitle"
+                                                                       name="coverLetterArticleTitle"
+                                                                       placeholder="예) 자신의 지원동기 및 입사후 포부를 기술해주세요">
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -227,10 +229,10 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-danger"><i class="fa fa-edit"></i> 수정</button>
+                                                <a href="#" class="btn btn-primary"><i class="fa fa-edit"></i> 수정</a>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-danger"><i class="fa fa-remove"></i> 삭제</button>
+                                                <a href="${path}/recruit/${recruitJobs.recruitId}/job/${recruitJobs.recruitJobId}/delete" class="btn btn-primary"><i class="fa fa-remove"></i> 삭제</a>
                                             </td>
                                             <td>
                                                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#articleUpdateModal${i.index}"> 자소서항목 수정</a>
@@ -315,7 +317,17 @@
 <script>
     $(function () {
 
-
+        // 채용 직무 추가
+        $("#recruitJobAddBtn").on("click", function () {
+            rename();
+            $("#recruitJobAddForm").submit();
+        });
+        function rename() {
+            $(".article").each(function (index) {
+                console.log(index);
+                $(this).find("input[name=coverLetterArticleTitle]").attr("name", "coverLetterArticles["+index+"].coverLetterArticleTitle");
+            });
+        }
 
         // 채용 직무 수정을 위해 채용 직무 값을 화면에 세팅
         <c:forEach varStatus="i" items="${recruitJobs}">

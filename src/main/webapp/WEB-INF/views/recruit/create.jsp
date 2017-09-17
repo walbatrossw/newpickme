@@ -223,6 +223,8 @@
 <script>
     $(function () {
 
+        //$("#companyName").select2();
+
         // 기업명 자동완성
         var companyNameList = new Array();
         <c:forEach var="i" items="${companies}">

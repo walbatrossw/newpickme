@@ -175,8 +175,17 @@
     </update>
 
     <!--채용 삭제-->
-    <delete id="delete">
+    <delete id="deleteRecruit">
 
+    </delete>
+
+    <!--채용 삭제-->
+    <delete id="deleteRecruitJob" parameterType="int">
+        DELETE RECJ, CVLT
+        FROM t_recruit_job AS RECJ
+            LEFT JOIN t_recruit_job_coverletter_article AS CVLT
+                ON RECJ.RECR_JOB_ID = CVLT.RECR_JOB_ID
+        WHERE RECJ.RECR_JOB_ID = #{recruitJobId}
     </delete>
 
 

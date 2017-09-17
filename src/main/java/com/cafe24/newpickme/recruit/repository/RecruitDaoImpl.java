@@ -81,8 +81,14 @@ public class RecruitDaoImpl implements RecruitDao{
 
     /*채용 삭제*/
     @Override
-    public void delete(int recruitId) {
-        sqlSession.delete("recruit.delete", recruitId);
+    public void deleteRecruit(int recruitId) {
+
+    }
+
+    /*채용 직무 삭제*/
+    @Override
+    public void deleteRecruitJob(int recruitJobId) {
+        sqlSession.delete("recruit.deleteRecruitJob", recruitJobId);
     }
 
 }

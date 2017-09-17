@@ -40,5 +40,8 @@ public interface RecruitDao {
     void update(int recruitId);
 
     /*채용 삭제*/
-    void delete(int recruitId);
+    void deleteRecruit(int recruitId);
+
+    /*채용 직무 삭제*/
+    void deleteRecruitJob(int recruitJobId);
 }
