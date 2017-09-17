@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -162,7 +159,7 @@ public class RecruitController {
         mav.addObject("recruitJobs", recruitJobs);
         mav.addObject("companyInfo", companyInfo);
         mav.addObject("jobCategory1s", jobCategory1s);
-        mav.setViewName("/recruit/update2");
+        mav.setViewName("/recruit/update");
         return mav;
     }
 
@@ -233,8 +230,7 @@ public class RecruitController {
         recruit.setAdminId(adminId);
         recruit.setRecruitId(recruitId);
         recruitService.modifyRecruit(recruit);
-
-        return "redirect:/recruit/list";
+        return "redirect:/recruit/" + recruitId + "/update";
     }
 
     /*채용 삭제 처리
@@ -243,11 +239,14 @@ public class RecruitController {
     * URL : /recruit/{recruitId}/delete
     * */
     @RequestMapping(value = "/{recruitId}/delete", method = RequestMethod.GET)
-    public String deleteRecruit(@PathVariable int recruitId,
-                                @ModelAttribute Recruit recruit,
-                                @ModelAttribute RecruitJob recruitJob,
-                                @ModelAttribute CoverLetterArticle coverletterArticle,
-                                HttpSession session) {
+    public String deleteRecruit(@PathVariable int recruitId, HttpSession session) {
+        List<RecruitJob> recruitJobs = recruitService.getRecruitJobsByRecruitId(recruitId);
+        for (RecruitJob recruitJob : recruitJobs) {
+            int recruitJobId = recruitJob.getRecruitJobId();
+            recruitService.removeRecruitJob(recruitJobId);
+        }
+        recruitService.removeRecruit(recruitId);
+
         return "redirect:/recruit/list";
     }
 

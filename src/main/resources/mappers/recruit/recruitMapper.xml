@@ -183,7 +183,9 @@
 
     <!--채용 삭제-->
     <delete id="deleteRecruit">
-
+        DELETE FROM
+            t_recruit
+        WHERE RECR_ID = #{recruitId}
     </delete>
 
     <!--채용직무 수정-->
