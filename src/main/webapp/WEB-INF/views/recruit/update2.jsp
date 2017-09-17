@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <form role="form" id="recruitUpdateForm" method="post" action="">
+                            <form role="form" id="recruitUpdateForm" method="post" action="${path}/recruit/${recruit.recruitId}/update">
                                 <div class="form-group">
                                     <label for="companyName">채용기업명</label>
                                     <input type="text" class="form-control" id="companyName"
@@ -68,15 +68,15 @@
                                             class="fa fa-calendar-times-o margin-r-5"></i> 채용 마감일시</strong></label>
                                     <input type="datetime-local" class="form-control"
                                            id="recruitEndDate"
-                                           value="<fmt:formatDate value="${recruit.recruitBeginDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>"
-                                           name="recruitBeginDate">
+                                           value="<fmt:formatDate value="${recruit.recruitEndDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>"
+                                           name="recruitEndDate">
                                 </div>
                             </form>
                         </div>
                         <div class="box-footer">
                             <div class="btn-group btn-group-justified">
-                                <a href="#" class="btn btn-primary">채용 수정</a>
-                                <a href="#" class="btn btn-primary">채용 삭제</a>
+                                <a href="#" class="btn btn-primary recruitUpdateBtn">채용 수정</a>
+                                <a href="#" class="btn btn-primary recruitDeleteBtn">채용 삭제</a>
                             </div>
                         </div>
                     </div>
@@ -316,6 +316,19 @@
 <script>
     $(function () {
 
+        // 채용 수정
+        $(".recruitUpdateBtn").on("click", function () {
+            if (confirm("채용을 수정하시겠습니까?")) {
+                $("#recruitUpdateForm").submit();
+            }
+        });
+
+        // 채용 삭제
+        $(".recruitDeleteBtn").on("click", function () {
+            if (confirm("채용을 삭제하시겠습니까?")) {
+                location.href = "/recruit/${recruit.recruitId}/delete";
+            }
+        });
 
         // 채용직무 수정
         $(".recruitJobUpdateBtn").on("click", function () {
@@ -328,6 +341,7 @@
             $("#recruitJobAddForm").submit();
         });
 
+        // 채용직무 추가를 위한 채용직무별 자기소개서 항목 name 속성 변경
         function rename() {
             $(".article").each(function (index) {
                 console.log(index);

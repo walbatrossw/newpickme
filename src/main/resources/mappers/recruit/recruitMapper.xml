@@ -171,7 +171,14 @@
 
     <!--채용 수정-->
     <update id="updateRecruit">
-
+        UPDATE t_recruit
+        SET
+            RECR_NM = #{recruitName}
+            , RECR_BEG_DT = #{recruitBeginDate}
+            , RECR_END_DT = #{recruitEndDate}
+            , RECR_UDT_DT = NOW()
+            , ADMIN_ID = #{adminId}
+        WHERE RECR_ID = #{recruitId}
     </update>
 
     <!--채용 삭제-->

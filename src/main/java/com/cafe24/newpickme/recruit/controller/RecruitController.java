@@ -205,11 +205,10 @@ public class RecruitController {
 
     // 채용직무별 자소서 항목 수정
     @RequestMapping(value = "/{recruitId}/job/{recruitJobId}/articles/update", method = RequestMethod.POST)
-    public String articlesUpdate(@PathVariable int recruitId, @PathVariable int recruitJobId, RecruitJob recruitJob) {
+    public String updateArticles(@PathVariable int recruitId, @PathVariable int recruitJobId, RecruitJob recruitJob) {
 
         // 기존의 자소서 항목 삭제
         recruitService.removeCoverLetterArticles(recruitJobId);
-
         // 수정된 자소서 항목 새로 입력
         int coverLetterArticleSize = recruitJob.getCoverLetterArticles().size();
         for (int i = 0; i < coverLetterArticleSize; i++) {
@@ -227,11 +226,14 @@ public class RecruitController {
     * URL : /recruit/{recruitId}/update
     * */
     @RequestMapping(value = "/{recruitId}/update", method = RequestMethod.POST)
-    public String updateRecruit(@PathVariable int recruitId,
-                                @ModelAttribute Recruit recruit,
-                                @ModelAttribute RecruitJob recruitJob,
-                                @ModelAttribute CoverLetterArticle coverletterArticle,
-                                HttpSession session) {
+    public String updateRecruit(@PathVariable int recruitId, @ModelAttribute Recruit recruit, HttpSession session) {
+
+        // 수정한 관리자 아이디
+        int adminId = (Integer) session.getAttribute("adminId");
+        recruit.setAdminId(adminId);
+        recruit.setRecruitId(recruitId);
+        recruitService.modifyRecruit(recruit);
+
         return "redirect:/recruit/list";
     }
 
