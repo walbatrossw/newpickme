@@ -1,17 +1,27 @@
 package com.cafe24.newpickme.resume.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Activity {
 
     private int activityId;
+
     private String activityName;
+
     private String activityHost;
+
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date activityBeginDate;
+
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date activityEndDate;
+
     private String activityContent;
 
     private int resumeId;
+
     private Resume resume;
 
     public int getActivityId() {

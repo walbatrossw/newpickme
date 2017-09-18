@@ -15,6 +15,14 @@
         <typeAlias type="com.cafe24.newpickme.recruit.domain.CoverLetterArticle" alias="CoverLetterArticle"/>
         <typeAlias type="com.cafe24.newpickme.recruit.domain.JobCategory1" alias="JobCategory1"/>
         <typeAlias type="com.cafe24.newpickme.recruit.domain.JobCategory2" alias="JobCategory2"/>
+        <typeAlias type="com.cafe24.newpickme.resume.domain.Resume" alias="Resume"/>
+        <typeAlias type="com.cafe24.newpickme.resume.domain.Personal" alias="Personal"/>
+        <typeAlias type="com.cafe24.newpickme.resume.domain.HighSchool" alias="HighSchool"/>
+        <typeAlias type="com.cafe24.newpickme.resume.domain.University" alias="University"/>
+        <typeAlias type="com.cafe24.newpickme.resume.domain.Language" alias="Language"/>
+        <typeAlias type="com.cafe24.newpickme.resume.domain.Certificate" alias="Certificate"/>
+        <typeAlias type="com.cafe24.newpickme.resume.domain.Career" alias="Career"/>
+        <typeAlias type="com.cafe24.newpickme.resume.domain.Etc" alias="Etc"/>
         <package name="com.cafe24.newpickme"/>
     </typeAliases>
 

@@ -55,13 +55,13 @@ public class ResumeController {
 
 
     /*
-    * 이력서 화면 처리
+    * 이력서 보기
     *
     *
     *
     * */
     @RequestMapping(value = "/{userId}/view", method = RequestMethod.GET)
-    public String update(@PathVariable int userId, Model model) {
+    public String view(@PathVariable int userId, Model model) {
         return "/resume/view";
     }
 

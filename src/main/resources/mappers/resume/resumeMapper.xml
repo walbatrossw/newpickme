@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="resume">
+
+    <!--이력서 작성-->
+    <insert id="insertResume">
+
+    </insert>
+
+    <!--이력서 보기-->
+    <select id="selectResumeByUserId">
+
+    </select>
+
+    <!--이력서 수정-->
+    <update id="updateResume">
+
+    </update>
+
+    <!--이력서 삭제-->
+    <delete id="deleteResume">
+
+    </delete>
+
+    <!-- ============= 이력서 관련 ResultMap ============-->
+
+    <resultMap id="resumeResultMap" type="Resume">
+
+    </resultMap>
+
+    <resultMap id="personalResultMap" type="Personal">
+
+    </resultMap>
+
+    <resultMap id="highSchoolResultMap" type="HighSchool">
+
+    </resultMap>
+
+    <resultMap id="universityResultMap" type="University">
+
+    </resultMap>
+
+    <resultMap id="languageResultMap" type="Language">
+
+    </resultMap>
+
+    <resultMap id="certificateResultMap" type="Certificate">
+
+    </resultMap>
+
+    <resultMap id="careerResultMap" type="Career">
+
+    </resultMap>
+
+    <resultMap id="activityResultMap" type="Activity">
+
+    </resultMap>
+
+    <resultMap id="etcResultMap" type="Etc">
+
+    </resultMap>
+
+    <resultMap id="userResultMap" type="User">
+
+    </resultMap>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
