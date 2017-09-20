@@ -19,19 +19,19 @@
 <%-- 테마 스타일 --%>
 <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
 <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
-<%-- iCheck --%>
+<%-- 체크박스 --%>
 <link rel="stylesheet" href="/plugins/iCheck/flat/blue.css">
 <%-- iCheck for checkboxes and radio inputs --%>
 <link rel="stylesheet" href="/plugins/iCheck/all.css">
 <%-- 데이터 테이블 --%>
 <link rel="stylesheet" href="/plugins/datatables/dataTables.bootstrap.css">
-<%-- 이미지 업로드 --%>
-<link href="/dist/css/imageUpload/jasny-bootstrap.min.css" rel="stylesheet" media="screen">
-<!-- fullCalendar 2.2.5-->
+<%--fullCalendar 2.2.5--%>
 <link rel="stylesheet" href="/plugins/fullcalendar2/fullcalendar.min.css">
 <link rel="stylesheet" href="/plugins/fullcalendar2/fullcalendar.print.css" media="print">
-<!-- Select2 -->
+<%--Select2--%>
 <link rel="stylesheet" href="/plugins/select2/select2.min.css">
+<%--Image Upload--%>
+<link rel="stylesheet" href="/plugins/image-upload/jasny-bootstrap.min.css" media="screen">
 <%-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries --%>
 <%-- WARNING: Respond.js doesn't work if you view the page via file:// --%>
 <%--[if lt IE 9]>

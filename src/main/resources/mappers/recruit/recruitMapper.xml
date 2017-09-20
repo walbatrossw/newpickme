@@ -245,7 +245,6 @@
                     javaType="java.util.ArrayList"
                     column="RECR_ID"
                     ofType="RecruitJob"
-
         />
 
     </resultMap>

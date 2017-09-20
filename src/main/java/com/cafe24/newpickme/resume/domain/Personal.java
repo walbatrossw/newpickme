@@ -11,13 +11,17 @@ public class Personal {
     private String personalName;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date personalbirthDate;
+    private Date personalBirthDate;
+
+    private String personalGender;
 
     private String personalPhone;
 
+    private String personalEmail;
+
     private String personalSns;
 
-    private String personalAdress;
+    private String personalAddress;
 
     private String personalImage;
 
@@ -41,12 +45,20 @@ public class Personal {
         this.personalName = personalName;
     }
 
-    public Date getPersonalbirthDate() {
-        return personalbirthDate;
+    public Date getPersonalBirthDate() {
+        return personalBirthDate;
     }
 
-    public void setPersonalbirthDate(Date personalbirthDate) {
-        this.personalbirthDate = personalbirthDate;
+    public void setPersonalBirthDate(Date personalBirthDate) {
+        this.personalBirthDate = personalBirthDate;
+    }
+
+    public String getPersonalGender() {
+        return personalGender;
+    }
+
+    public void setPersonalGender(String personalGender) {
+        this.personalGender = personalGender;
     }
 
     public String getPersonalPhone() {
@@ -57,6 +69,14 @@ public class Personal {
         this.personalPhone = personalPhone;
     }
 
+    public String getPersonalEmail() {
+        return personalEmail;
+    }
+
+    public void setPersonalEmail(String personalEmail) {
+        this.personalEmail = personalEmail;
+    }
+
     public String getPersonalSns() {
         return personalSns;
     }
@@ -65,12 +85,12 @@ public class Personal {
         this.personalSns = personalSns;
     }
 
-    public String getPersonalAdress() {
-        return personalAdress;
+    public String getPersonalAddress() {
+        return personalAddress;
     }
 
-    public void setPersonalAdress(String personalAdress) {
-        this.personalAdress = personalAdress;
+    public void setPersonalAddress(String personalAddress) {
+        this.personalAddress = personalAddress;
     }
 
     public String getPersonalImage() {
@@ -102,10 +122,12 @@ public class Personal {
         return "Personal{" +
                 "personalId=" + personalId +
                 ", personalName='" + personalName + '\'' +
-                ", personalbirthDate=" + personalbirthDate +
+                ", personalBirthDate=" + personalBirthDate +
+                ", personalGender='" + personalGender + '\'' +
                 ", personalPhone='" + personalPhone + '\'' +
+                ", personalEmail='" + personalEmail + '\'' +
                 ", personalSns='" + personalSns + '\'' +
-                ", personalAdress='" + personalAdress + '\'' +
+                ", personalAddress='" + personalAddress + '\'' +
                 ", personalImage='" + personalImage + '\'' +
                 ", resumeId=" + resumeId +
                 ", resume=" + resume +

@@ -8,7 +8,7 @@ public class Career {
 
     private int careerId;
 
-    private String company;
+    private String careerCompany;
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date careerBeginDate;
@@ -18,11 +18,11 @@ public class Career {
 
     private String careerPosition;
 
-    private String Department;
+    private String careerDepartment;
 
-    private String task;
+    private String careerTask;
 
-    private String resign;
+    private String careerResign;
 
     private int resumeId;
     private Resume resume;
@@ -35,12 +35,12 @@ public class Career {
         this.careerId = careerId;
     }
 
-    public String getCompany() {
-        return company;
+    public String getCareerCompany() {
+        return careerCompany;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setCareerCompany(String careerCompany) {
+        this.careerCompany = careerCompany;
     }
 
     public Date getCareerBeginDate() {
@@ -67,28 +67,28 @@ public class Career {
         this.careerPosition = careerPosition;
     }
 
-    public String getDepartment() {
-        return Department;
+    public String getCareerDepartment() {
+        return careerDepartment;
     }
 
-    public void setDepartment(String department) {
-        Department = department;
+    public void setCareerDepartment(String careerDepartment) {
+        this.careerDepartment = careerDepartment;
     }
 
-    public String getTask() {
-        return task;
+    public String getCareerTask() {
+        return careerTask;
     }
 
-    public void setTask(String task) {
-        this.task = task;
+    public void setCareerTask(String careerTask) {
+        this.careerTask = careerTask;
     }
 
-    public String getResign() {
-        return resign;
+    public String getCareerResign() {
+        return careerResign;
     }
 
-    public void setResign(String resign) {
-        this.resign = resign;
+    public void setCareerResign(String careerResign) {
+        this.careerResign = careerResign;
     }
 
     public int getResumeId() {
@@ -111,13 +111,13 @@ public class Career {
     public String toString() {
         return "Career{" +
                 "careerId=" + careerId +
-                ", company='" + company + '\'' +
+                ", careerCompany='" + careerCompany + '\'' +
                 ", careerBeginDate=" + careerBeginDate +
                 ", careerEndDate=" + careerEndDate +
                 ", careerPosition='" + careerPosition + '\'' +
-                ", Department='" + Department + '\'' +
-                ", task='" + task + '\'' +
-                ", resign='" + resign + '\'' +
+                ", careerDepartment='" + careerDepartment + '\'' +
+                ", careerTask='" + careerTask + '\'' +
+                ", careerResign='" + careerResign + '\'' +
                 ", resumeId=" + resumeId +
                 ", resume=" + resume +
                 '}';

@@ -18,7 +18,7 @@ public class University {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date universityEndDate;
 
-    private String universityMojor;
+    private String universityMajor;
 
     private String universityDoubleMajor;
 
@@ -68,12 +68,12 @@ public class University {
         this.universityEndDate = universityEndDate;
     }
 
-    public String getUniversityMojor() {
-        return universityMojor;
+    public String getUniversityMajor() {
+        return universityMajor;
     }
 
-    public void setUniversityMojor(String universityMojor) {
-        this.universityMojor = universityMojor;
+    public void setUniversityMajor(String universityMajor) {
+        this.universityMajor = universityMajor;
     }
 
     public String getUniversityDoubleMajor() {
@@ -116,7 +116,7 @@ public class University {
                 ", universityType='" + universityType + '\'' +
                 ", universityBeginDate=" + universityBeginDate +
                 ", universityEndDate=" + universityEndDate +
-                ", universityMojor='" + universityMojor + '\'' +
+                ", universityMajor='" + universityMajor + '\'' +
                 ", universityDoubleMajor='" + universityDoubleMajor + '\'' +
                 ", universityCredit='" + universityCredit + '\'' +
                 ", resumeId=" + resumeId +

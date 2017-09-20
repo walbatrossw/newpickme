@@ -28,58 +28,202 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- ============= 이력서 관련 ResultMap ============-->
 
+    <!--이력서 resultMap-->
     <resultMap id="resumeResultMap" type="Resume">
 
+        <id column="RESUME_ID" property="resumeId"/>
+
+        <result column="RESUME_NM" property="resumeName"/>
+        <result column="RESUME_WRT_DT" property="resumeWriteDate"/>
+        <result column="RESUME_UDT_DT" property="resumeUpdateDate"/>
+
+        <result column="USER_ID" property="userId"/>
+        <association property="user" resultMap="userResultMap"/>
+
+        <association property="personal" resultMap="personalResultMap"/>
+        <association property="highSchool" resultMap="highSchoolResultMap"/>
+
+        <collection property="universities"
+                    javaType="java.util.ArrayList"
+                    column="RESUME_ID"
+                    ofType="University" />
+
+        <collection property="languages"
+                    javaType="java.util.ArrayList"
+                    column="RESUME_ID"
+                    ofType="Language" />
+
+        <collection property="certificates"
+                    javaType="java.util.ArrayList"
+                    column="RESUME_ID"
+                    ofType="Certificate" />
+
+        <collection property="careers"
+                    javaType="java.util.ArrayList"
+                    column="RESUME_ID"
+                    ofType="Career" />
+
+        <collection property="activities"
+                    javaType="java.util.ArrayList"
+                    column="RESUME_ID"
+                    ofType="Activity" />
+
+        <collection property="etcs"
+                    javaType="java.util.ArrayList"
+                    column="RESUME_ID"
+                    ofType="Etc" />
+
     </resultMap>
 
+    <!--이력서 개인 신상 정보 resultMap-->
     <resultMap id="personalResultMap" type="Personal">
 
+        <id column="PERSONAL_ID" property="personalId"/>
+
+        <result column="PERSONAL_NM" property="personalName"/>
+        <result column="PERSONAL_BIRTH_DT" property="personalName"/>
+        <result column="PERSONAL_PHONE" property="personalName"/>
+        <result column="PERSONAL_SNS" property="personalSns"/>
+        <result column="PERSONAL_ADDR" property="personalAddress"/>
+        <result column="PERSONAL_IMAGE" property="personalImage"/>
+        <result column="PERSONAL_EMAIL" property="personalEmail"/>
+        <result column="PERSONAL_GENDER" property="personalGender"/>
+
+        <result column="RESUME_ID" property="resumeId"/>
+        <association property="resume" resultMap="resumeResultMap"/>
+
     </resultMap>
 
+    <!--이력서 고등학교 학력 정보 resultMap-->
     <resultMap id="highSchoolResultMap" type="HighSchool">
 
+        <id column="HIGH_ID" property="highSchoolId"/>
+
+        <result column="HIGH_NM" property="highSchoolName"/>
+        <result column="HIGH_TYPE" property="highSchoolType"/>
+        <result column="HIGH_BEG_DT" property="highSchoolBeginDate"/>
+        <result column="HIGH_END_DT" property="highSchoolEndDate"/>
+
+        <result column="RESUME_ID" property="resumeId"/>
+        <association property="resume" resultMap="resumeResultMap"/>
+
     </resultMap>
 
+    <!--이력서 대학교 학력 정보 resultMap-->
     <resultMap id="universityResultMap" type="University">
 
+        <id column="UNIV_ID" property="universityId"/>
+
+        <result column="UNIV_NM" property="universityName"/>
+        <result column="UNIV_TYPE" property="universityType"/>
+        <result column="UNIV_BEG_DT" property="universityBeginDate"/>
+        <result column="UNIV_END_DT" property="universityEndDate"/>
+        <result column="UNIV_MAJOR" property="universityMajor"/>
+        <result column="UNIV_DMAJOR" property="universityDoubleMajor"/>
+        <result column="UNIV_CREDIT" property="universityCredit"/>
+
+        <result column="RESUME_ID" property="resumeId"/>
+        <association property="resume" resultMap="resumeResultMap"/>
+
     </resultMap>
 
+    <!--이력서 어학시험 정보 resultMap-->
     <resultMap id="languageResultMap" type="Language">
 
+        <id column="LANG_ID" property="languageId"/>
+
+        <result column="LANG_NM" property="languageName"/>
+        <result column="LANG_GRADE" property="languageGrade"/>
+        <result column="LANG_HOST" property="languageHost"/>
+        <result column="LANG_NUM" property="languageNumber"/>
+        <result column="LANG_BEG_DT" property="languageBeginDate"/>
+        <result column="LANG_END_DT" property="languageEndDate"/>
+
+
+        <result column="RESUME_ID" property="resumeId"/>
+        <association property="resume" resultMap="resumeResultMap"/>
+
     </resultMap>
 
+    <!--이력서 자격증 정보 resultMap-->
     <resultMap id="certificateResultMap" type="Certificate">
 
+        <id column="CERT_ID" property="certificateId"/>
+
+        <result column="CERT_NM" property="certificateName"/>
+        <result column="CERT_GRADE" property="certificateGrade"/>
+        <result column="CERT_HOST" property="certificateHost"/>
+        <result column="CERT_NUM" property="certificateNumber"/>
+        <result column="CERT_BEG_DT" property="certificateBeginDate"/>
+        <result column="CERT_END_DT" property="certificateEndDate"/>
+
+        <result column="RESUME_ID" property="resumeId"/>
+        <association property="resume" resultMap="resumeResultMap"/>
+
     </resultMap>
 
+    <!--이력서 경력 정보 resultMap-->
     <resultMap id="careerResultMap" type="Career">
 
+        <id column="CAREER_ID" property="careerId"/>
+
+        <result column="CAREER_COMP" property="carrerCompany"/>
+        <result column="CAREER_BEG_DT" property="careerBeginDate"/>
+        <result column="CAREER_END_DT" property="careerEndDate"/>
+        <result column="CAREER_POSITION" property="careerPosition"/>
+        <result column="CAREER_DEPARTMENT" property="careerDepartment"/>
+        <result column="CAREER_TASK" property="careerTask"/>
+        <result column="CAREER_RESIGN" property="careerResign"/>
+
+        <result column="RESUME_ID" property="resumeId"/>
+        <association property="resume" resultMap="resumeResultMap"/>
+
     </resultMap>
 
+    <!--이력서 직무관련 경험 및 대외활동 정보 resultMap-->
     <resultMap id="activityResultMap" type="Activity">
 
+        <id column="ACTV_ID" property="activityId"/>
+
+        <result column="ACTV_NM" property="activityName"/>
+        <result column="ACTV_HOST" property="activityHost"/>
+        <result column="ACTV_BEG_DT" property="activityBeginDate"/>
+        <result column="ACTV_END_DT" property="activityEndDate"/>
+        <result column="ACTV_CONTENT" property="activityContent"/>
+
+        <result column="RESUME_ID" property="resumeId"/>
+        <association property="resume" resultMap="resumeResultMap"/>
+
     </resultMap>
 
+    <!--이력서 기타 정보 resultMap-->
     <resultMap id="etcResultMap" type="Etc">
 
+        <id column="ETC_ID" property="etcId"/>
+
+        <result column="ETC_NM" property="etcName"/>
+        <result column="ETC_BEG_DT" property="etcBeginDate"/>
+        <result column="ETC_END_DT" property="etcEndDate"/>
+        <result column="ETC_CONTENT" property="etcContent"/>
+
+        <result column="RESUME_ID" property="resumeId"/>
+        <association property="resume" resultMap="resumeResultMap"/>
+
     </resultMap>
 
+
+    <!--회원 resultMap-->
     <resultMap id="userResultMap" type="User">
+
+        <id column="USER_ID" property="userId"/>
+
+        <result column="USER_EMAIL" property="userEmail"/>
+        <result column="USER_NICK_NM" property="userNickName"/>
+        <result column="USER_PW" property="userPassword"/>
+        <result column="USER_JN_DT" property="userJoinDate"/>
+        <result column="USER_UDT_DT" property="userUpdateDate"/>
+        <result column="USER_LOG_DT" property="userLoginDate"/>
 
     </resultMap>
 
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
