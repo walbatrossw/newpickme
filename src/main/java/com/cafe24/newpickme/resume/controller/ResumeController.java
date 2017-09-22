@@ -1,6 +1,8 @@
 package com.cafe24.newpickme.resume.controller;
 
 import com.cafe24.newpickme.resume.domain.Resume;
+import com.cafe24.newpickme.resume.service.ResumeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -8,9 +10,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/resume")
 public class ResumeController {
+
+
+    @Autowired
+    ResumeService resumeService;
 
     /*
     * 이력서 작성 페이지
@@ -28,7 +36,8 @@ public class ResumeController {
      *
      * */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(@ModelAttribute Resume resume) {
+    public String create(@ModelAttribute Resume resume, HttpSession session) {
+        resumeService.create(resume, session);
         return "/resume/create";
     }
 

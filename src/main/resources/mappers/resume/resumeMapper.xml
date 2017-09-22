@@ -7,9 +7,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="resume">
 
     <!--이력서 작성-->
-    <insert id="insertResume">
+    <insert id="insertResume" parameterType="Resume" useGeneratedKeys="true" keyProperty="resumeId">
+        INSERT INTO t_resume (
+
+            USER_ID
+            , RESUME_NM
+            , RESUME_WRT_DT
+            , RESUME_UDT_DT
+
+        ) VALUES (
+
+            #{userId}
+            , #{resumeName}
+            , NOW()
+            , NOW()
+
+        )
+    </insert>
+
+    <insert id="insertResumePersonal">
 
     </insert>
+
 
     <!--이력서 보기-->
     <select id="selectResumeByUserId">

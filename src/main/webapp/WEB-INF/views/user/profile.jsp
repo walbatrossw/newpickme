@@ -226,6 +226,8 @@
                         <div class="tab-content">
 
                             <div class="active tab-pane" id="resume">
+                                <%--이력서 작성 추가--%>
+                                <jsp:include page="user_resume.jsp"/>
                                 1. 내가 작성한 이력서 <br/>
                                 2. 이력서 PDF파일 생성 버튼 <br/>
                                 3. 이력서 수정버튼... <br/>

@@ -2,10 +2,12 @@ package com.cafe24.newpickme.resume.service;
 
 import com.cafe24.newpickme.resume.domain.Resume;
 
+import javax.servlet.http.HttpSession;
+
 public interface ResumeService {
 
     /*이력서 작성*/
-    void create(Resume resume);
+    void create(Resume resume, HttpSession session);
 
     /*이력서 보기*/
     void getResume(int userId);
