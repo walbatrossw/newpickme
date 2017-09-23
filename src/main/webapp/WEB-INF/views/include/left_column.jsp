@@ -210,7 +210,7 @@
                         <ul class="treeview-menu">
                             <li><a href="${path}/resume/create"><i class="fa fa-circle-o"></i> 이력서 작성</a></li>
                             <li><a href="${path}/resume/update"><i class="fa fa-circle-o"></i> 이력서 수정</a></li>
-                            <li><a href="${path}/resume/view"><i class="fa fa-circle-o"></i> 이력서</a></li>
+                            <li><a href="${path}/resume/${sessionScope.userId}/view"><i class="fa fa-circle-o"></i> 이력서</a></li>
                         </ul>
                     </li>
 

@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="resume">
 
+<!--
+====================================================================================================================
+                                              이력서 작성
+====================================================================================================================
+-->
+
     <!--이력서 작성-->
     <insert id="insertResume" parameterType="Resume" useGeneratedKeys="true" keyProperty="resumeId">
+
         INSERT INTO t_resume (
 
             USER_ID
@@ -23,17 +29,373 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             , NOW()
 
         )
+
     </insert>
+
 
     <insert id="insertResumePersonal">
 
+        INSERT INTO t_resume_personal (
+
+            RESUME_ID
+            , PERSONAL_NM
+            , PERSONAL_BIRTH_DT
+            , PERSONAL_PHONE
+            , PERSONAL_SNS
+            , PERSONAL_ADDR
+            , PERSONAL_IMAGE
+            , PERSONAL_EMAIL
+            , PERSONAL_GENDER
+
+        ) VALUES (
+
+            #{resumeId}
+            , #{personalName}
+            , #{personalBirthDate}
+            , #{personalPhone}
+            , #{personalSns}
+            , #{personalAddress}
+            , #{personalImage}
+            , #{personalEmail}
+            , #{personalGender}
+
+        )
+
     </insert>
 
+    <insert id="insertResumeHighSchool">
+
+        INSERT INTO t_resume_highschool (
+
+            RESUME_ID
+            , HIGH_NM
+            , HIGH_TYPE
+            , HIGH_BEG_DT
+            , HIGH_END_DT
+
+        ) VALUES (
+
+            #{resumeId}
+            , #{highSchoolName}
+            , #{highSchoolType}
+            , #{highSchoolBeginDate}
+            , #{highSchoolEndDate}
+
+        )
+
+    </insert>
+
+    <insert id="insertResumeUniversity">
+
+
+        INSERT INTO t_resume_university (
+
+            RESUME_ID
+            , UNIV_NM
+            , UNIV_TYPE
+            , UNIV_BEG_DT
+            , UNIV_END_DT
+            , UNIV_MAJOR
+            , UNIV_DMAJOR
+            , UNIV_CREDIT
+
+        ) VALUES (
+
+            #{resumeId}
+            , #{universityName}
+            , #{universityType}
+            , #{universityBeginDate}
+            , #{universityEndDate}
+            , #{universityMajor}
+            , #{universityDoubleMajor}
+            , #{universityCredit}
+
+        )
+
+    </insert>
+
+    <insert id="insertResumeLanguage">
+
+        INSERT INTO t_resume_language (
+
+            RESUME_ID
+            , LANG_NM
+            , LANG_GRADE
+            , LANG_HOST
+            , LANG_NUM
+            , LANG_BEG_DT
+            , LANG_END_DT
+
+        ) VALUES (
+
+            #{resumeId}
+            , #{languageName}
+            , #{languageGrade}
+            , #{languageHost}
+            , #{languageNumber}
+            , #{languageBeginDate}
+            , #{languageEndDate}
+
+        )
+
+    </insert>
+
+    <insert id="insertResumeCertificate">
+
+        INSERT INTO t_resume_certificate (
+
+            RESUME_ID
+            , CERT_NM
+            , CERT_GRADE
+            , CERT_HOST
+            , CERT_NUM
+            , CERT_BEG_DT
+            , CERT_END_DT
+
+        ) VALUES (
+
+            #{resumeId}
+            , #{certificateName}
+            , #{certificateGrade}
+            , #{certificateHost}
+            , #{certificateNumber}
+            , #{certificateBeginDate}
+            , #{certificateEndDate}
+
+        )
+
+    </insert>
+
+    <insert id="insertResumeCareer">
+
+        INSERT INTO t_resume_career (
+
+            RESUME_ID
+            , CAREER_COMP
+            , CAREER_BEG_DT
+            , CAREER_END_DT
+            , CAREER_POSITION
+            , CAREER_DEPARTMENT
+            , CAREER_TASK
+            , CAREER_RESIGN
+
+        ) VALUES (
+
+            #{resumeId}
+            , #{careerCompany}
+            , #{careerBeginDate}
+            , #{careerEndDate}
+            , #{careerPosition}
+            , #{careerDepartment}
+            , #{careerTask}
+            , #{careerResign}
+
+        )
+
+
+    </insert>
+
+    <insert id="insertResumeActivity">
+
+        INSERT INTO t_resume_activity (
+
+            RESUME_ID
+            , ACTV_NM
+            , ACTV_HOST
+            , ACTV_BEG_DT
+            , ACTV_END_DT
+            , ACTV_CONTENT
+
+        ) VALUES (
+
+            #{resumeId}
+            , #{activityName}
+            , #{activityHost}
+            , #{activityBeginDate}
+            , #{activityEndDate}
+            , #{activityContent}
+
+        )
+
+    </insert>
+
+    <insert id="insertResumeEtc">
+
+        INSERT INTO t_resume_etc (
+
+            RESUME_ID
+            , ETC_NM
+            , ETC_BEG_DT
+            , ETC_END_DT
+            , ETC_CONTENT
+
+        ) VALUES (
+
+            #{resumeId}
+            , #{etcName}
+            , #{etcBeginDate}
+            , #{etcEndDate}
+            , #{etcContent}
+
+        )
+
+    </insert>
+
+<!--
+====================================================================================================================
+                                              이력서 작성
+====================================================================================================================
+-->
+
+
+<!--
+====================================================================================================================
+                                              이력서 보기
+====================================================================================================================
+-->
 
     <!--이력서 보기-->
-    <select id="selectResumeByUserId">
+    <select id="selectResumeByUserId" parameterType="int" resultMap="resumeResultMap">
+
+        SELECT
+            RESUME_ID
+            , USER_ID
+            , RESUME_NM
+            , RESUME_WRT_DT
+            , RESUME_UDT_DT
+        FROM t_resume
+        WHERE USER_ID = #{userId}
 
     </select>
+
+    <!--이력서 보기 : 개인신상-->
+    <select id="selectResumePersonalByResumeId" parameterType="int" resultMap="personalResultMap">
+        SELECT
+            PERSONAL_ID
+            , RESUME_ID
+            , PERSONAL_NM
+            , PERSONAL_BIRTH_DT
+            , PERSONAL_PHONE
+            , PERSONAL_SNS
+            , PERSONAL_ADDR
+            , PERSONAL_IMAGE
+            , PERSONAL_EMAIL
+            , PERSONAL_GENDER
+        FROM t_resume_personal
+        WHERE RESUME_ID = #{resumeId}
+    </select>
+
+    <!--이력서 보기 : 고등학교-->
+    <select id="selectResumeHighSchoolByResumeId" parameterType="int" resultMap="highSchoolResultMap">
+        SELECT
+            HIGH_ID
+            , RESUME_ID
+            , HIGH_NM
+            , HIGH_TYPE
+            , HIGH_BEG_DT
+            , HIGH_END_DT
+        FROM t_resume_highschool
+        WHERE RESUME_ID = #{resumeId}
+    </select>
+
+    <!--이력서 보기 : 대학교, 대학원-->
+    <select id="selectResumeUniversityByResumeId" parameterType="int" resultMap="universityResultMap">
+        SELECT
+            UNIV_ID
+            , RESUME_ID
+            , UNIV_NM
+            , UNIV_TYPE
+            , UNIV_BEG_DT
+            , UNIV_END_DT
+            , UNIV_MAJOR
+            , UNIV_DMAJOR
+            , UNIV_CREDIT
+        FROM t_resume_university
+        WHERE RESUME_ID = #{resumeId}
+    </select>
+
+    <!--이력서 보기 : 어학시험-->
+    <select id="selectResumeLanguageByResumeId" parameterType="int" resultMap="languageResultMap">
+        SELECT
+            LANG_ID
+            , RESUME_ID
+            , LANG_NM
+            , LANG_GRADE
+            , LANG_HOST
+            , LANG_NUM
+            , LANG_BEG_DT
+            , LANG_END_DT
+        FROM t_resume_language
+        WHERE RESUME_ID = #{resumeId}
+    </select>
+
+    <!--이력서 보기 : 자격증-->
+    <select id="selectResumeCertificateByResumeId" parameterType="int" resultMap="certificateResultMap">
+        SELECT
+            CERT_ID
+            , RESUME_ID
+            , CERT_NM
+            , CERT_GRADE
+            , CERT_HOST
+            , CERT_NUM
+            , CERT_BEG_DT
+            , CERT_END_DT
+        FROM t_resume_certificate
+        WHERE RESUME_ID = #{resumeId}
+    </select>
+
+    <!--이력서 보기 : 경력-->
+    <select id="selectResumeCareerByResumeId" parameterType="int" resultMap="careerResultMap">
+        SELECT
+            CAREER_ID
+            , RESUME_ID
+            , CAREER_COMP
+            , CAREER_BEG_DT
+            , CAREER_END_DT
+            , CAREER_POSITION
+            , CAREER_DEPARTMENT
+            , CAREER_TASK
+            , CAREER_RESIGN
+        FROM t_resume_career
+        WHERE RESUME_ID = #{resumeId}
+    </select>
+
+    <!--이력서 보기 : 직무관련활동-->
+    <select id="selectResumeActivityByResumeId" parameterType="int" resultMap="activityResultMap">
+        SELECT
+            ACTV_ID
+            , RESUME_ID
+            , ACTV_NM
+            , ACTV_HOST
+            , ACTV_BEG_DT
+            , ACTV_END_DT
+            , ACTV_CONTENT
+        FROM t_resume_activity
+        WHERE RESUME_ID = #{resumeId}
+    </select>
+
+    <!--이력서 보기 : 기타활동(논문, 포트폴리오)-->
+    <select id="selectResumeEtcByResumeId" resultMap="etcResultMap">
+        SELECT
+            ETC_ID
+            , RESUME_ID
+            , ETC_NM
+            , ETC_BEG_DT
+            , ETC_END_DT
+            , ETC_CONTENT
+        FROM t_resume_etc
+        WHERE RESUME_ID = #{resumeId}
+    </select>
+
+<!--
+====================================================================================================================
+                                              이력서 보기
+====================================================================================================================
+-->
+
+
+
+
 
     <!--이력서 수정-->
     <update id="updateResume">
@@ -45,7 +407,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     </delete>
 
-    <!-- ============= 이력서 관련 ResultMap ============-->
+
+
+
+<!--
+====================================================================================================================
+                                              이력서 관련 ResultMap
+====================================================================================================================
+-->
 
     <!--이력서 resultMap-->
     <resultMap id="resumeResultMap" type="Resume">
@@ -59,38 +428,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result column="USER_ID" property="userId"/>
         <association property="user" resultMap="userResultMap"/>
 
-        <association property="personal" resultMap="personalResultMap"/>
-        <association property="highSchool" resultMap="highSchoolResultMap"/>
+        <association property="personal"
+                     column="RESUME_ID"
+                     javaType="Personal"
+                     select="selectResumePersonalByResumeId" />
+
+        <association property="highSchool"
+                     column="RESUME_ID"
+                     javaType="HighSchool"
+                     select="selectResumeHighSchoolByResumeId" />
 
         <collection property="universities"
                     javaType="java.util.ArrayList"
                     column="RESUME_ID"
-                    ofType="University" />
+                    ofType="University"
+                    select="selectResumeUniversityByResumeId" />
 
         <collection property="languages"
                     javaType="java.util.ArrayList"
                     column="RESUME_ID"
-                    ofType="Language" />
+                    ofType="Language"
+                    select="selectResumeLanguageByResumeId" />
 
         <collection property="certificates"
                     javaType="java.util.ArrayList"
                     column="RESUME_ID"
-                    ofType="Certificate" />
+                    ofType="Certificate"
+                    select="selectResumeCertificateByResumeId" />
 
         <collection property="careers"
                     javaType="java.util.ArrayList"
                     column="RESUME_ID"
-                    ofType="Career" />
+                    ofType="Career"
+                    select="selectResumeCareerByResumeId" />
 
         <collection property="activities"
                     javaType="java.util.ArrayList"
                     column="RESUME_ID"
-                    ofType="Activity" />
+                    ofType="Activity"
+                    select="selectResumeActivityByResumeId" />
 
         <collection property="etcs"
                     javaType="java.util.ArrayList"
                     column="RESUME_ID"
-                    ofType="Etc" />
+                    ofType="Etc"
+                    select="selectResumeEtcByResumeId" />
 
     </resultMap>
 
@@ -100,8 +482,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id column="PERSONAL_ID" property="personalId"/>
 
         <result column="PERSONAL_NM" property="personalName"/>
-        <result column="PERSONAL_BIRTH_DT" property="personalName"/>
-        <result column="PERSONAL_PHONE" property="personalName"/>
+        <result column="PERSONAL_BIRTH_DT" property="personalBirthDate"/>
+        <result column="PERSONAL_PHONE" property="personalPhone"/>
         <result column="PERSONAL_SNS" property="personalSns"/>
         <result column="PERSONAL_ADDR" property="personalAddress"/>
         <result column="PERSONAL_IMAGE" property="personalImage"/>
@@ -109,7 +491,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result column="PERSONAL_GENDER" property="personalGender"/>
 
         <result column="RESUME_ID" property="resumeId"/>
-        <association property="resume" resultMap="resumeResultMap"/>
+
 
     </resultMap>
 
@@ -124,7 +506,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result column="HIGH_END_DT" property="highSchoolEndDate"/>
 
         <result column="RESUME_ID" property="resumeId"/>
-        <association property="resume" resultMap="resumeResultMap"/>
+
 
     </resultMap>
 
@@ -142,7 +524,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result column="UNIV_CREDIT" property="universityCredit"/>
 
         <result column="RESUME_ID" property="resumeId"/>
-        <association property="resume" resultMap="resumeResultMap"/>
+
 
     </resultMap>
 
@@ -160,7 +542,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
         <result column="RESUME_ID" property="resumeId"/>
-        <association property="resume" resultMap="resumeResultMap"/>
+
 
     </resultMap>
 
@@ -177,7 +559,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result column="CERT_END_DT" property="certificateEndDate"/>
 
         <result column="RESUME_ID" property="resumeId"/>
-        <association property="resume" resultMap="resumeResultMap"/>
+
 
     </resultMap>
 
@@ -186,7 +568,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
         <id column="CAREER_ID" property="careerId"/>
 
-        <result column="CAREER_COMP" property="carrerCompany"/>
+        <result column="CAREER_COMP" property="careerCompany"/>
         <result column="CAREER_BEG_DT" property="careerBeginDate"/>
         <result column="CAREER_END_DT" property="careerEndDate"/>
         <result column="CAREER_POSITION" property="careerPosition"/>
@@ -195,7 +577,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result column="CAREER_RESIGN" property="careerResign"/>
 
         <result column="RESUME_ID" property="resumeId"/>
-        <association property="resume" resultMap="resumeResultMap"/>
+
 
     </resultMap>
 
@@ -211,7 +593,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result column="ACTV_CONTENT" property="activityContent"/>
 
         <result column="RESUME_ID" property="resumeId"/>
-        <association property="resume" resultMap="resumeResultMap"/>
+
 
     </resultMap>
 
@@ -226,7 +608,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result column="ETC_CONTENT" property="etcContent"/>
 
         <result column="RESUME_ID" property="resumeId"/>
-        <association property="resume" resultMap="resumeResultMap"/>
+
 
     </resultMap>
 
@@ -244,5 +626,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result column="USER_LOG_DT" property="userLoginDate"/>
 
     </resultMap>
+
+<!--
+====================================================================================================================
+                                              이력서 관련 ResultMap
+====================================================================================================================
+-->
 
 </mapper>

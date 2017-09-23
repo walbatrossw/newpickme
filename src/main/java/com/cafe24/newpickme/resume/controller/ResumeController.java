@@ -71,6 +71,9 @@ public class ResumeController {
     * */
     @RequestMapping(value = "/{userId}/view", method = RequestMethod.GET)
     public String view(@PathVariable int userId, Model model) {
+        Resume resume = resumeService.getResume(userId);
+        System.out.println(resume);
+        model.addAttribute("resume", resume);
         return "/resume/view";
     }
 
@@ -81,7 +84,7 @@ public class ResumeController {
     *
     * */
     @RequestMapping(value = "/{userId}/delete", method = RequestMethod.GET)
-    public String delete() {
+    public String delete(@PathVariable int userId) {
         return "/resume/create";
     }
 }

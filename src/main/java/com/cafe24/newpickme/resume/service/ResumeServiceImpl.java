@@ -80,8 +80,8 @@ public class ResumeServiceImpl implements ResumeService {
 
     /*이력서 보기*/
     @Override
-    public void getResume(int userId) {
-
+    public Resume getResume(int userId) {
+        return resumeDao.selectResumeByUserId(userId);
     }
 
     /*이력서 수정*/

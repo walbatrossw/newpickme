@@ -3,6 +3,8 @@ package com.cafe24.newpickme.resume.repository;
 
 import com.cafe24.newpickme.resume.domain.*;
 
+import java.util.List;
+
 public interface ResumeDao {
 
     /*이력서 작성*/
@@ -25,7 +27,7 @@ public interface ResumeDao {
     void insertResumeEtc(Etc etc);
 
     /*이력서 보기*/
-    void selectResumeByUserId(int userId);
+    Resume selectResumeByUserId(int userId);
 
     /*이력서 수정*/
     void updateResume(Resume resume);

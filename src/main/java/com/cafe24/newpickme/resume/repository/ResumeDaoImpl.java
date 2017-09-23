@@ -5,6 +5,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class ResumeDaoImpl implements ResumeDao{
 
@@ -20,57 +22,58 @@ public class ResumeDaoImpl implements ResumeDao{
 
     @Override
     public void insertResumePersonal(Personal personal) {
-        //sqlSession.insert("resume.insertResumePersonal", personal);
+        sqlSession.insert("resume.insertResumePersonal", personal);
         System.out.println(personal);
     }
 
     @Override
     public void insertResumeHighSchool(HighSchool highSchool) {
-        //sqlSession.insert("resume.insertResumeHighSchool", highSchool);
+        sqlSession.insert("resume.insertResumeHighSchool", highSchool);
         System.out.println(highSchool);
     }
 
     @Override
     public void insertResumeUniversity(University university) {
-        //sqlSession.insert("resume.insertResumeUniversity", university);
+        sqlSession.insert("resume.insertResumeUniversity", university);
         System.out.println(university);
     }
 
     @Override
     public void insertResumeLanguage(Language language) {
-        //sqlSession.insert("resume.insertResumeLanguage", language);
+        sqlSession.insert("resume.insertResumeLanguage", language);
         System.out.println(language);
     }
 
     @Override
     public void insertResumeCertificate(Certificate certificate) {
-        //sqlSession.insert("resume.insertResumeCertificate", certificate);
+        sqlSession.insert("resume.insertResumeCertificate", certificate);
         System.out.println(certificate);
     }
 
     @Override
     public void insertResumeCareer(Career career) {
-        //sqlSession.insert("resume.insertResumeCareer", career);
+        sqlSession.insert("resume.insertResumeCareer", career);
         System.out.println(career);
     }
 
     @Override
     public void insertResumeActivity(Activity activity) {
-        //sqlSession.insert("resume.insertResumeActivity", activity);
+        sqlSession.insert("resume.insertResumeActivity", activity);
         System.out.println(activity);
     }
 
     @Override
     public void insertResumeEtc(Etc etc) {
-        //sqlSession.insert("resume.insertResumeEtc", etc);
+        sqlSession.insert("resume.insertResumeEtc", etc);
         System.out.println(etc);
     }
 
     /*이력서 보기*/
     @Override
-    public void selectResumeByUserId(int userId) {
-
+    public Resume selectResumeByUserId(int userId) {
+        return sqlSession.selectOne("resume.selectResumeByUserId", userId);
     }
+
 
     /*이력서 수정*/
     @Override
