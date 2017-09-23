@@ -65,13 +65,13 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="personalName">이름</label>
-                                                <input type="text" class="form-control" id="personalName" name="personal.personalName" value="${resume.personal.personalName}"/>
+                                                <input type="text" class="form-control" id="personalName" name="personal.personalName" value="${resume.personal.personalName}">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="personalBirthDate">생년월일</label>
-                                                <input type="date" class="form-control" id="personalBirthDate" name="personal.personalBirthDate" value="<fmt:formatDate value="${resume.personal.personalBirthDate}" pattern="yyyy-MM-dd"/>"/>
+                                                <input type="date" class="form-control" id="personalBirthDate" name="personal.personalBirthDate" value="<fmt:formatDate value="${resume.personal.personalBirthDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
@@ -87,25 +87,25 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="personalPhone">연락처</label>
-                                                <input type="text" class="form-control" id="personalPhone" name="personal.personalPhone" placeholder="예) 010-1234-1234" value="${resume.personal.personalPhone}" />
+                                                <input type="text" class="form-control" id="personalPhone" name="personal.personalPhone" placeholder="예) 010-1234-1234" value="${resume.personal.personalPhone}">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="personalEmail">이메일</label>
-                                                <input type="text" class="form-control" id="personalEmail" name="personal.personalEmail" placeholder="예) abc@abc.com" value="${resume.personal.personalEmail}" />
+                                                <input type="text" class="form-control" id="personalEmail" name="personal.personalEmail" placeholder="예) abc@abc.com" value="${resume.personal.personalEmail}">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="personalSns">SNS</label>
-                                                <input type="text" class="form-control" id="personalSns" name="personal.personalSns" placeholder="예) 페이스북: abc" value="${resume.personal.personalSns}" />
+                                                <input type="text" class="form-control" id="personalSns" name="personal.personalSns" placeholder="예) 페이스북: abc" value="${resume.personal.personalSns}">
                                             </div>
                                         </div>
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label for="personalAddress">주소</label>
-                                                <input type="text" class="form-control" id="personalAddress" name="personal.personalAddress" placeholder="예) 서울특별시 종로구 1번지" value="${resume.personal.personalAddress}" />
+                                                <input type="text" class="form-control" id="personalAddress" name="personal.personalAddress" placeholder="예) 서울특별시 종로구 1번지" value="${resume.personal.personalAddress}">
                                             </div>
                                         </div>
                                     </div>
@@ -123,7 +123,7 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="highSchoolName">고등학교명</label>
-                                                <input type="text" class="form-control" id="highSchoolName" name="highSchool.highSchoolName">
+                                                <input type="text" class="form-control" id="highSchoolName" name="highSchool.highSchoolName" value="${resume.highSchool.highSchoolName}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
@@ -141,13 +141,13 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="highSchoolBeginDate">입학일자</label>
-                                                <input type="date" class="form-control" id="highSchoolBeginDate" name="highSchool.highSchoolBeginDate">
+                                                <input type="date" class="form-control" id="highSchoolBeginDate" name="highSchool.highSchoolBeginDate" value="<fmt:formatDate value="${resume.highSchool.highSchoolBeginDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="highSchoolEndDate">졸업일자</label>
-                                                <input type="date" class="form-control" id="highSchoolEndDate" name="highSchool.highSchoolEndDate">
+                                                <input type="date" class="form-control" id="highSchoolEndDate" name="highSchool.highSchoolEndDate" value="<fmt:formatDate value="${resume.highSchool.highSchoolEndDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                     </div>
@@ -164,12 +164,13 @@
                                 </div>
                             </div>
                             <div class="box-body universities">
+                                <c:forEach var="university" varStatus="i" items="${resume.universities}">
                                 <div class="row university">
                                     <div class="col-sm-12">
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="universityName">대학교명</label>
-                                                <input type="text" class="form-control" id="universityName" name="universityName">
+                                                <input type="text" class="form-control" id="universityName" name="universityName" value="${university.universityName}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
@@ -187,35 +188,36 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="universityBeginDate">입학일자</label>
-                                                <input type="date" class="form-control" id="universityBeginDate" name="universityBeginDate">
+                                                <input type="date" class="form-control" id="universityBeginDate" name="universityBeginDate" value="<fmt:formatDate value="${university.universityBeginDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="universityEndDate">졸업일자</label>
-                                                <input type="date" class="form-control" id="universityEndDate" name="universityEndDate">
+                                                <input type="date" class="form-control" id="universityEndDate" name="universityEndDate" value="<fmt:formatDate value="${university.universityEndDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
                                             <div class="form-group">
                                                 <label for="universityMajor">전공명</label>
-                                                <input type="text" class="form-control" id="universityMajor" name="universityMajor">
+                                                <input type="text" class="form-control" id="universityMajor" name="universityMajor" value="${university.universityMajor}">
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
                                             <div class="form-group">
                                                 <label for="universityDoubleMajor">복수/부전공명</label>
-                                                <input type="text" class="form-control" id="universityDoubleMajor" name="universityDoubleMajor">
+                                                <input type="text" class="form-control" id="universityDoubleMajor" name="universityDoubleMajor" value="${university.universityDoubleMajor}">
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
                                             <div class="form-group">
                                                 <label for="universityCredit">학점</label>
-                                                <input type="text" class="form-control" id="universityCredit" name="universityCredit">
+                                                <input type="text" class="form-control" id="universityCredit" name="universityCredit" value="${university.universityCredit}">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                </c:forEach>
                             </div>
                         </div>
 
@@ -228,46 +230,48 @@
                                 </div>
                             </div>
                             <div class="box-body languages">
+                                <c:forEach var="language" varStatus="i" items="${resume.languages}">
                                 <div class="row language">
                                     <div class="col-sm-12">
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="languageName">어학시험명</label>
-                                                <input type="text" class="form-control" id="languageName" name="languageName">
+                                                <input type="text" class="form-control" id="languageName" name="languageName" value="${language.languageName}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="languageGrade">취득점수</label>
-                                                <input type="text" class="form-control" id="languageGrade" name="languageGrade">
+                                                <input type="text" class="form-control" id="languageGrade" name="languageGrade" value="${language.languageGrade}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="languageBeginDate">취득일자</label>
-                                                <input type="date" class="form-control" id="languageBeginDate" name="languageBeginDate">
+                                                <input type="date" class="form-control" id="languageBeginDate" name="languageBeginDate" value="<fmt:formatDate value="${language.languageBeginDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="languageEndDate">만료일자</label>
-                                                <input type="date" class="form-control" id="languageEndDate" name="languageEndDate">
+                                                <input type="date" class="form-control" id="languageEndDate" name="languageEndDate" value="<fmt:formatDate value="${language.languageEndDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="languageHost">주관처</label>
-                                                <input type="text" class="form-control" id="languageHost" name="languageHost">
+                                                <input type="text" class="form-control" id="languageHost" name="languageHost" value="${language.languageHost}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="languageNumber">등록번호</label>
-                                                <input type="text" class="form-control" id="languageNumber" name="languageNumber">
+                                                <input type="text" class="form-control" id="languageNumber" name="languageNumber" value="${language.languageNumber}">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                </c:forEach>
                             </div>
                         </div>
 
@@ -280,46 +284,48 @@
                                 </div>
                             </div>
                             <div class="box-body certificates">
+                                <c:forEach var="certificate" varStatus="i" items="${resume.certificates}">
                                 <div class="row certificate">
                                     <div class="col-sm-12">
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="certificateName">자격증명</label>
-                                                <input type="text" class="form-control" id="certificateName" name="certificateName">
+                                                <input type="text" class="form-control" id="certificateName" name="certificateName" value="${certificate.certificateName}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="certificateGrade">등급</label>
-                                                <input type="text" class="form-control" id="certificateGrade" name="certificateGrade">
+                                                <input type="text" class="form-control" id="certificateGrade" name="certificateGrade" value="${certificate.certificateGrade}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="certificateBeginDate">취득일자</label>
-                                                <input type="date" class="form-control" id="certificateBeginDate" name="certificateBeginDate">
+                                                <input type="date" class="form-control" id="certificateBeginDate" name="certificateBeginDate" value="<fmt:formatDate value="${certificate.certificateBeginDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="certificateEndDate">만료일자</label>
-                                                <input type="date" class="form-control" id="certificateEndDate" name="certificateEndDate">
+                                                <input type="date" class="form-control" id="certificateEndDate" name="certificateEndDate" value="<fmt:formatDate value="${certificate.certificateEndDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="certificateHost">주관처</label>
-                                                <input type="text" class="form-control" id="certificateHost" name="certificateHost">
+                                                <input type="text" class="form-control" id="certificateHost" name="certificateHost" value="${certificate.certificateHost}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="certificateNumber">등록번호</label>
-                                                <input type="text" class="form-control" id="certificateNumber" name="certificateNumber">
+                                                <input type="text" class="form-control" id="certificateNumber" name="certificateNumber" value="${certificate.certificateNumber}">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                </c:forEach>
                             </div>
                         </div>
 
@@ -332,52 +338,54 @@
                                 </div>
                             </div>
                             <div class="box-body careers">
+                                <c:forEach var="career" varStatus="i" items="${resume.careers}">
                                 <div class="row career">
                                     <div class="col-sm-12">
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="careerCompany">회사명</label>
-                                                <input type="text" class="form-control" id="careerCompany" name="careerCompany">
+                                                <input type="text" class="form-control" id="careerCompany" name="careerCompany" value="${career.careerCompany}">
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
                                             <div class="form-group">
                                                 <label for="careerPosition">직급</label>
-                                                <input type="text" class="form-control" id="careerPosition" name="careerPosition">
+                                                <input type="text" class="form-control" id="careerPosition" name="careerPosition" value="${career.careerPosition}">
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
                                             <div class="form-group">
                                                 <label for="careerDepartment">부서</label>
-                                                <input type="text" class="form-control" id="careerDepartment" name="careerDepartment">
+                                                <input type="text" class="form-control" id="careerDepartment" name="careerDepartment" value="${career.careerDepartment}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="careerTask">담당업무</label>
-                                                <input type="text" class="form-control" id="careerTask" name="careerTask">
+                                                <input type="text" class="form-control" id="careerTask" name="careerTask" value="${career.careerTask}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="careerBeginDate">입사일자</label>
-                                                <input type="date" class="form-control" id="careerBeginDate" name="careerBeginDate">
+                                                <input type="date" class="form-control" id="careerBeginDate" name="careerBeginDate" value="<fmt:formatDate value="${career.careerBeginDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="careerEndDate">퇴사일자</label>
-                                                <input type="date" class="form-control" id="careerEndDate" name="careerEndDate">
+                                                <input type="date" class="form-control" id="careerEndDate" name="careerEndDate" value="<fmt:formatDate value="${career.careerEndDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="careerResign">퇴사사유</label>
-                                                <input type="text" class="form-control" id="careerResign" name="careerResign">
+                                                <input type="text" class="form-control" id="careerResign" name="careerResign" value="${career.careerResign}">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                </c:forEach>
                             </div>
                         </div>
 
@@ -390,40 +398,42 @@
                                 </div>
                             </div>
                             <div class="box-body activities">
+                                <c:forEach var="activity" varStatus="i" items="${resume.activities}">
                                 <div class="row activity">
                                     <div class="col-sm-12">
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="activityName">활동명</label>
-                                                <input type="text" class="form-control" id="activityName" name="activityName">
+                                                <input type="text" class="form-control" id="activityName" name="activityName" value="${activity.activityName}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="activityHost">주관단체</label>
-                                                <input type="text" class="form-control" id="activityHost" name="activityHost">
+                                                <input type="text" class="form-control" id="activityHost" name="activityHost" value="${activity.activityHost}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="activityBeginDate">시작일자</label>
-                                                <input type="date" class="form-control" id="activityBeginDate" name="activityBeginDate">
+                                                <input type="date" class="form-control" id="activityBeginDate" name="activityBeginDate" value="<fmt:formatDate value="${activity.activityBeginDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="activityEndDate">종료일자</label>
-                                                <input type="date" class="form-control" id="activityEndDate" name="activityEndDate">
+                                                <input type="date" class="form-control" id="activityEndDate" name="activityEndDate" value="<fmt:formatDate value="${activity.activityEndDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <label for="activityContent">활동내용</label>
-                                                <input type="text" class="form-control" id="activityContent" name="activityContent">
+                                                <input type="text" class="form-control" id="activityContent" name="activityContent" value="${activity.activityContent}">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                </c:forEach>
                             </div>
                         </div>
 
@@ -436,40 +446,42 @@
                                 </div>
                             </div>
                             <div class="box-body etcs">
+                                <c:forEach var="etc" varStatus="i" items="${resume.etcs}">
                                 <div class="row etc">
                                     <div class="col-sm-12">
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="etcName">기타사항명</label>
-                                                <input type="text" class="form-control" id="etcName" name="etcName">
+                                                <input type="text" class="form-control" id="etcName" name="etcName" value="${etc.etcName}">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="etcBeginDate">시작일자</label>
-                                                <input type="date" class="form-control" id="etcBeginDate" name="etcBeginDate">
+                                                <input type="date" class="form-control" id="etcBeginDate" name="etcBeginDate" value="<fmt:formatDate value="${etc.etcBeginDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="etcEndDate">종료일자</label>
-                                                <input type="date" class="form-control" id="etcEndDate" name="etcEndDate">
+                                                <input type="date" class="form-control" id="etcEndDate" name="etcEndDate" value="<fmt:formatDate value="${etc.etcEndDate}" pattern="yyyy-MM-dd"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="personalName">기타내용</label>
-                                                <input type="text" class="form-control" id="etcContent" name="etcContent">
+                                                <input type="text" class="form-control" id="etcContent" name="etcContent" value="${etc.etcContent}">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                </c:forEach>
                             </div>
                         </div>
                     </section>
                 </div>
             </form>
-            <button type="button" class="btn btn-primary btn-sm resumeSaveBtn"><i class="fa fa-save"></i> 이력서 저장</button>
+            <button type="button" class="btn btn-primary btn-sm resumeSaveBtn"><i class="fa fa-save"></i> 이력서 수정</button>
         </section>
 
     </div>
