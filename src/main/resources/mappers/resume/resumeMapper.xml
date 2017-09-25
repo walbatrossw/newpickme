@@ -7,7 +7,20 @@
 
 <!--
 ====================================================================================================================
-                                              이력서 작성
+                                              이력서 작성여부
+====================================================================================================================
+-->
+
+
+<!--
+====================================================================================================================
+                                              이력서 작성여부
+====================================================================================================================
+-->
+
+<!--
+====================================================================================================================
+                                              이력서 작성, 수정처리
 ====================================================================================================================
 -->
 
@@ -16,19 +29,22 @@
 
         INSERT INTO t_resume (
 
-            USER_ID
+            RESUME_ID
+            , USER_ID
             , RESUME_NM
             , RESUME_WRT_DT
             , RESUME_UDT_DT
 
         ) VALUES (
-
-            #{userId}
+            #{resumeId}
+            , #{userId}
             , #{resumeName}
             , NOW()
             , NOW()
 
-        )
+        ) ON DUPLICATE KEY UPDATE
+            RESUME_NM = #{resumeName}
+            , RESUME_UDT_DT = NOW()
 
     </insert>
 
@@ -37,7 +53,8 @@
 
         INSERT INTO t_resume_personal (
 
-            RESUME_ID
+            PERSONAL_ID
+            , RESUME_ID
             , PERSONAL_NM
             , PERSONAL_BIRTH_DT
             , PERSONAL_PHONE
@@ -49,7 +66,8 @@
 
         ) VALUES (
 
-            #{resumeId}
+            #{personalId}
+            , #{resumeId}
             , #{personalName}
             , #{personalBirthDate}
             , #{personalPhone}
@@ -59,7 +77,16 @@
             , #{personalEmail}
             , #{personalGender}
 
-        )
+        ) ON DUPLICATE KEY UPDATE
+
+            PERSONAL_NM = #{personalName}
+            , PERSONAL_BIRTH_DT = #{personalBirthDate}
+            , PERSONAL_PHONE = #{personalPhone}
+            , PERSONAL_SNS = #{personalSns}
+            , PERSONAL_ADDR = #{personalAddress}
+            , PERSONAL_IMAGE = #{personalImage}
+            , PERSONAL_EMAIL = #{personalEmail}
+            , PERSONAL_GENDER = #{personalGender}
 
     </insert>
 
@@ -67,7 +94,8 @@
 
         INSERT INTO t_resume_highschool (
 
-            RESUME_ID
+            HIGH_ID
+            , RESUME_ID
             , HIGH_NM
             , HIGH_TYPE
             , HIGH_BEG_DT
@@ -75,13 +103,19 @@
 
         ) VALUES (
 
-            #{resumeId}
+            #{highSchoolId}
+            , #{resumeId}
             , #{highSchoolName}
             , #{highSchoolType}
             , #{highSchoolBeginDate}
             , #{highSchoolEndDate}
 
-        )
+        ) ON DUPLICATE KEY UPDATE
+
+            HIGH_NM = #{highSchoolName}
+            , HIGH_TYPE = #{highSchoolType}
+            , HIGH_BEG_DT = #{highSchoolBeginDate}
+            , HIGH_END_DT = #{highSchoolEndDate}
 
     </insert>
 
@@ -90,7 +124,8 @@
 
         INSERT INTO t_resume_university (
 
-            RESUME_ID
+            UNIV_ID
+            , RESUME_ID
             , UNIV_NM
             , UNIV_TYPE
             , UNIV_BEG_DT
@@ -101,7 +136,8 @@
 
         ) VALUES (
 
-            #{resumeId}
+            #{universityId}
+            , #{resumeId}
             , #{universityName}
             , #{universityType}
             , #{universityBeginDate}
@@ -110,7 +146,15 @@
             , #{universityDoubleMajor}
             , #{universityCredit}
 
-        )
+        ) ON DUPLICATE KEY UPDATE
+
+            UNIV_NM = #{universityName}
+            , UNIV_TYPE = #{universityType}
+            , UNIV_BEG_DT = #{universityBeginDate}
+            , UNIV_END_DT = #{universityEndDate}
+            , UNIV_MAJOR = #{universityMajor}
+            , UNIV_DMAJOR = #{universityDoubleMajor}
+            , UNIV_CREDIT = #{universityCredit}
 
     </insert>
 
@@ -118,7 +162,8 @@
 
         INSERT INTO t_resume_language (
 
-            RESUME_ID
+            LANG_ID
+            , RESUME_ID
             , LANG_NM
             , LANG_GRADE
             , LANG_HOST
@@ -128,7 +173,8 @@
 
         ) VALUES (
 
-            #{resumeId}
+            #{languageId}
+            , #{resumeId}
             , #{languageName}
             , #{languageGrade}
             , #{languageHost}
@@ -136,7 +182,14 @@
             , #{languageBeginDate}
             , #{languageEndDate}
 
-        )
+        ) ON DUPLICATE KEY UPDATE
+
+            LANG_NM = #{languageName}
+            , LANG_GRADE = #{languageGrade}
+            , LANG_HOST = #{languageHost}
+            , LANG_NUM = #{languageNumber}
+            , LANG_BEG_DT = #{languageBeginDate}
+            , LANG_END_DT = #{languageEndDate}
 
     </insert>
 
@@ -144,7 +197,8 @@
 
         INSERT INTO t_resume_certificate (
 
-            RESUME_ID
+            CERT_ID
+            , RESUME_ID
             , CERT_NM
             , CERT_GRADE
             , CERT_HOST
@@ -154,7 +208,8 @@
 
         ) VALUES (
 
-            #{resumeId}
+            #{certificateId}
+            , #{resumeId}
             , #{certificateName}
             , #{certificateGrade}
             , #{certificateHost}
@@ -162,7 +217,15 @@
             , #{certificateBeginDate}
             , #{certificateEndDate}
 
-        )
+        ) ON DUPLICATE KEY UPDATE
+
+            CERT_NM = #{certificateName}
+            , CERT_GRADE = #{certificateGrade}
+            , CERT_HOST = #{certificateHost}
+            , CERT_NUM = #{certificateNumber}
+            , CERT_BEG_DT = #{certificateBeginDate}
+            , CERT_END_DT = #{certificateEndDate}
+
 
     </insert>
 
@@ -170,7 +233,8 @@
 
         INSERT INTO t_resume_career (
 
-            RESUME_ID
+            CAREER_ID
+            , RESUME_ID
             , CAREER_COMP
             , CAREER_BEG_DT
             , CAREER_END_DT
@@ -181,7 +245,8 @@
 
         ) VALUES (
 
-            #{resumeId}
+            #{careerId}
+            , #{resumeId}
             , #{careerCompany}
             , #{careerBeginDate}
             , #{careerEndDate}
@@ -190,7 +255,15 @@
             , #{careerTask}
             , #{careerResign}
 
-        )
+        ) ON DUPLICATE KEY UPDATE
+
+            CAREER_COMP = #{careerCompany}
+            , CAREER_BEG_DT = #{careerBeginDate}
+            , CAREER_END_DT = #{careerEndDate}
+            , CAREER_POSITION = #{careerPosition}
+            , CAREER_DEPARTMENT = #{careerDepartment}
+            , CAREER_TASK = #{careerTask}
+            , CAREER_RESIGN = #{careerResign}
 
 
     </insert>
@@ -199,7 +272,8 @@
 
         INSERT INTO t_resume_activity (
 
-            RESUME_ID
+            ACTV_ID
+            , RESUME_ID
             , ACTV_NM
             , ACTV_HOST
             , ACTV_BEG_DT
@@ -208,14 +282,21 @@
 
         ) VALUES (
 
-            #{resumeId}
+            #{activityId}
+            , #{resumeId}
             , #{activityName}
             , #{activityHost}
             , #{activityBeginDate}
             , #{activityEndDate}
             , #{activityContent}
 
-        )
+        ) ON DUPLICATE KEY UPDATE
+
+            ACTV_NM = #{activityName}
+            , ACTV_HOST = #{activityHost}
+            , ACTV_BEG_DT = #{activityBeginDate}
+            , ACTV_END_DT = #{activityEndDate}
+            , ACTV_CONTENT = #{activityContent}
 
     </insert>
 
@@ -223,7 +304,8 @@
 
         INSERT INTO t_resume_etc (
 
-            RESUME_ID
+            ETC_ID
+            , RESUME_ID
             , ETC_NM
             , ETC_BEG_DT
             , ETC_END_DT
@@ -231,19 +313,25 @@
 
         ) VALUES (
 
-            #{resumeId}
+            #{etcId}
+            , #{resumeId}
             , #{etcName}
             , #{etcBeginDate}
             , #{etcEndDate}
             , #{etcContent}
 
-        )
+        ) ON DUPLICATE KEY UPDATE
+
+            ETC_NM = #{etcName}
+            , ETC_BEG_DT = #{etcBeginDate}
+            , ETC_END_DT = #{etcEndDate}
+            , ETC_CONTENT = #{etcContent}
 
     </insert>
 
 <!--
 ====================================================================================================================
-                                              이력서 작성
+                                              이력서 작성, 수정처리
 ====================================================================================================================
 -->
 
@@ -396,19 +484,132 @@
 
 
 
-
-    <!--이력서 수정-->
-    <update id="updateResume">
-
-    </update>
+<!--
+====================================================================================================================
+                                              이력서 삭제 : CASCADE
+====================================================================================================================
+-->
 
     <!--이력서 삭제-->
     <delete id="deleteResume">
-
+        DELETE FROM t_resume
+        WHERE USER_ID = #{userId}
     </delete>
 
+<!--
+====================================================================================================================
+                                              이력서 삭제 : CASCADE
+====================================================================================================================
+-->
 
 
+
+<!--
+====================================================================================================================
+                                              이력서 삭제 : NONE CASCADE
+====================================================================================================================
+-->
+
+    <delete id="deleteResumeNoneCascade">
+        DELETE FROM t_resume
+        WHERE RESUME_ID = #{resumeId}
+    </delete>
+
+    <delete id="deleteResumePersonalNoneCascade">
+        DELETE FROM t_resume_personal
+        WHERE RESUME_ID = #{resumeId}
+    </delete>
+
+    <delete id="deleteResumeHighSchoolNoneCascade">
+        DELETE FROM t_resume_highschool
+        WHERE RESUME_ID = #{resumeId}
+    </delete>
+
+    <delete id="deleteResumeUniversityNoneCascade">
+        DELETE FROM t_resume_university
+        WHERE RESUME_ID = #{resumeId}
+    </delete>
+
+    <delete id="deleteResumeLanguageNoneCascade">
+        DELETE FROM t_resume_language
+        WHERE RESUME_ID = #{resumeId}
+    </delete>
+
+    <delete id="deleteResumeCertificateNoneCascade">
+        DELETE FROM t_resume_certificate
+        WHERE RESUME_ID = #{resumeId}
+    </delete>
+
+    <delete id="deleteResumeCareerNoneCascade">
+        DELETE FROM t_resume_career
+        WHERE RESUME_ID = #{resumeId}
+    </delete>
+
+    <delete id="deleteResumeActivityNoneCascade">
+        DELETE FROM t_resume_activity
+        WHERE RESUME_ID = #{resumeId}
+    </delete>
+
+    <delete id="deleteResumeEtcNoneCascade">
+        DELETE FROM t_resume_etc
+        WHERE RESUME_ID = #{resumeId}
+    </delete>
+
+<!--
+====================================================================================================================
+                                              이력서 삭제 : NONE CASCADE
+====================================================================================================================
+-->
+
+
+<!--
+====================================================================================================================
+                                              이력서 항목별 삭제
+====================================================================================================================
+-->
+
+
+    <!--이력서 항목 삭제 : 대학교, 대학원-->
+    <delete id="deleteResumeUniversity" parameterType="int">
+        DELETE FROM t_resume_university
+        WHERE UNIV_ID = #{universityId}
+    </delete>
+
+    <!--이력서 항목 삭제 : 어학시험-->
+    <delete id="deleteResumeLanguage" parameterType="int">
+        DELETE FROM t_resume_language
+        WHERE LANG_ID = #{languageId}
+    </delete>
+
+    <!--이력서 항목 삭제 : 자격증-->
+    <delete id="deleteResumeCertificate" parameterType="int">
+        DELETE FROM t_resume_certificate
+        WHERE CERT_ID = #{certificateId}
+    </delete>
+
+    <!--이력서 항목 삭제 : 경력-->
+    <delete id="deleteResumeCareer" parameterType="int">
+        DELETE FROM t_resume_career
+        WHERE CAREER_ID = #{careerId}
+    </delete>
+
+    <!--이력서 항목 삭제 : 활동사항-->
+    <delete id="deleteResumeActivity" parameterType="int">
+        DELETE FROM t_resume_activity
+        WHERE ACTV_ID = #{activityId}
+    </delete>
+
+    <!--이력서 항목 삭제 : 기타사항-->
+    <delete id="deleteResumeEtc" parameterType="int">
+        DELETE FROM t_resume_etc
+        WHERE ETC_ID = #{etcId}
+    </delete>
+
+<!--
+====================================================================================================================
+                                              이력서 항목별 삭제
+====================================================================================================================
+-->
 
 <!--
 ====================================================================================================================

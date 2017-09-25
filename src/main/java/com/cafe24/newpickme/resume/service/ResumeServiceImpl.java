@@ -88,12 +88,84 @@ public class ResumeServiceImpl implements ResumeService {
     @Override
     public void update(Resume resume) {
 
+        int resumeId = resume.getResumeId();
+
+        // 이력서 정보
+        resumeDao.insertResume(resume);
+
+        // 개인신상
+        Personal personal = resume.getPersonal();
+        personal.setResumeId(resumeId);
+        resumeDao.insertResumePersonal(personal);
+
+        // 고등학교
+        HighSchool highSchool = resume.getHighSchool();
+        highSchool.setResumeId(resumeId);
+        resumeDao.insertResumeHighSchool(highSchool);
+
+        // 대학교, 대학원
+        List<University> universities = resume.getUniversities();
+        for (University university : universities) {
+            university.setResumeId(resumeId);
+            resumeDao.insertResumeUniversity(university);
+        }
+
+        // 어학시험
+        // 자격증
+        // 경력
+        // 직무관련활동
+        // 기타사항
+
     }
 
-    /*이력서 삭제*/
+    /*이력서 삭제 Cascade */
     @Override
-    public void delete(int userId, int resumeId) {
+    public void deleteResume(int userId) {
+        resumeDao.deleteResume(userId);
+    }
 
+    /*이력서 삭제 None Cascade*/
+    @Override
+    public void deleteResumeNoneCascade(int resumeId) {
+        resumeDao.deleteResumeEtcNoneCascade(resumeId);
+        resumeDao.deleteResumeActivityNoneCascade(resumeId);
+        resumeDao.deleteResumeCareerNoneCascade(resumeId);
+        resumeDao.deleteResumeCertificateNoneCascade(resumeId);
+        resumeDao.deleteResumeLanguageNoneCascade(resumeId);
+        resumeDao.deleteResumeUniversityNoneCascade(resumeId);
+        resumeDao.deleteResumeHighSchoolNoneCascade(resumeId);
+        resumeDao.deleteResumePersonalNoneCascade(resumeId);
+        resumeDao.deleteResumeNoneCascade(resumeId);
+    }
+
+    @Override
+    public void deleteResumeUniversity(int universityId) {
+        resumeDao.deleteResumeUniversity(universityId);
+    }
+
+    @Override
+    public void deleteResumeLanguage(int languageId) {
+        resumeDao.deleteResumeLanguage(languageId);
+    }
+
+    @Override
+    public void deleteResumeCertificate(int certificateId) {
+        resumeDao.deleteResumeCertificate(certificateId);
+    }
+
+    @Override
+    public void deleteResumeCareer(int careerId) {
+        resumeDao.deleteResumeCareer(careerId);
+    }
+
+    @Override
+    public void deleteResumeActivity(int activityId) {
+        resumeDao.deleteResumeActivity(activityId);
+    }
+
+    @Override
+    public void deleteResumeEtc(int etcId) {
+        resumeDao.deleteResumeEtc(etcId);
     }
 
 

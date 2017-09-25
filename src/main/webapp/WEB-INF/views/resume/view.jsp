@@ -32,11 +32,38 @@
         <!--본문 페이지 내용-->
         <section class="content">
             <!-- 페이지 내용 -->
-            <form id="resumeCreateForm" action="${path}/resume/create" method="post">
+            <form id="resumeUpdateForm" action="${path}/resume/${sessionScope.userId}/update" method="post">
                 <div class="row">
                     <section class="col-lg-8">
-                        <label for="resumeName">이력서 이름</label>
-                        <input type="text" class="form-control" id="resumeName" name="resumeName">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"><i class="fa fa-user-secret"></i> 이력서 정보</h3>
+                                <div class="box-tools">
+                                    <a href="${path}/resume/${sessionScope.userId}/delete" type="button" class="btn btn-primary"><i class="fa fa-remove"></i> 이력서 초기화(cascade)</a>
+                                    <a href="${path}/resume/${sessionScope.userId}/delete/${resume.resumeId}" type="button" class="btn btn-primary"><i class="fa fa-remove"></i> 이력서 초기화(none cascade)</a>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="form-group col-sm-4">
+                                    <label for="resumeName">이력서 이름</label>
+                                    <input type="text" class="form-control" id="resumeName" name="resumeName" value="${resume.resumeName}">
+                                    <input type="hidden" class="form-control" id="resumeId" name="resumeId" value="${resume.resumeId}">
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <strong> 이력서 작성일자</strong>
+                                    <p class="text-muted">
+                                        <fmt:formatDate value="${resume.resumeWriteDate}" pattern="yyyy-MM-dd a HH:mm:ss"/>
+                                    </p>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <strong> 이력서 수정일자</strong>
+                                    <p class="text-muted">
+                                        <fmt:formatDate value="${resume.resumeUpdateDate}" pattern="yyyy-MM-dd a HH:mm:ss"/>
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="box box-primary">
                             <div class="box-header with-border">
                                 <h3 class="box-title"><i class="fa fa-user-secret"></i> 개인 신상 정보</h3>
@@ -66,6 +93,7 @@
                                             <div class="form-group">
                                                 <label for="personalName">이름</label>
                                                 <input type="text" class="form-control" id="personalName" name="personal.personalName" value="${resume.personal.personalName}">
+                                                <input type="hidden" class="form-control" id="personalId" name="personal.personalId" value="${resume.personal.personalId}">
                                             </div>
                                         </div>
                                         <div class="col-sm-4">
@@ -124,6 +152,7 @@
                                             <div class="form-group">
                                                 <label for="highSchoolName">고등학교명</label>
                                                 <input type="text" class="form-control" id="highSchoolName" name="highSchool.highSchoolName" value="${resume.highSchool.highSchoolName}">
+                                                <input type="hidden" class="form-control" id="highSchoolId" name="highSchool.highSchoolId" value="${resume.highSchool.highSchoolId}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
@@ -171,6 +200,7 @@
                                             <div class="form-group">
                                                 <label for="universityName">대학교명</label>
                                                 <input type="text" class="form-control" id="universityName" name="universityName" value="${university.universityName}">
+                                                <input type="hidden" class="form-control" id="universityId" name="universityId" value="${university.universityId}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
@@ -217,6 +247,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                    <c:choose>
+                                        <c:when test="${i.last}">
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <hr>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </div>
                         </div>
@@ -237,6 +275,7 @@
                                             <div class="form-group">
                                                 <label for="languageName">어학시험명</label>
                                                 <input type="text" class="form-control" id="languageName" name="languageName" value="${language.languageName}">
+                                                <input type="hidden" class="form-control" id="languageId" name="languageId" value="${language.languageId}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
@@ -271,6 +310,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                    <c:choose>
+                                        <c:when test="${i.last}">
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <hr>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </div>
                         </div>
@@ -291,6 +338,7 @@
                                             <div class="form-group">
                                                 <label for="certificateName">자격증명</label>
                                                 <input type="text" class="form-control" id="certificateName" name="certificateName" value="${certificate.certificateName}">
+                                                <input type="hidden" class="form-control" id="certificateId" name="certificateId" value="${certificate.certificateId}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
@@ -325,6 +373,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                    <c:choose>
+                                        <c:when test="${i.last}">
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <hr>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </div>
                         </div>
@@ -345,6 +401,7 @@
                                             <div class="form-group">
                                                 <label for="careerCompany">회사명</label>
                                                 <input type="text" class="form-control" id="careerCompany" name="careerCompany" value="${career.careerCompany}">
+                                                <input type="hidden" class="form-control" id="careerId" name="careerId" value="${career.careerId}">
                                             </div>
                                         </div>
                                         <div class="col-sm-1">
@@ -385,6 +442,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                    <c:choose>
+                                        <c:when test="${i.last}">
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <hr>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </div>
                         </div>
@@ -405,6 +470,7 @@
                                             <div class="form-group">
                                                 <label for="activityName">활동명</label>
                                                 <input type="text" class="form-control" id="activityName" name="activityName" value="${activity.activityName}">
+                                                <input type="hidden" class="form-control" id="activityId" name="activityId" value="${activity.activityId}">
                                             </div>
                                         </div>
                                         <div class="col-sm-2">
@@ -433,6 +499,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                    <c:choose>
+                                        <c:when test="${i.last}">
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <hr>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </div>
                         </div>
@@ -453,6 +527,7 @@
                                             <div class="form-group">
                                                 <label for="etcName">기타사항명</label>
                                                 <input type="text" class="form-control" id="etcName" name="etcName" value="${etc.etcName}">
+                                                <input type="hidden" class="form-control" id="etcId" name="etcId" value="${etc.etcId}">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
@@ -475,13 +550,21 @@
                                         </div>
                                     </div>
                                 </div>
+                                    <c:choose>
+                                        <c:when test="${i.last}">
+
+                                        </c:when>
+                                        <c:otherwise>
+                                            <hr>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:forEach>
                             </div>
                         </div>
                     </section>
                 </div>
             </form>
-            <button type="button" class="btn btn-primary btn-sm resumeSaveBtn"><i class="fa fa-save"></i> 이력서 수정</button>
+            <button type="button" class="btn btn-primary btn-sm resumeUpdateBtn"><i class="fa fa-save"></i> 이력서 수정</button>
         </section>
 
     </div>
@@ -505,8 +588,8 @@
             $(".university:last")
                 .after("<hr>")
                 .clone()
-                .addClass("addUniversity")
                 .find("input[type=text]").val("").end()
+                .find("input[type=hidden]").val("").remove().end()
                 .find("input[type=date]").val("").end()
                 .find("option:first").attr("selected", "selected").end()
                 .appendTo(".universities");
@@ -516,8 +599,28 @@
         // 대학교 삭제 버튼 클릭시
         $(".universityDelBtn").on("click", function () {
 
-            $(".addUniversity:last").remove();
-            $(".universities").find("hr:last").remove();
+            if ( $(".university").length === 1) {
+                alert("대학교 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                var universityId = $(".university:last").find("input[name=universityId]").val();
+                if ( confirm("삭제하시겠습니까?") ) {
+                    if (universityId === "") {
+                        $(".university:last").remove();
+                        $(".universities").find("hr:last").remove();
+                    } else {
+                        $.ajax({
+                            type: "delete",
+                            url: "${path}/resume/${sessionScope.userId}/university/"+universityId+"/delete",
+                            success: function () {
+                                $(".university:last").remove();
+                                $(".universities").find("hr:last").remove();
+                            }
+                        });
+                    }
+                }
+            }
+
+
 
         });
 
@@ -527,8 +630,8 @@
             $(".language:last")
                 .after("<hr>")
                 .clone()
-                .addClass("addLanguage")
                 .find("input[type=text]").val("").end()
+                .find("input[type=hidden]").val("").remove().end()
                 .find("input[type=date]").val("").end()
                 .find("option:first").attr("selected", "selected").end()
                 .appendTo(".languages");
@@ -538,9 +641,26 @@
         // 어학시험 삭제 버튼 클릭시
         $(".languageDelBtn").on("click", function () {
 
-            $(".addLanguage:last").remove();
-            $(".languages").find("hr:last").remove();
-
+            if ( $(".language").length === 1 ) {
+                alert("어학시험 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                var languageId = $(".language:last").find("input[name=languageId]").val();
+                if ( confirm("삭제하시겠습니까?") ) {
+                    if (languageId === "") {
+                        $(".language:last").remove();
+                        $(".languages").find("hr:last").remove();
+                    } else {
+                        $.ajax({
+                            type: "delete",
+                            url: "${path}/resume/${sessionScope.userId}/language/"+languageId+"/delete",
+                            success: function () {
+                                $(".language:last").remove();
+                                $(".languages").find("hr:last").remove();
+                            }
+                        });
+                    }
+                }
+            }
         });
 
         // 자격증 추가 버튼 클릭시
@@ -549,8 +669,8 @@
             $(".certificate:last")
                 .after("<hr>")
                 .clone()
-                .addClass("addCertificate")
                 .find("input[type=text]").val("").end()
+                .find("input[type=hidden]").val("").remove().end()
                 .find("input[type=date]").val("").end()
                 .find("option:first").attr("selected", "selected").end()
                 .appendTo(".certificates");
@@ -560,9 +680,26 @@
         // 자격증 삭제 버튼 클릭시
         $(".certificateDelBtn").on("click", function () {
 
-            $(".addCertificate:last").remove();
-            $(".certificates").find("hr:last").remove();
-
+            if ( $(".certificate").length === 1 ) {
+                alert("자격증 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                var certificateId = $(".certificate:last").find("input[name=certificateId]").val();
+                if ( confirm("삭제하시겠습니까?") ) {
+                    if (certificateId === "") {
+                        $(".certificate:last").remove();
+                        $(".certificates").find("hr:last").remove();
+                    } else {
+                        $.ajax({
+                            type: "delete",
+                            url: "${path}/resume/${sessionScope.userId}/certificate/"+certificateId+"/delete",
+                            success: function () {
+                                $(".certificate:last").remove();
+                                $(".certificates").find("hr:last").remove();
+                            }
+                        });
+                    }
+                }
+            }
         });
 
         // 경력 추가 버튼 클릭시
@@ -571,8 +708,8 @@
             $(".career:last")
                 .after("<hr>")
                 .clone()
-                .addClass("addCareer")
                 .find("input[type=text]").val("").end()
+                .find("input[type=hidden]").val("").remove().end()
                 .find("input[type=date]").val("").end()
                 .find("option:first").attr("selected", "selected").end()
                 .appendTo(".careers");
@@ -582,9 +719,26 @@
         // 경력 삭제 버튼 클릭시
         $(".careerDelBtn").on("click", function () {
 
-            $(".addCareer:last").remove();
-            $(".careers").find("hr:last").remove();
-
+            if ( $(".career").length === 1 ) {
+                alert("경력 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                var careerId = $(".career:last").find("input[name=careerId]").val();
+                if ( confirm("삭제하시겠습니까?") ) {
+                    if (careerId === "") {
+                        $(".career:last").remove();
+                        $(".careers").find("hr:last").remove();
+                    } else {
+                        $.ajax({
+                            type: "delete",
+                            url: "${path}/resume/${sessionScope.userId}/career/"+careerId+"/delete",
+                            success: function () {
+                                $(".career:last").remove();
+                                $(".careers").find("hr:last").remove();
+                            }
+                        });
+                    }
+                }
+            }
         });
 
 
@@ -595,8 +749,8 @@
             $(".activity:last")
                 .after("<hr>")
                 .clone()
-                .addClass("addActivity")
                 .find("input[type=text]").val("").end()
+                .find("input[type=hidden]").val("").remove().end()
                 .find("input[type=date]").val("").end()
                 .find("option:first").attr("selected", "selected").end()
                 .appendTo(".activities");
@@ -606,8 +760,26 @@
         // 활동사항 삭제 버튼 클릭시
         $(".activityDelBtn").on("click", function () {
 
-            $(".addActivity:last").remove();
-            $(".activities").find("hr:last").remove();
+            if ( $(".activity").length === 1 ) {
+                alert("활동사항 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                var activityId = $(".activity:last").find("input[name=activityId]").val();
+                if ( confirm("삭제하시겠습니까?") ) {
+                    if (activityId === "") {
+                        $(".activity:last").remove();
+                        $(".activities").find("hr:last").remove();
+                    } else {
+                        $.ajax({
+                            type: "delete",
+                            url: "${path}/resume/${sessionScope.userId}/activity/"+activityId+"/delete",
+                            success: function () {
+                                $(".activity:last").remove();
+                                $(".activities").find("hr:last").remove();
+                            }
+                        });
+                    }
+                }
+            }
 
         });
 
@@ -617,8 +789,8 @@
             $(".etc:last")
                 .after("<hr>")
                 .clone()
-                .addClass("addEtc")
                 .find("input[type=text]").val("").end()
+                .find("input[type=hidden]").val("").remove().end()
                 .find("input[type=date]").val("").end()
                 .find("option:first").attr("selected", "selected").end()
                 .appendTo(".etcs");
@@ -628,14 +800,33 @@
         // 기타사항 삭제 버튼 클릭시
         $(".etcDelBtn").on("click", function () {
 
-            $(".addEtc:last").remove();
-            $(".etcs").find("hr:last").remove();
+            if ( $(".etc").length === 1 ) {
+                alert("활동사항 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                var etcId = $(".etc:last").find("input[name=etcId]").val();
+                if ( confirm("삭제하시겠습니까?") ) {
+                    if (etcId === "") {
+                        $(".etc:last").remove();
+                        $(".etcs").find("hr:last").remove();
+                    } else {
+                        $.ajax({
+                            type: "delete",
+                            url: "${path}/resume/${sessionScope.userId}/etc/"+etcId+"/delete",
+                            success: function () {
+                                $(".etc:last").remove();
+                                $(".etcs").find("hr:last").remove();
+                            }
+                        });
+                    }
+                }
 
+            }
         });
 
-        $(".resumeSaveBtn").on("click", function () {
+        $(".resumeUpdateBtn").on("click", function () {
 
             $(".university").each(function (index) {
+                $(this).find("input[name=universityId]").attr("name", "universities["+index+"].universityId");
                 $(this).find("input[name=universityName]").attr("name", "universities["+index+"].universityName");
                 $(this).find("select[name=universityType]").attr("name", "universities["+index+"].universityType");
                 $(this).find("input[name=universityBeginDate]").attr("name", "universities["+index+"].universityBeginDate");
@@ -646,6 +837,7 @@
             });
 
             $(".language").each(function (index) {
+                $(this).find("input[name=languageId]").attr("name", "languages["+index+"].languageId");
                 $(this).find("input[name=languageName]").attr("name", "languages["+index+"].languageName");
                 $(this).find("input[name=languageGrade]").attr("name", "languages["+index+"].languageGrade");
                 $(this).find("input[name=languageHost]").attr("name", "languages["+index+"].languageHost");
@@ -655,6 +847,7 @@
             });
 
             $(".certificate").each(function (index) {
+                $(this).find("input[name=certificateId]").attr("name", "certificates["+index+"].certificateId");
                 $(this).find("input[name=certificateName]").attr("name", "certificates["+index+"].certificateName");
                 $(this).find("input[name=certificateGrade]").attr("name", "certificates["+index+"].certificateGrade");
                 $(this).find("input[name=certificateHost]").attr("name", "certificates["+index+"].certificateHost");
@@ -664,6 +857,7 @@
             });
 
             $(".career").each(function (index) {
+                $(this).find("input[name=careerId]").attr("name", "careers["+index+"].careerId");
                 $(this).find("input[name=careerCompany]").attr("name", "careers["+index+"].careerCompany");
                 $(this).find("input[name=careerBeginDate]").attr("name", "careers["+index+"].careerBeginDate");
                 $(this).find("input[name=careerEndDate]").attr("name", "careers["+index+"].careerEndDate");
@@ -674,6 +868,7 @@
             });
 
             $(".activity").each(function (index) {
+                $(this).find("input[name=activityId]").attr("name", "activities["+index+"].activityId");
                 $(this).find("input[name=activityName]").attr("name", "activities["+index+"].activityName");
                 $(this).find("input[name=activityHost]").attr("name", "activities["+index+"].activityHost");
                 $(this).find("input[name=activityBeginDate]").attr("name", "activities["+index+"].activityBeginDate");
@@ -682,17 +877,15 @@
             });
 
             $(".etc").each(function (index) {
+                $(this).find("input[name=etcId]").attr("name", "etcs["+index+"].etcId");
                 $(this).find("input[name=etcName]").attr("name", "etcs["+index+"].etcName");
                 $(this).find("input[name=etcBeginDate]").attr("name", "etcs["+index+"].etcBeginDate");
                 $(this).find("input[name=etcEndDate]").attr("name", "etcs["+index+"].etcEndDate");
                 $(this).find("input[name=etcContent]").attr("name", "etcs["+index+"].etcContent");
             });
 
-            $("#resumeCreateForm").submit();
+            $("#resumeUpdateForm").submit();
         });
-
-
-
     });
 
 </script>

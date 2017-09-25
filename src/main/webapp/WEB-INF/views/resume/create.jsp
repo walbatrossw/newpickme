@@ -493,8 +493,8 @@
             $(".university:last")
                 .after("<hr>")
                 .clone()
-                .addClass("addUniversity")
                 .find("input[type=text]").val("").end()
+                .find("input[type=hidden]").val("").end()
                 .find("input[type=date]").val("").end()
                 .find("option:first").attr("selected", "selected").end()
                 .appendTo(".universities");
@@ -504,8 +504,12 @@
         // 대학교 삭제 버튼 클릭시
         $(".universityDelBtn").on("click", function () {
 
-            $(".addUniversity:last").remove();
-            $(".universities").find("hr:last").remove();
+            if ( $(".university").length === 1) {
+                alert("대학교 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                $(".university:last").remove();
+                $(".universities").find("hr:last").remove();
+            }
 
         });
 
@@ -515,8 +519,8 @@
             $(".language:last")
                 .after("<hr>")
                 .clone()
-                .addClass("addLanguage")
                 .find("input[type=text]").val("").end()
+                .find("input[type=hidden]").val("").end()
                 .find("input[type=date]").val("").end()
                 .find("option:first").attr("selected", "selected").end()
                 .appendTo(".languages");
@@ -526,8 +530,13 @@
         // 어학시험 삭제 버튼 클릭시
         $(".languageDelBtn").on("click", function () {
 
-            $(".addLanguage:last").remove();
-            $(".languages").find("hr:last").remove();
+            if ( $(".language").length === 1 ) {
+                alert("어학시험 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                $(".language:last").remove();
+                $(".languages").find("hr:last").remove();
+            }
+
 
         });
 
@@ -537,8 +546,8 @@
             $(".certificate:last")
                 .after("<hr>")
                 .clone()
-                .addClass("addCertificate")
                 .find("input[type=text]").val("").end()
+                .find("input[type=hidden]").val("").end()
                 .find("input[type=date]").val("").end()
                 .find("option:first").attr("selected", "selected").end()
                 .appendTo(".certificates");
@@ -548,9 +557,12 @@
         // 자격증 삭제 버튼 클릭시
         $(".certificateDelBtn").on("click", function () {
 
-            $(".addCertificate:last").remove();
-            $(".certificates").find("hr:last").remove();
-
+            if ( $(".certificate").length === 1 ) {
+                alert("자격증 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                $(".certificate:last").remove();
+                $(".certificates").find("hr:last").remove();
+            }
         });
 
         // 경력 추가 버튼 클릭시
@@ -559,8 +571,8 @@
             $(".career:last")
                 .after("<hr>")
                 .clone()
-                .addClass("addCareer")
                 .find("input[type=text]").val("").end()
+                .find("input[type=hidden]").val("").end()
                 .find("input[type=date]").val("").end()
                 .find("option:first").attr("selected", "selected").end()
                 .appendTo(".careers");
@@ -570,9 +582,12 @@
         // 경력 삭제 버튼 클릭시
         $(".careerDelBtn").on("click", function () {
 
-            $(".addCareer:last").remove();
-            $(".careers").find("hr:last").remove();
-
+            if ( $(".career").length === 1 ) {
+                alert("경력 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                $(".career:last").remove();
+                $(".careers").find("hr:last").remove();
+            }
         });
 
 
@@ -583,8 +598,8 @@
             $(".activity:last")
                 .after("<hr>")
                 .clone()
-                .addClass("addActivity")
                 .find("input[type=text]").val("").end()
+                .find("input[type=hidden]").val("").end()
                 .find("input[type=date]").val("").end()
                 .find("option:first").attr("selected", "selected").end()
                 .appendTo(".activities");
@@ -594,8 +609,12 @@
         // 활동사항 삭제 버튼 클릭시
         $(".activityDelBtn").on("click", function () {
 
-            $(".addActivity:last").remove();
-            $(".activities").find("hr:last").remove();
+            if ( $(".activity").length === 1 ) {
+                alert("활동사항 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                $(".activity:last").remove();
+                $(".activities").find("hr:last").remove();
+            }
 
         });
 
@@ -605,8 +624,8 @@
             $(".etc:last")
                 .after("<hr>")
                 .clone()
-                .addClass("addEtc")
                 .find("input[type=text]").val("").end()
+                .find("input[type=hidden]").val("").end()
                 .find("input[type=date]").val("").end()
                 .find("option:first").attr("selected", "selected").end()
                 .appendTo(".etcs");
@@ -616,9 +635,12 @@
         // 기타사항 삭제 버튼 클릭시
         $(".etcDelBtn").on("click", function () {
 
-            $(".addEtc:last").remove();
-            $(".etcs").find("hr:last").remove();
-
+            if ( $(".etc").length === 1 ) {
+                alert("활동사항 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                $(".etc:last").remove();
+                $(".etcs").find("hr:last").remove();
+            }
         });
 
         $(".resumeSaveBtn").on("click", function () {
