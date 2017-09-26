@@ -14,6 +14,12 @@ public class ResumeDaoImpl implements ResumeDao{
     @Autowired
     SqlSession sqlSession;
 
+    /*이력서 작성여부*/
+    @Override
+    public Boolean isResume(int userId) {
+        return sqlSession.selectOne("resume.isResume", userId);
+    }
+
     /*이력서 작성*/
     @Override
     public void insertResume(Resume resume) {

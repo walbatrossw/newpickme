@@ -14,6 +14,12 @@ public class ResumeServiceImpl implements ResumeService {
     @Autowired
     ResumeDao resumeDao;
 
+    /*이력서 작성여부*/
+    @Override
+    public boolean isResume(int userId) {
+        return resumeDao.isResume(userId);
+    }
+
     /*이력서 작성*/
     @Override
     public void create(Resume resume, HttpSession session) {
@@ -77,6 +83,8 @@ public class ResumeServiceImpl implements ResumeService {
         }
 
     }
+
+
 
     /*이력서 보기*/
     @Override

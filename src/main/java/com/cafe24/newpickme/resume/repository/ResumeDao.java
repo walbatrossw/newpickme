@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface ResumeDao {
 
+
+    /*이력서 작성여부*/
+    Boolean isResume(int userId);
+
     /*이력서 작성*/
     void insertResume(Resume resume);
 

@@ -29,9 +29,14 @@ public class ResumeController {
     *
     * */
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String create() {
-
+    public String create(HttpSession session) {
+        int userId = (Integer) session.getAttribute("userId");
+        boolean isResume = resumeService.isResume(userId);
+        if (isResume) {
+            return "redirect:/resume/"+userId+"/view";
+        }
         return "/resume/create";
+
     }
 
     /*

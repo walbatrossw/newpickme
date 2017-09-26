@@ -6,6 +6,10 @@ import javax.servlet.http.HttpSession;
 
 public interface ResumeService {
 
+
+    /*이력서 작성여부 확인*/
+    boolean isResume(int userId);
+
     /*이력서 작성*/
     void create(Resume resume, HttpSession session);
 
