@@ -6,48 +6,47 @@ import java.util.List;
 
 public interface RecruitDao {
 
-    /*채용 입력*/
+    // 직무 대분류 리스트
+    List<JobCategory1> selectJobCategory1s();
+
+    // 직무 소분류 리스트
+    List<JobCategory2> selectJobCategory2sByJobCategory1Id(int jobCategory1Id);
+
+    // 채용 입력 처리
     void insert(Recruit recruit);
 
-    /*채용 직무 입력*/
+    // 채용직무 입력 처리
     void insert(RecruitJob recruitJob);
 
-    /*채용 직무별 자기소개서 항목*/
+    // 채용직무별 자기소개서 항목 입력 처리
     void insert(CoverLetterArticle coverLetterArticle);
 
-    /*직무 대분류 목록*/
-    List<JobCategory1> selectListJobCategory1();
+    // 채용 목록
+    List<Recruit> selectRecruits();
 
-    /*직무 소분류 목록*/
-    List<JobCategory2> selectListJobCategory2(int jobCategory1Id);
+    // 채용 상세 보기
+    Recruit selectRecruitByRecruitId(int recruitId);
 
-    /*기업 아이디*/
-    int selectCompanyIdByCompanyName(String companyName);
-
-    /*채용 목록*/
-    List<Recruit> selectListRecruits();
-
-    /*채용 상세*/
-    Recruit selectOneByRecruitId(int recruitId);
-
-    /*채용 직무 리스트*/
-    List<RecruitJob> selectRecruitJobsByRecruitId(int recruitId);
-
-    /*채용 직무별 자소서 리스트*/
-    List<CoverLetterArticle> selectCoverLetterArticlesByRecruitJobId(int recruitJobId);
-
-    /*채용 수정*/
+    // 채용 수정 처리
     void updateRecruit(Recruit recruit);
 
-    /*채용 삭제*/
-    void deleteRecruit(int recruitId);
-
-    /*채용직무 수정*/
+    // 채용직무 수정 처리 1 - 직무 일괄 수정
     void updateRecruitJob(RecruitJob recruitJob);
 
-    /*채용직무별 자기소개서 항목 삭제*/
+    // 채용직무 수정 처리 2 - 직무 추가
+    void createRecruitJob(RecruitJob recruitJob);
+
+    // 채용 삭제처리
+    void deleteRecruit(int recruitId);
+
+    // 채용직무 삭제처리
+    void deleteRecruitJob(int recruitJobId);
+
+    // 채용직무별 자기소개서 삭제 처리
+    void deleteCoverLetterArticle(int coverLetterArticleId);
+
+    // 채용직무별 자기소개서 항목 일괄 삭제 처리
     void deleteCoverLetterArticles(int recruitJobId);
 
-    /*채용 직무 삭제*/
-    void deleteRecruitJob(int recruitJobId);
+    // 채용 달력 페이지
 }

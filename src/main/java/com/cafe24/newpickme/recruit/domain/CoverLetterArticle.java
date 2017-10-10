@@ -46,7 +46,6 @@ public class CoverLetterArticle {
                 "coverLetterArticleId=" + coverLetterArticleId +
                 ", coverLetterArticleTitle='" + coverLetterArticleTitle + '\'' +
                 ", recruitJobId=" + recruitJobId +
-                ", recruitJob=" + recruitJob +
                 '}';
     }
 }

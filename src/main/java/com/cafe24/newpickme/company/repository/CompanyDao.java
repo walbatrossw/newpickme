@@ -9,10 +9,10 @@ import java.util.List;
 public interface CompanyDao {
 
     /*기업정보 등록 페이지 : 업종대분류 목록*/
-    List<IndustryCategory1> selectListIndustryCategory1();
+    List<IndustryCategory1> selectIndustryCategory1s();
 
     /*기업정보 등록 페이지 : 업종소분류 목록*/
-    List<IndustryCategory2> selectListIndustryCategory2ByIndustryCategory1Id(int industryCategory1Id);
+    List<IndustryCategory2> selectIndustryCategory2sByIndustryCategory1Id(int industryCategory1Id);
 
     /*기업정보 등록 처리*/
     void insert(Company company);
@@ -29,4 +29,6 @@ public interface CompanyDao {
     /*기업정보 삭제*/
     void deleteCompanyInfo(int companyId);
 
+    /*기업 ID 조회*/
+    int selectCompanyIdByCompanyName(String companyName);
 }

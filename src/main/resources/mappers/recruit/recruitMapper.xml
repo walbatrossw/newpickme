@@ -5,84 +5,94 @@
 
 <mapper namespace="recruit">
 
+<!--
+========================================================================================================================
+                        채용, 채용직무, 채용직무별 자기소개서 항목 INSERT / UPDATE
+========================================================================================================================
+-->
     <!--채용 입력-->
     <insert id="insertRecruit" parameterType="Recruit" useGeneratedKeys="true" keyProperty="recruitId">
         INSERT INTO t_recruit (
-            COMP_ID
+            RECR_ID
+            , COMP_ID
             , RECR_NM
+            , RECR_IMAGE_NM
             , RECR_BEG_DT
             , RECR_END_DT
             , RECR_WRT_DT
             , RECR_UDT_DT
             , ADMIN_ID
         ) VALUES (
-            #{companyId}
+            #{recruitId}
+            , #{companyId}
             , #{recruitName}
+            , #{recruitImageName}
             , #{recruitBeginDate}
             , #{recruitEndDate}
             , NOW()
             , NOW(),
             #{adminId}
-        )
+        ) ON DUPLICATE KEY UPDATE
+            RECR_NM = #{recruitName}
+            <if test="recruitImageName != null">
+                , RECR_IMAGE_NM = #{recruitImageName}
+            </if>
+            , RECR_BEG_DT = #{recruitBeginDate}
+            , RECR_END_DT = #{recruitEndDate}
+            , RECR_UDT_DT = NOW()
+            , ADMIN_ID = #{adminId}
     </insert>
 
     <!--채용 직무 입력-->
     <insert id="insertRecruitJob" parameterType="RecruitJob" useGeneratedKeys="true" keyProperty="recruitJobId">
         INSERT INTO t_recruit_job (
-            RECR_ID
+            RECR_JOB_ID
+            , RECR_ID
             , JOB_CATE2_ID
             , RECR_JOB_TYPE
             , RECR_JOB_EDU
             , RECR_JOB_DETAIL
         ) VALUES (
-            #{recruitId}
+            #{recruitJobId}
+            , #{recruitId}
             , #{jobCategory2Id}
             , #{recruitJobType}
             , #{recruitJobEdu}
             , #{recruitJobDetail}
-        )
+        ) ON DUPLICATE KEY UPDATE
+            JOB_CATE2_ID = #{jobCategory2Id}
+            , RECR_JOB_TYPE = #{recruitJobType}
+            , RECR_JOB_EDU = #{recruitJobEdu}
+            , RECR_JOB_DETAIL = #{recruitJobDetail}
     </insert>
 
     <!--채용 직무별 자기소개서 항목 입력-->
     <insert id="insertCoverLetterArticle" parameterType="CoverLetterArticle" useGeneratedKeys="true" keyProperty="coverLetterArticleId">
         INSERT INTO t_recruit_job_coverletter_article (
-            RECR_JOB_ID
+            CVLT_ARTICLE_ID
+            , RECR_JOB_ID
             , CVLT_ARTICLE_TITLE
         ) VALUES (
-            #{recruitJobId}
+            #{coverLetterArticleId}
+            , #{recruitJobId}
             , #{coverLetterArticleTitle}
-        )
+        ) ON DUPLICATE KEY UPDATE
+            CVLT_ARTICLE_TITLE = #{coverLetterArticleTitle}
     </insert>
 
-
     <!--직무 대분류 목록-->
-    <select id="selectListJobCategory1" resultMap="jobCategory1ResultMap">
-
+    <select id="selectJobCategory1s" resultMap="jobCategory1ResultMap">
         SELECT * FROM t_job_category1
-
     </select>
 
     <!--직무 소분류 목록-->
-    <select id="selectListJobCategory2" resultMap="jobCategory2ResultMap">
-
+    <select id="selectJobCategory2s" resultMap="jobCategory2ResultMap">
         SELECT * FROM t_job_category2
         WHERE JOB_CATE1_ID = #{jobCategory1Id}
-
-    </select>
-
-    <!--기업 아이디-->
-    <select id="selectCompanyIdByCompanyName" resultType="int">
-
-        SELECT
-            COMP_ID
-        FROM t_company
-        WHERE COMP_NM = #{companyName}
-
     </select>
 
     <!--채용 목록-->
-    <select id="selectListRecruits" resultMap="recruitResultMap">
-
+    <select id="selectRecruits" resultMap="recruitResultMap">
         SELECT
             REC.RECR_ID
             , REC.COMP_ID
@@ -102,18 +112,16 @@
             REC.COMP_ID = CPY.COMP_ID
             AND REC.ADMIN_ID = ADM.ADMIN_ID
         ORDER BY REC.RECR_WRT_DT ASC
-
-
     </select>
 
 
     <!--채용 상세-->
-    <select id="selectOneByRecruitId" resultMap="recruitResultMap">
-
+    <select id="selectRecruitByRecruitId" resultMap="recruitResultMap">
         SELECT
             REC.RECR_ID
             , REC.COMP_ID
             , REC.RECR_NM
+            , REC.RECR_IMAGE_NM
             , REC.RECR_BEG_DT
             , REC.RECR_END_DT
             , REC.RECR_WRT_DT
@@ -129,12 +137,10 @@
             REC.COMP_ID = CPY.COMP_ID
             AND REC.ADMIN_ID = ADM.ADMIN_ID
             AND RECR_ID = #{recruitId}
-
     </select>
 
-    <!--채용 직무 목록-->
+    <!--채용직무 목록-->
     <select id="selectRecruitJobsByRecruitId" resultMap="recruitJobResultMap">
-
         SELECT
             RECJ.RECR_JOB_ID
             , RECJ.RECR_ID
@@ -149,24 +155,20 @@
             t_recruit_job AS RECJ
             , t_job_category1 AS JCT1
             , t_job_category2 AS JCT2
-
         WHERE
             RECJ.JOB_CATE2_ID = JCT2.JOB_CATE2_ID
             AND JCT2.JOB_CATE1_ID = JCT1.JOB_CATE1_ID
             AND RECJ.RECR_ID = #{recruitId}
-
     </select>
 
-    <!--채용 직무별 자소서항목 목록-->
-    <select id="selectListCoverLetterArticles" resultMap="coverLetterArticleResultMap">
-
+    <!--채용직무별 자소서항목 목록-->
+    <select id="selectCoverLetterArticlesByRecruitJobId" resultMap="coverLetterArticleResultMap">
         SELECT
             CVLT_ARTICLE_ID
             , RECR_JOB_ID
             , CVLT_ARTICLE_TITLE
         FROM t_recruit_job_coverletter_article
         WHERE RECR_JOB_ID = #{recruitJobId}
-
     </select>
 
     <!--채용 수정-->
@@ -201,12 +203,21 @@
 
     </update>
 
-    <!--채용 직무별 자기소개서 항목 삭제-->
+    <!--채용 직무별 자기소개서 항목 일괄 삭제-->
     <delete id="deleteCoverLetterArticles" parameterType="int">
 
         DELETE FROM
             t_recruit_job_coverletter_article
         WHERE RECR_JOB_ID = #{recruitJobId}
+
+    </delete>
+
+    <!--채용 직무별 자기소개서 항목 삭제-->
+    <delete id="deleteCoverLetterArticle" parameterType="int">
+
+        DELETE FROM
+        t_recruit_job_coverletter_article
+        WHERE CVLT_ARTICLE_ID = #{coverLetterArticleId}
 
     </delete>
 
@@ -229,22 +240,21 @@
     <resultMap id="recruitResultMap" type="Recruit">
 
         <id column="RECR_ID" property="recruitId"/>
-
         <result column="RECR_NM" property="recruitName"/>
+        <result column="RECR_IMAGE_NM" property="recruitImageName"/>
         <result column="RECR_BEG_DT" property="recruitBeginDate"/>
         <result column="RECR_END_DT" property="recruitEndDate"/>
         <result column="RECR_WRT_DT" property="recruitWriteDate"/>
         <result column="RECR_UDT_DT" property="recruitUpdateDate"/>
         <result column="COMP_ID" property="companyId"/>
         <result column="ADMIN_ID" property="adminId"/>
-
         <association property="company" resultMap="companyResultMap"/>
         <association property="admin" resultMap="adminResultMap"/>
-
         <collection property="recruitJobs"
                     javaType="java.util.ArrayList"
                     column="RECR_ID"
                     ofType="RecruitJob"
+                    select="selectRecruitJobsByRecruitId"
         />
 
     </resultMap>
@@ -253,21 +263,18 @@
     <resultMap id="recruitJobResultMap" type="RecruitJob">
 
         <id column="RECR_JOB_ID" property="recruitJobId"/>
-
         <result column="RECR_JOB_TYPE" property="recruitJobType"/>
         <result column="RECR_JOB_EDU" property="recruitJobEdu"/>
         <result column="RECR_JOB_DETAIL" property="recruitJobDetail"/>
         <result column="RECR_ID" property="recruitId"/>
         <result column="JOB_CATE2_ID" property="jobCategory2Id"/>
-
         <association property="recruit" resultMap="recruitResultMap"/>
         <association property="jobCategory2" resultMap="jobCategory2ResultMap"/>
-
         <collection property="coverLetterArticles"
                     javaType="java.util.ArrayList"
                     column="RECR_JOB_ID"
                     ofType="CoverLetterArticle"
-                    select="selectListCoverLetterArticles"
+                    select="selectCoverLetterArticlesByRecruitJobId"
         />
 
     </resultMap>
@@ -276,10 +283,8 @@
     <resultMap id="coverLetterArticleResultMap" type="CoverLetterArticle">
 
         <id column="CVLT_ARTICLE_ID" property="coverLetterArticleId"/>
-
         <result column="CVLT_ARTICLE_TITLE" property="coverLetterArticleTitle"/>
         <result column="RECR_JOB_ID" property="recruitJobId"/>
-
         <association property="recruitJob" resultMap="recruitJobResultMap"/>
 
     </resultMap>

@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="company">
 
     <!--기업정보 등록 페이지 : 업종대분류 목록-->
-    <select id="selectListIndustryCategory1" resultMap="industryCategory1ResultMap">
+    <select id="selectIndustryCategory1s" resultMap="industryCategory1ResultMap">
         SELECT
             INDU_CATE1_ID
             ,INDU_CATE1_NM
@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <!--기업정보 등록 페이지 : 업종소분류 목록-->
-    <select id="selectListIndustryCategory2ByIndustryCategory1Id"
+    <select id="selectIndustryCategory2sByIndustryCategory1Id"
             resultMap="industryCategory2ResultMap">
         SELECT
             INDU_CATE2_ID
@@ -135,6 +135,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         DELETE FROM t_company
         WHERE COMP_ID = #{companyId}
     </delete>
+
+    <!--기업 아이디 조회-->
+    <select id="selectCompanyIdByCompanyName" resultType="int">
+        SELECT
+        COMP_ID
+        FROM t_company
+        WHERE COMP_NM = #{companyName}
+    </select>
 
     <!--기업 resultMap-->
     <resultMap id="companyResultMap" type="Company">

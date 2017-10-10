@@ -25,7 +25,7 @@ public class CompanyController {
     * */
     @RequestMapping(value = "/info/create", method = RequestMethod.GET)
     public String companyCreate(Model model) {
-        model.addAttribute("IndustryCategory1", companyService.getListIndustryCategory1());
+        model.addAttribute("IndustryCategory1", companyService.getIndustryCategory1s());
         return "/company/create";
     }
 
@@ -36,8 +36,8 @@ public class CompanyController {
     * */
     @RequestMapping(value = "/info/industry/category2/{industryCategory1Id}", method = RequestMethod.GET)
     @ResponseBody
-    public List<IndustryCategory2> getIndustryCategory2(@PathVariable int industryCategory1Id) {
-        return companyService.getListIndustryCategory2ByIndustryCategory1Id(industryCategory1Id);
+    public List<IndustryCategory2> getIndustryCategory2s(@PathVariable int industryCategory1Id) {
+        return companyService.getIndustryCategory2sByIndustryCategory1Id(industryCategory1Id);
     }
 
     /* 기업 등록 처리
@@ -74,7 +74,7 @@ public class CompanyController {
     @RequestMapping(value = "/info/{companyId}", method = RequestMethod.GET)
     public String companyInfo(@PathVariable int companyId, Model model) {
         model.addAttribute("companyInfo", companyService.getCompanyInfo(companyId));
-        model.addAttribute("IndustryCategory1", companyService.getListIndustryCategory1());
+        model.addAttribute("IndustryCategory1", companyService.getIndustryCategory1s());
         return "/company/info";
     }
 

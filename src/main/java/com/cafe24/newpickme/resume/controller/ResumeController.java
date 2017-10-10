@@ -19,7 +19,6 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/resume")
 public class ResumeController {
 
-
     @Autowired
     ResumeService resumeService;
 
@@ -36,7 +35,6 @@ public class ResumeController {
             return "redirect:/resume/"+userId+"/view";
         }
         return "/resume/create";
-
     }
 
     /*

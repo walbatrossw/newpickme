@@ -9,10 +9,10 @@ import java.util.List;
 public interface CompanyService {
 
     /*기업정보 등록 페이지 : 업종대분류 목록*/
-    List<IndustryCategory1> getListIndustryCategory1();
+    List<IndustryCategory1> getIndustryCategory1s();
 
     /*기업정보 등록 페이지 : 업종소분류 목록*/
-    List<IndustryCategory2> getListIndustryCategory2ByIndustryCategory1Id(int industryCategory1Id);
+    List<IndustryCategory2> getIndustryCategory2sByIndustryCategory1Id(int industryCategory1Id);
 
     /*기업정보 등록 처리*/
     void create(Company company);
@@ -29,4 +29,6 @@ public interface CompanyService {
     /*기업정보 삭제*/
     void removeCompanyInfo(int companyId);
 
+    /*기업 ID 조회*/
+    int getCompanyIdByCompanyName(String companyName);
 }

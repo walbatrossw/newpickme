@@ -17,14 +17,14 @@ public class CompanyDaoImpl implements CompanyDao{
 
     /*기업정보 등록 페이지 : 업종대분류 목록*/
     @Override
-    public List<IndustryCategory1> selectListIndustryCategory1() {
-        return sqlSession.selectList("company.selectListIndustryCategory1");
+    public List<IndustryCategory1> selectIndustryCategory1s() {
+        return sqlSession.selectList("company.selectIndustryCategory1s");
     }
 
     /*기업정보 등록 페이지 : 업종소분류 목록*/
     @Override
-    public List<IndustryCategory2> selectListIndustryCategory2ByIndustryCategory1Id(int industryCategory1Id) {
-        return sqlSession.selectList("company.selectListIndustryCategory2ByIndustryCategory1Id", industryCategory1Id);
+    public List<IndustryCategory2> selectIndustryCategory2sByIndustryCategory1Id(int industryCategory1Id) {
+        return sqlSession.selectList("company.selectIndustryCategory2sByIndustryCategory1Id", industryCategory1Id);
     }
 
     /*기업정보 등록 처리*/
@@ -55,6 +55,12 @@ public class CompanyDaoImpl implements CompanyDao{
     @Override
     public void deleteCompanyInfo(int companyId) {
         sqlSession.delete("company.deleteCompanyInfo", companyId);
+    }
+
+    /*기업 ID 조회*/
+    @Override
+    public int selectCompanyIdByCompanyName(String companyName) {
+        return sqlSession.selectOne("company.selectCompanyIdByCompanyName", companyName);
     }
 
 }

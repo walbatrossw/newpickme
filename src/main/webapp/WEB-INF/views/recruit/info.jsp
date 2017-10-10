@@ -34,10 +34,9 @@
                 <div class="col-md-3">
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                            <img class="profile-user-img img-responsive img-bordered"
-                                 src="${path}/dist/img/default-company-image.png">
-                            <h3 class="profile-username text-center"><a
-                                    href="/company/info/${recruit.companyId}">${recruit.company.companyName}</a></h3>
+                            <img class="profile-user-img img-responsive img-bordered" src="${path}/dist/img/default-company-image.png">
+                            <h3 class="profile-username text-center">
+                                <a href="/company/info/${recruit.companyId}">${recruit.company.companyName}</a></h3>
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
                                     <strong><i class="fa fa-tag margin-r-5"></i> 채용명</strong>
@@ -65,8 +64,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div class="col-md-9">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
@@ -89,7 +86,7 @@
                                         <th>채용 학력</th>
                                         <th>자소서 항목</th>
                                     </tr>
-                                    <c:forEach varStatus="i" var="recruitJobs" items="${recruitJobs}">
+                                    <c:forEach varStatus="i" var="recruitJobs" items="${recruit.recruitJobs}">
                                         <tr>
                                             <td>${i.index+1}</td>
                                             <td>${recruitJobs.jobCategory2.jobCategory1.jobCategory1Name}</td>
@@ -201,6 +198,23 @@
                             <div class="tab-pane" id="qna">
                                 QNA...
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><i class="fa fa-user-secret"></i> 채용 공고 상세 정보</h3>
+                        </div>
+                        <div class="box-body">
+                            <c:choose>
+                                <c:when test="${recruit.recruitImageName == ''}">
+                                    <img class="profile-user-img img-responsive img-bordered" src="${path}/dist/img/default-company-image.png">
+                                </c:when>
+                                <c:otherwise>
+                                    <img class="img-responsive" src="${path}/dist/img/recruits/${recruit.recruitImageName}">
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                     </div>
                 </div>

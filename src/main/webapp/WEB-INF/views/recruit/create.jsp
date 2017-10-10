@@ -21,7 +21,7 @@
         <section class="content-header">
             <h1>
                 채용 등록
-                <small>페이지 소제목</small>
+                <small>채용기업/채용직무</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 채용</a></li>
@@ -31,181 +31,150 @@
 
         <!--본문 페이지 내용-->
         <section class="content">
-            <form id="recruitCreateForm" action="${path}/recruit/create" method="post">
+            <form id="recruitCreateForm" action="${path}/recruit/create" method="post" enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-md-8">
-
-                        <div class="nav-tabs-custom">
-                            <%--탭 제목--%>
-                            <ul class="nav nav-tabs">
-
-                                <li class="active"><a href="#recruitTab" data-toggle="tab">채용기업</a></li>
-
-                                <li><a href="#recruitJobTab" data-toggle="tab">채용직무 </a></li>
-
-                                <li class="pull-right">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-primary jobAddBtn"><i
-                                                class="fa fa-plus"></i>
-                                            직무 추가
-                                        </button>
-                                        <button type="button" class="btn btn-primary jobDelBtn"><i
-                                                class="fa fa-minus"></i>
-                                            직무 삭제
-                                        </button>
-                                        <button type="button" class="btn btn-success recruitCreateBtn"><i
-                                                class="fa fa-save"></i> 저장
-                                        </button>
-                                    </div>
-                                </li>
-                            </ul>
-                            <%--탭 내용--%>
-                            <div class="tab-content">
-
-                                <%--채용기업--%>
-                                <div class="tab-pane active" id="recruitTab">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group invalidText1" style="color: red"></div>
-                                        </div>
-                                        <div class="col-sm-6">
+                    <section class="col-lg-10">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                              <h3 class="box-title"> 채용 기업 정보 </h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="companyName">기업명</label>
-                                                <input type="text" class="form-control" id="companyName"
-                                                       name="companyName"
-                                                       placeholder="예) 삼성전자">
+                                                <input type="text" class="form-control" id="companyName" name="companyName">
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="recruitName">채용공고명</label>
-                                                <input type="text" class="form-control" id="recruitName"
-                                                       name="recruitName"
-                                                       placeholder="예) 2017 상반기 대졸 신입사원 공채">
+                                                <input type="text" class="form-control" id="recruitName" name="recruitName">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="recruitBeginDate">채용시작일시</label>
+                                                <input type="datetime-local" class="form-control" id="recruitBeginDate" name="recruitBeginDate">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="recruitEndDate">채용마감일시</label>
+                                                <input type="datetime-local" class="form-control" id="recruitEndDate" name="recruitEndDate">
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="recruitBeginDate">채용시작일</label>
-                                                <input type="datetime-local" class="form-control"
-                                                       id="recruitBeginDate"
-                                                       name="recruitBeginDate">
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="recruitEndDate">채용마감일</label>
-                                                <input type="datetime-local" class="form-control"
-                                                       id="recruitEndDate"
-                                                       name="recruitEndDate">
-                                            </div>
-                                        </div>
-                                        <%--<div class="col-sm-12">--%>
-                                            <%--<div class="form-group">--%>
-                                                <%--<label for="recruitCompanyPhotoName">채용 공고 사진파일</label>--%>
-                                                <%--<input type="file" id="recruitCompanyPhotoName"--%>
-                                                       <%--name="recruitCompanyPhotoName">--%>
-                                            <%--</div>--%>
-                                        <%--</div>--%>
-                                    </div>
-                                </div>
-
-                                <%--채용 직무--%>
-                                <div class="tab-pane" id="recruitJobTab">
-                                    <div class="recruitJob">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="form-group invalidText2" style="color: red"></div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="recruitJobType">채용형태</label>
-                                                    <select class="form-control" id="recruitJobType"
-                                                            name="recruitJobType">
-                                                        <option value="">:::선택:::</option>
-                                                        <option value="인턴">인턴</option>
-                                                        <option value="계약직">계약직</option>
-                                                        <option value="신입">신입</option>
-                                                        <option value="경력">경력</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="recruitJobEdu">채용학력</label>
-                                                    <select class="form-control" id="recruitJobEdu"
-                                                            name="recruitJobEdu">
-                                                        <option value="">:::선택:::</option>
-                                                        <option value="학력무관">학력무관</option>
-                                                        <option value="전문대졸">전문대졸</option>
-                                                        <option value="대졸">대졸</option>
-                                                        <option value="석사">석사</option>
-                                                        <option value="박사">박사</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row jobCategories">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="jobCategory1Id">직무 대분류</label>
-                                                    <select class="form-control" id="jobCategory1Id">
-                                                        <option value="">:::직무대분류:::</option>
-                                                        <c:forEach var="i" items="${jobCategory1s}">
-                                                            <option value="${i.jobCategory1Id}">${i.jobCategory1Name}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="recruitJobCategory2">직무 소분류</label>
-                                                    <select class="form-control" id="recruitJobCategory2"
-                                                            name="jobCategory2Id">
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="recruitJobDetail">상세 직무</label>
-                                                    <input type="text" class="form-control" id="recruitJobDetail"
-                                                           name="recruitJobDetail" placeholder="예) 자바개발자">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="form-group articles">
-                                                    <label for="coverLetterArticleTitle">직무별 자기소개서 항목</label>
-                                                    <button type="button" class="btn btn-default btn-xs articleAddBtn">
-                                                        <i
-                                                                class="fa fa-plus"></i> 항목 추가
-                                                    </button>
-                                                    <button type="button" class="btn btn-default btn-xs articleDelBtn">
-                                                        <i
-                                                                class="fa fa-minus"></i> 항목 삭제
-                                                    </button>
-                                                    <div class="form-group article">
-                                                        <input type="text" class="form-control"
-                                                               id="coverLetterArticleTitle"
-                                                               name="coverLetterArticleTitle"
-                                                               placeholder="예) 자신의 지원동기 및 입사후 포부를 기술해주세요">
+                                                <label for="recruitImage">채용 사진파일</label>
+                                                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput">
+                                                        <i class="glyphicon glyphicon-file fileinput-exists"></i>
+                                                        <span class="fileinput-filename"></span>
                                                     </div>
+                                                    <span class="input-group-addon btn btn-default btn-file">
+                                                        <span class="fileinput-new">사진파일 선택</span>
+                                                        <span class="fileinput-exists">변경</span>
+                                                        <input type="file" name="recruitImage" id="recruitImage">
+                                                    </span>
+                                                    <a href="#" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">삭제</a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
-
-                    </div>
-
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"> 채용 직무별 정보 </h3>
+                                <div class="box-tools">
+                                    <button type="button" class="btn btn-primary btn-xs recruitJobAddBtn">
+                                        <i class="fa fa-plus"></i> 직무 추가
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-xs recruitJobRemoveBtn">
+                                        <i class="fa fa-minus"></i> 직무 삭제
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="box-body recruitJobs">
+                                <div class="row recruitJob">
+                                    <div class="col-sm-12">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="recruitJobType">채용형태</label>
+                                                <select class="form-control" id="recruitJobType" name="recruitJobType">
+                                                    <option value="">:::선택:::</option>
+                                                    <option value="인턴">인턴</option>
+                                                    <option value="계약직">계약직</option>
+                                                    <option value="신입">신입</option>
+                                                    <option value="경력">경력</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="recruitJobEdu">채용학력</label>
+                                                <select class="form-control" id="recruitJobEdu" name="recruitJobEdu">
+                                                    <option value="">:::선택:::</option>
+                                                    <option value="학력무관">학력무관</option>
+                                                    <option value="전문대졸">전문대졸</option>
+                                                    <option value="대졸">대졸</option>
+                                                    <option value="석사">석사</option>
+                                                    <option value="박사">박사</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="jobCategory1Id">직무 대분류</label>
+                                                <select class="form-control" id="jobCategory1Id">
+                                                    <option value="">:::직무대분류:::</option>
+                                                    <c:forEach var="i" items="${jobCategory1s}">
+                                                        <option value="${i.jobCategory1Id}">${i.jobCategory1Name}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="recruitJobCategory2">직무 소분류</label>
+                                                <select class="form-control" id="recruitJobCategory2" name="jobCategory2Id">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="recruitJobDetail">상세 직무 설명</label>
+                                                <input type="text" class="form-control" id="recruitJobDetail" name="recruitJobDetail" placeholder="예) 자바개발자">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group articles">
+                                                <label for="coverLetterArticleTitle">직무별 자기소개서 항목</label>
+                                                <button type="button" class="btn btn-primary btn-xs articleAddBtn">
+                                                    <i class="fa fa-plus"></i> 항목 추가
+                                                </button>
+                                                <button type="button" class="btn btn-primary btn-xs articleRemoveBtn">
+                                                    <i class="fa fa-minus"></i> 항목 삭제
+                                                </button>
+                                                <div class="form-group article">
+                                                    <input type="text" class="form-control"
+                                                           id="coverLetterArticleTitle"
+                                                           name="coverLetterArticleTitle"
+                                                           placeholder="예) 자신의 지원동기 및 입사후 포부를 기술해주세요">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </form>
+            <button type="button" class="btn btn-primary btn-sm recruitCreateBtn"><i class="fa fa-save"></i> 채용 저장</button>
         </section>
 
     </div>
@@ -223,8 +192,6 @@
 <script>
     $(function () {
 
-        //$("#companyName").select2();
-
         // 기업명 자동완성
         var companyNameList = new Array();
         <c:forEach var="i" items="${companies}">
@@ -241,7 +208,7 @@
             $(this).parents(".recruitJob").find("#recruitJobCategory2 option").remove();
             $.ajax({
                 type: "get",
-                url: "${path}/recruit/job/category1/" + jobCategory1Id + "/list",
+                url: "${path}/recruit/jobCategory1s/" + jobCategory1Id + "/jobCategory2s/list",
                 success: function (data) {
                     for (var i in data) {
                         jobCategory2.append(
@@ -251,49 +218,49 @@
             });
         });
 
-        // 채용직무 추가
-        $(".jobAddBtn").on("click", function () {
-            // 채용직무 div 복사 : 클릭이벤트까지 (true)
-            var job = $(".recruitJob:first").clone(true);
-            job
-                .find(".add-article").remove().end() // 추가된 자소서항목 div 전부 삭제
-                .find("#recruitJobState").val("").end()
-                .find("#recruitJobEdu").val("").end()
+        // 채용 직무 추가
+        $(".recruitJobAddBtn").on("click", function () {
+            $(".recruitJob:last")
+                .after("<hr>")
+                .clone(true)
+                .find("input[type=text]").val("").end()
+                .find("option:first").attr("selected", "selected").end()
                 .find("#recruitJobCategory2").val("").end()
-                .find("#recruitJobDetail").val("").end()
-                .find("#coverLetterArticleTitle").val("").end()
-                .addClass("job-add") // 채용직무 div 에 job-add 클래스 추가, 원본 삭제 방지를 위해
-                //.attr("id", jobId)
-                .appendTo("#recruitJobTab"); // 복사한 div 붙여넣기
-
+                .find(".added").remove().end()
+                .appendTo(".recruitJobs");
         });
 
-        // 채용직무 삭제
-        $(".jobDelBtn").on("click", function () {
-            // 채용직무 .job-add 클래스가 추가된 div 만 삭제되게 처리, 원본 삭제 방지
-            $(".recruitJob:last").remove(".job-add");
+        // 채용 직무 삭제
+        $(".recruitJobRemoveBtn").on("click", function () {
+            if ( $(".recruitJob").length === 1 ) {
+                alert("채용직무 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                $(".recruitJob:last").remove();
+                $(".recruitJobs").find("hr:last").remove();
+            }
         });
 
-        // 자소서 항목 추가
+        // 채용 직무별 자기소개서 항목 추가
         $(".articleAddBtn").on("click", function () {
-            // 자소서 항목중 가장 마지막 요소를 변수에 저장
-            var article = $(this).parent().find(".article").last();
-            article
-                .clone() // 요소를 복사
-                .find("input:text").val("").end() // input 태그에 작성된 value 값 초기화
-                .addClass("add-article") // 항목 div 에 article-add 클래스 추가, 원본 삭제 방지를 위해
-                .appendTo($(this).parent()); // 자기자신의 부모 div 에 붙여넣기
+            $(this).parent().find(".article:last")
+                .clone()
+                .find("input[type=text]").val("").end()
+                .addClass("added")
+                .appendTo($(this).parent());
         });
 
-        // 자소서 항목 삭제
-        $(".articleDelBtn").on("click", function () {
-            var article = $(this).parent().find(".add-article").last();
-            // 항목 .article-add 클래스가 추가된 div 만 삭제, 원본 삭제 방지
-            article.remove(".add-article");
+        // 채용 직무별 자기소개서 항목 삭제
+        $(".articleRemoveBtn").on("click", function () {
+            var article = $(this).parent().find(".article");
+            if ( article.length === 1 ) {
+                alert("자기소개서 항목 입력칸 모두를 삭제할 수 없습니다.")
+            } else {
+                article.last().remove();
+            }
         });
 
         // name 속성에 인덱스값 부여
-        function renameForRecruitJobModelAttribute() {
+        function renameForSubmit() {
 
             $(".recruitJob").each(function (index) {
                 $(this).find("select[name=recruitJobType]").attr("name", "recruitJobs["+index+"].recruitJobType");
@@ -308,13 +275,13 @@
         }
 
         $(".recruitCreateBtn").on("click", function () {
-
-                renameForRecruitJobModelAttribute();
-                $("#recruitCreateForm").submit();
+            renameForSubmit();
+            $("#recruitCreateForm").submit();
         });
+
+
+        // 유효성검사 추가
     });
-
-
 </script>
 </body>
 </html>

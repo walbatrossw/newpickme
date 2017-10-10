@@ -97,7 +97,6 @@ public class RecruitJob {
                 ", recruitJobEdu='" + recruitJobEdu + '\'' +
                 ", recruitJobDetail='" + recruitJobDetail + '\'' +
                 ", recruitId=" + recruitId +
-                ", recruit=" + recruit +
                 ", jobCategory2Id=" + jobCategory2Id +
                 ", jobCategory2=" + jobCategory2 +
                 ", coverLetterArticles=" + coverLetterArticles +

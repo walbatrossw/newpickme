@@ -3,27 +3,76 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
     <context:component-scan base-package="com.cafe24.newpickme"/>
 
+    <!-- 스프링에서 AOP의 설정을 통한 Proxy(Advice가 적용되었을 때 생성)객체 생성 -->
+    <aop:aspectj-autoproxy/>
+
     <mvc:annotation-driven/>
 
-    <!-- 리소스 설정 -->
+    <!-- resources 설정 -->
     <!-- mapping : 가상 경로(상대경로), location : 리소스가 실제로 저장된 경로 -->
     <mvc:resources mapping="/resources/**" location="/resources/"/>
-    <mvc:resources mapping="/bootstrap/**" location="/resources/bootstrap/" />
-    <mvc:resources mapping="/plugins/**" location="/resources/plugins/" />
-    <mvc:resources mapping="/dist/**" location="/resources/dist/" />
+    <mvc:resources mapping="/bootstrap/**" location="/resources/bootstrap/"/>
+    <mvc:resources mapping="/plugins/**" location="/resources/plugins/"/>
+    <mvc:resources mapping="/dist/**" location="/resources/dist/"/>
 
-    <!--뷰리졸버 설정-->
+    <!--ViewResolver 설정-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <!-- 스프링에서 AOP의 설정을 통한 Proxy(Advice가 적용되었을 때 생성)객체 생성 -->
-    <aop:aspectj-autoproxy/>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760"/>
+    </bean>
+
+    <bean id="loginPageInterceptor" class="com.cafe24.newpickme.commons.interceptors.LoginPageInterceptor"/>
+    <bean id="adminPageInterceptor" class="com.cafe24.newpickme.commons.interceptors.AdminPageInterceptor"/>
+    <mvc:interceptors>
+
+        <!--로그인 페이지 Interceptor URL-->
+        <mvc:interceptor>
+
+            <mvc:mapping path="/user/login"/>
+            <mvc:mapping path="/user/register"/>
+            <mvc:mapping path="/admin/login"/>
+            <mvc:mapping path="/admin/register"/>
+            <ref bean="loginPageInterceptor"/>
+
+        </mvc:interceptor>
+
+        <!--관리자 페이지 Interceptor URL-->
+        <mvc:interceptor>
+
+            <mvc:mapping path="/admin/list"/>
+            <mvc:mapping path="/user/list"/>
+
+            <!--기업 관리 페이지-->
+            <mvc:mapping path="/company/info/create"/>
+            <mvc:mapping path="/company/info/list"/>
+            <mvc:mapping path="/company/info/list/{companyId}"/>
+            <mvc:mapping path="/company/info/list/{companyId}/update"/>
+            <mvc:mapping path="/company/info/list/{companyId}/delete"/>
+
+            <!--채용 관리 페이지-->
+            <mvc:mapping path="/recruit/create"/> <!--채용 입력-->
+            <mvc:mapping path="/recruit/{recruitId}/update"/> <!--채용 수정-->
+            <mvc:mapping path="/recruit/{recruitId}/delete"/> <!--채용 삭제-->
+
+            <mvc:mapping path="/recruit/{recruitId}/job/add"/> <!--채용 직무 추가-->
+            <mvc:mapping path="/recruit/{recruitId}/job/update"/> <!--채용 직무 수정-->
+            <mvc:mapping path="/recruit/{recruitId}/job/{recruitJobId}/delete"/> <!--채용 직무 삭제-->
+            <mvc:mapping path="/recruit/{recruitId}/job/{recruitJobId}/articles/update"/> <!--채용 직무별 자기소개서 항목 수정-->
+            <ref bean="adminPageInterceptor"/>
+
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 </beans>

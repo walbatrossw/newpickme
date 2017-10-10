@@ -3,6 +3,7 @@ package com.cafe24.newpickme.recruit.domain;
 import com.cafe24.newpickme.admin.domain.Admin;
 import com.cafe24.newpickme.company.domain.Company;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,8 @@ public class Recruit {
 
     private int recruitId;          // 채용 아이디
     private String recruitName;     // 채용 이름
+    private MultipartFile recruitImage; // 채용 이미지 파일
+    private String recruitImageName; // 채용 이미지 파일명
 
     @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
     private Date recruitBeginDate;  // 채용 시작일시
@@ -42,6 +45,22 @@ public class Recruit {
 
     public void setRecruitName(String recruitName) {
         this.recruitName = recruitName;
+    }
+
+    public MultipartFile getRecruitImage() {
+        return recruitImage;
+    }
+
+    public void setRecruitImage(MultipartFile recruitImage) {
+        this.recruitImage = recruitImage;
+    }
+
+    public String getRecruitImageName() {
+        return recruitImageName;
+    }
+
+    public void setRecruitImageName(String recruitImageName) {
+        this.recruitImageName = recruitImageName;
     }
 
     public Date getRecruitBeginDate() {
@@ -129,6 +148,8 @@ public class Recruit {
         return "Recruit{" +
                 "recruitId=" + recruitId +
                 ", recruitName='" + recruitName + '\'' +
+                ", recruitImage=" + recruitImage +
+                ", recruitImageName='" + recruitImageName + '\'' +
                 ", recruitBeginDate=" + recruitBeginDate +
                 ", recruitEndDate=" + recruitEndDate +
                 ", recruitWriteDate=" + recruitWriteDate +

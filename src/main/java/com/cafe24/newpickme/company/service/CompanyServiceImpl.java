@@ -17,14 +17,14 @@ public class CompanyServiceImpl implements CompanyService {
 
     /*기업정보 등록 페이지 : 업종대분류 목록*/
     @Override
-    public List<IndustryCategory1> getListIndustryCategory1() {
-        return companyDao.selectListIndustryCategory1();
+    public List<IndustryCategory1> getIndustryCategory1s() {
+        return companyDao.selectIndustryCategory1s();
     }
 
     /*기업정보 등록 페이지 : 업종소분류 목록*/
     @Override
-    public List<IndustryCategory2> getListIndustryCategory2ByIndustryCategory1Id(int industryCategory1Id) {
-        return companyDao.selectListIndustryCategory2ByIndustryCategory1Id(industryCategory1Id);
+    public List<IndustryCategory2> getIndustryCategory2sByIndustryCategory1Id(int industryCategory1Id) {
+        return companyDao.selectIndustryCategory2sByIndustryCategory1Id(industryCategory1Id);
     }
 
     /*기업정보 등록 처리*/
@@ -55,6 +55,12 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void removeCompanyInfo(int companyId) {
         companyDao.deleteCompanyInfo(companyId);
+    }
+
+    /*기업 ID 조회*/
+    @Override
+    public int getCompanyIdByCompanyName(String companyName) {
+        return companyDao.selectCompanyIdByCompanyName(companyName);
     }
 
 }

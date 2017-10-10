@@ -13,95 +13,90 @@ public class RecruitDaoImpl implements RecruitDao{
     @Autowired
     SqlSession sqlSession;
 
-    /*채용 입력*/
+    // 직무 대분류 리스트
+    @Override
+    public List<JobCategory1> selectJobCategory1s() {
+        return sqlSession.selectList("recruit.selectJobCategory1s");
+    }
+
+    // 직무 소분류 리스트
+    @Override
+    public List<JobCategory2> selectJobCategory2sByJobCategory1Id(int jobCategory1Id) {
+        return sqlSession.selectList("recruit.selectJobCategory2s", jobCategory1Id);
+    }
+
+    // 채용 입력 처리
     @Override
     public void insert(Recruit recruit) {
+        sqlSession.insert("recruit.insertRecruit",recruit);
+    }
+
+    // 채용직무 입력 처리
+    @Override
+    public void insert(RecruitJob recruitJob) {
+        sqlSession.insert("recruit.insertRecruitJob",recruitJob);
+    }
+
+    // 채용직무별 자기소개서 항목 입력 처리
+    @Override
+    public void insert(CoverLetterArticle coverLetterArticle) {
+        sqlSession.insert("recruit.insertCoverLetterArticle",coverLetterArticle);
+    }
+
+    // 채용 목록
+    @Override
+    public List<Recruit> selectRecruits() {
+        return sqlSession.selectList("recruit.selectRecruits");
+    }
+
+    // 채용 상세 보기
+    @Override
+    public Recruit selectRecruitByRecruitId(int recruitId) {
+        return sqlSession.selectOne("recruit.selectRecruitByRecruitId", recruitId);
+    }
+
+    // 채용 수정 처리
+    @Override
+    public void updateRecruit(Recruit recruit) {
         sqlSession.insert("recruit.insertRecruit", recruit);
     }
 
-    /*채용 직무 입력*/
+    // 채용직무 수정 처리 1 - 직무 일괄 수정
     @Override
-    public void insert(RecruitJob recruitJob) {
+    public void updateRecruitJob(RecruitJob recruitJob) {
         sqlSession.insert("recruit.insertRecruitJob", recruitJob);
     }
 
-    /*채용 직무별 자기소개서 항목*/
+    // 채용직무 수정 처리 2 - 직무 추가
     @Override
-    public void insert(CoverLetterArticle coverLetterArticle) {
-        sqlSession.insert("recruit.insertCoverLetterArticle", coverLetterArticle);
+    public void createRecruitJob(RecruitJob recruitJob) {
+        sqlSession.insert("recruit.insertRecruitJob", recruitJob);
     }
 
-    /*직무 대분류 목록*/
-    @Override
-    public List<JobCategory1> selectListJobCategory1() {
-        return sqlSession.selectList("recruit.selectListJobCategory1");
-    }
-
-    /*직무 소분류 목록*/
-    @Override
-    public List<JobCategory2> selectListJobCategory2(int jobCategory1Id) {
-        return sqlSession.selectList("recruit.selectListJobCategory2", jobCategory1Id);
-    }
-
-    /*기업 아이디*/
-    @Override
-    public int selectCompanyIdByCompanyName(String companyName) {
-        return sqlSession.selectOne("recruit.selectCompanyIdByCompanyName", companyName);
-    }
-
-    /*채용 목록*/
-    @Override
-    public List<Recruit> selectListRecruits() {
-        return sqlSession.selectList("recruit.selectListRecruits");
-    }
-
-    /*채용 상세 페이지 : 채용*/
-    @Override
-    public Recruit selectOneByRecruitId(int recruitId) {
-        return sqlSession.selectOne("recruit.selectOneByRecruitId", recruitId);
-    }
-
-    /*채용 상세 페이지 : 채용 직무 목록*/
-    @Override
-    public List<RecruitJob> selectRecruitJobsByRecruitId(int recruitId) {
-        return sqlSession.selectList("recruit.selectRecruitJobsByRecruitId", recruitId);
-    }
-
-    /*채용 상세 페이지 : 채용 직무별 자기소개서 항목 */
-    @Override
-    public List<CoverLetterArticle> selectCoverLetterArticlesByRecruitJobId(int recruitJobId) {
-        return sqlSession.selectList("recruit.selectCoverLetterArticlesByRecruitJobId", recruitJobId);
-    }
-
-    /*채용 수정*/
-    @Override
-    public void updateRecruit(Recruit recruit) {
-        sqlSession.update("recruit.updateRecruit", recruit);
-    }
-
-
-    /*채용 삭제*/
+    // 채용 삭제처리
     @Override
     public void deleteRecruit(int recruitId) {
         sqlSession.delete("recruit.deleteRecruit", recruitId);
     }
 
-    /*채용직무 수정*/
+    // 채용직무 삭제처리
     @Override
-    public void updateRecruitJob(RecruitJob recruitJob) {
-        sqlSession.update("recruit.updateRecruitJob", recruitJob);
+    public void deleteRecruitJob(int recruitJobId) {
+        sqlSession.delete("recruit.deleteRecruitJob", recruitJobId);
     }
 
-    /*채용직무별 자기소개서 항목 삭제*/
+    // 채용직무별 자기소개서 삭제 처리
+    @Override
+    public void deleteCoverLetterArticle(int coverLetterArticleId) {
+        sqlSession.delete("recruit.deleteCoverLetterArticle", coverLetterArticleId);
+    }
+
+    // 채용직무별 자기소개서 일괄삭제 처리
     @Override
     public void deleteCoverLetterArticles(int recruitJobId) {
         sqlSession.delete("recruit.deleteCoverLetterArticles", recruitJobId);
     }
 
-    /*채용 직무 삭제*/
-    @Override
-    public void deleteRecruitJob(int recruitJobId) {
-        sqlSession.delete("recruit.deleteRecruitJob", recruitJobId);
-    }
+    // 채용 달력 페이지
 
 }
