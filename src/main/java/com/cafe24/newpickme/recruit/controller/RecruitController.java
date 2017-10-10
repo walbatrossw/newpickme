@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/recruit")
@@ -153,4 +156,28 @@ public class RecruitController {
     }
 
     // 채용 달력 페이지 (/recruit/calendar, get)
+    @RequestMapping(value = "/calendar", method = RequestMethod.GET)
+    public String getRecruitsForCalendar(Model model) {
+        List<Recruit> recruits = recruitService.getRecruits(); // 채용리스트
+        List<JobCategory1> jobCategory1s = recruitService.getJobCategory1s(); // 직무 대분류 리스트
+        List<IndustryCategory1> industryCategory1s = companyService.getIndustryCategory1s(); // 업종 대분류 리스트
+        model.addAttribute("jobCategory1s", jobCategory1s);
+        model.addAttribute("recruits", recruits);
+        model.addAttribute("industryCategory1s", industryCategory1s);
+        return "/recruit/calendar";
+    }
+
+    @RequestMapping(value = "/calendar", method = RequestMethod.POST)
+    public ModelAndView getRecruitsForSearchedCalendar(int[] jobCategory1Id, int[] industryCategory1Id, String[] companyType, String[] recruitJobType, String[] recruitJobEdu) {
+
+        List<Recruit> recruits = recruitService.getRecruits(jobCategory1Id, industryCategory1Id, companyType, recruitJobType, recruitJobEdu); // 채용리스트
+        List<JobCategory1> jobCategory1s = recruitService.getJobCategory1s(); // 직무 대분류 리스트
+        List<IndustryCategory1> industryCategory1s = companyService.getIndustryCategory1s(); // 업종 대분류 리스트
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("jobCategory1s", jobCategory1s);
+        mav.addObject("industryCategory1s", industryCategory1s);
+        mav.setViewName("/recruit/calendar");
+
+        return mav;
+    }
 }

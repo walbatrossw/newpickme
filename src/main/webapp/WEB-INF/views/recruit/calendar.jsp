@@ -2,26 +2,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!--헤드(CSS) include-->
+    <%--헤드(CSS) include--%>
     <%@ include file="../include/head.jsp" %>
 </head>
 <body class="fixed skin-blue-light sidebar-mini">
 <div class="wrapper">
 
-    <!--헤더 네비바 include-->
+    <%--헤더 네비바 include--%>
     <%@ include file="../include/navbar.jsp" %>
 
-    <!--사이드 메뉴 include-->
+    <%--사이드 메뉴 include--%>
     <%@ include file="../include/left_column.jsp" %>
 
-    <!--본문 페이지-->
+
     <div class="content-wrapper">
 
-        <!--본문 페이지 헤더-->
         <section class="content-header">
             <h1>
-                채용달력
-                <small>페이지 소제목</small>
+                채용 달력
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 채용</a></li>
@@ -29,198 +27,197 @@
             </ol>
         </section>
 
-        <!--본문 페이지 내용-->
         <section class="content">
-            <!-- 페이지 내용 -->
             <div class="row">
-                <div class="col-md-2">
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h4 class="box-title">직무 선택</h4>
+                <form class="recruitSearchForm" method="post" action="${path}/recruit/calendar">
+                    <div class="col-md-2">
+                        <div class="box">
+                            <button type="button" class="btn btn-primary btn-block recruitSearchBtn">
+                                <i class="fa fa-search"></i> 선택 조건으로 검색
+                            </button>
                         </div>
-                        <div class="box-body">
-                            <c:forEach var="i" items="${jobCategory1s}">
-                            <div class="checkbox">
-                                <label for="jobCategory1Id">
-                                    <input type="checkbox" id="jobCategory1Id" value="${i.jobCategory1Id}">
-                                    ${i.jobCategory1Name}
-                                </label>
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <div class="box-title">
+                                    직무 선택
+                                </div>
                             </div>
-                            </c:forEach>
+                            <div class="box-body">
+                                <c:forEach var="jobCategory1s" varStatus="i" items="${jobCategory1s}">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="jobCategory1Id" value="${jobCategory1s.jobCategory1Id}">
+                                        ${jobCategory1s.jobCategory1Name}
+                                    </label>
+                                </div>
+                                </c:forEach>
+                            </div>
                         </div>
-                        <!-- /.box-body -->
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h4 class="box-title">업종 선택</h4>
+                            </div>
+                            <div class="box-body">
+                                <c:forEach var="industryCategory1s" varStatus="i" items="${industryCategory1s}">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="industryCategory1Id" value="${industryCategory1s.industryCategory1Id}">
+                                            ${industryCategory1s.industryCategory1Name}
+                                    </label>
+                                </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h4 class="box-title">기업 형태 선택</h4>
+                            </div>
+                            <div class="box-body">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="companyType" value="대기업">
+                                        대기업
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="companyType" value="중견기업">
+                                        중견기업
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="companyType" value="중소기업">
+                                        중소기업
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="companyType" value="외국계">
+                                        외국계
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="companyType" value="스타트업">
+                                        스타트업
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="companyType" value="공기업">
+                                        공기업
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="companyType" value="공공기관">
+                                        공공기관
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h4 class="box-title">채용 형태 선택</h4>
+                            </div>
+                            <div class="box-body">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="recruitJobType" value="신입">
+                                        신입
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="recruitJobType" value="경력">
+                                        경력
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="recruitJobType" value="인턴">
+                                        인턴
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="recruitJobType" value="계약직">
+                                        계약직
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h4 class="box-title">채용 학력 선택</h4>
+                            </div>
+                            <div class="box-body">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="recruitJobEdu" value="학력무관">
+                                        학력무관
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="recruitJobEdu" value="고졸">
+                                        고졸
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="recruitJobEdu" value="대졸">
+                                        대졸
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="recruitJobEdu" value="석사">
+                                        석사
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="recruitJobEdu" value="박사">
+                                        박사
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <!-- /. box -->
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h4 class="box-title">업종 선택</h4>
-                        </div>
-                        <div class="box-body">
-                            <c:forEach var="i" items="${industryCategory1s}">
-                            <div class="checkbox">
-                                <label for="industryCategory1Id">
-                                    <input type="checkbox" id="industryCategory1Id" value="${i.industryCategory1Id}">
-                                        ${i.industryCategory1Name}
-                                </label>
-                            </div>
-                            </c:forEach>
-                        </div>
-                    </div>
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h4 class="box-title">기업 형태 선택</h4>
-                        </div>
-                        <div class="box-body">
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
-                                    대기업
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
-                                    중견기업
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
-                                    중소기업
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
-                                    외국계
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
-                                    스타트업
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
-                                    공기업
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
-                                    공공기관
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h4 class="box-title">채용 형태 선택</h4>
-                        </div>
-                        <div class="box-body">
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" class="minimal" id="companyType" value="">
-                                    신입
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" class="minimal" id="companyType" value="">
-                                    경력
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" class="minimal" id="companyType" value="">
-                                    인턴
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" class="minimal" id="companyType" value="">
-                                    계약직
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box box-solid">
-                        <div class="box-header with-border">
-                            <h4 class="box-title">채용 학력 선택</h4>
-                        </div>
-                        <div class="box-body">
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
-                                    학력무관
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
-                                    고졸
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
-                                    대졸
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
-                                    석사
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label for="companyType">
-                                    <input type="checkbox" id="companyType" value="">
-                                    박사
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.col -->
+                </form>
                 <div class="col-md-10">
                     <div class="box box-primary">
                         <div class="box-body no-padding">
-                            <!-- THE CALENDAR -->
                             <div id="calendar"></div>
                         </div>
-                        <!-- /.box-body -->
                     </div>
-                    <!-- /. box -->
                 </div>
-                <!-- /.col -->
             </div>
         </section>
 
     </div>
 
-    <!--풋터 include-->
+    <%--풋터 include--%>
     <%@ include file="../include/footer.jsp" %>
 
-    <!--컨트롤 사이드바 -->
+    <%--컨트롤 사이드바--%>
     <%@ include file="../include/control_sidebar.jsp" %>
 
 
 </div>
-<!-- 풋(JS) include-->
+<%--풋(JS) include--%>
 <%@ include file="../include/js.jsp" %>
 <script>
-
-
-
     $(function () {
 
+        // 체크박스
         $("input[type='checkbox']").iCheck({
             checkboxClass: 'icheckbox_square-blue'
         });
 
+        // 데이터
         var data = [
             <c:forEach var="recruits" varStatus="i" items="${recruits}" >
             {
@@ -233,6 +230,7 @@
             </c:forEach>
         ];
 
+        // 채용 달력
         $("#calendar").fullCalendar({
             locale: "ko",
             header: {
@@ -242,9 +240,12 @@
             },
             editable : false,
             events: data
-
         });
 
+        // 직무로 검색
+        $(".recruitSearchBtn").on("click", function () {
+            $(".recruitSearchForm").submit();
+        })
     });
 </script>
 </body>

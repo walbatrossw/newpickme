@@ -24,6 +24,9 @@ public interface RecruitDao {
     // 채용 목록
     List<Recruit> selectRecruits();
 
+    // 채용 달력 페이지
+    List<Recruit> selectRecruits(int[] jobCategory1Id, int[] industryCategory1Id, String[] companyType, String[] recruitJobType, String[] recruitJobEdu);
+
     // 채용 상세 보기
     Recruit selectRecruitByRecruitId(int recruitId);
 
@@ -48,5 +51,5 @@ public interface RecruitDao {
     // 채용직무별 자기소개서 항목 일괄 삭제 처리
     void deleteCoverLetterArticles(int recruitJobId);
 
-    // 채용 달력 페이지
+
 }

@@ -5,7 +5,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class RecruitDaoImpl implements RecruitDao{
@@ -47,6 +49,18 @@ public class RecruitDaoImpl implements RecruitDao{
     @Override
     public List<Recruit> selectRecruits() {
         return sqlSession.selectList("recruit.selectRecruits");
+    }
+
+    // 채용 달력 페이지
+    @Override
+    public List<Recruit> selectRecruits(int[] jobCategory1Id, int[] industryCategory1Id, String[] companyType, String[] recruitJobType, String[] recruitJobEdu) {
+        Map<String, Object> searchMap = new HashMap<String, Object>();
+        searchMap.put("jobCategory1Id", jobCategory1Id);
+        searchMap.put("industryCategory1Id", industryCategory1Id);
+        searchMap.put("companyType", companyType);
+        searchMap.put("recruitJobType", recruitJobType);
+        searchMap.put("recruitJobEdu", recruitJobEdu);
+        return sqlSession.selectList("recruit.selectRecruitsSearch", searchMap);
     }
 
     // 채용 상세 보기
@@ -97,6 +111,6 @@ public class RecruitDaoImpl implements RecruitDao{
         sqlSession.delete("recruit.deleteCoverLetterArticles", recruitJobId);
     }
 
-    // 채용 달력 페이지
+
 
 }

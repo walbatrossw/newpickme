@@ -18,6 +18,9 @@ public interface RecruitService {
     // 채용 목록
     List<Recruit> getRecruits();
 
+    // 채용 달력 페이지
+    List<Recruit> getRecruits(int[] jobCategory1Id, int[] industryCategory1Id, String[] companyType, String[] recruitJobType, String[] recruitJobEdu);
+
     // 채용 상세 보기
     Recruit getRecruitByRecruitId(int recruitId);
 
@@ -42,6 +45,6 @@ public interface RecruitService {
     // 채용직무별 자기소개서항목 삭제 처리
     void removeCoverLetterArticle(int coverLetterArticleId);
 
-    // 채용 달력 페이지
+
 
 }

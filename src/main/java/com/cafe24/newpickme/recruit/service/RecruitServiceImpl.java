@@ -62,6 +62,12 @@ public class RecruitServiceImpl implements RecruitService{
         return recruitDao.selectRecruits();
     }
 
+    // 채용 달력 페이지
+    @Override
+    public List<Recruit> getRecruits(int[] jobCategory1Id, int[] industryCategory1Id, String[] companyType, String[] recruitJobType, String[] recruitJobEdu) {
+        return recruitDao.selectRecruits(jobCategory1Id, industryCategory1Id, companyType, recruitJobType, recruitJobEdu);
+    }
+
     // 채용 상세 보기
     @Override
     public Recruit getRecruitByRecruitId(int recruitId) {
@@ -136,5 +142,5 @@ public class RecruitServiceImpl implements RecruitService{
         recruitDao.deleteCoverLetterArticle(coverLetterArticleId);
     }
 
-    // 채용 달력 페이지
+
 }
