@@ -44,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             USER_ID
             , USER_EMAIL
             , USER_NICK_NM
+            , USER_PROFILE_IMAGE_NM
             , USER_JN_DT
             , USER_UDT_DT
             , USER_LOG_DT
@@ -55,6 +56,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateUserNickName">
         UPDATE t_user
         SET USER_NICK_NM = #{userNickName},
+            USER_UDT_DT = NOW()
+        WHERE USER_EMAIL = #{userEmail}
+    </update>
+
+    <!--회원 프로필 사진 변경-->
+    <update id="updateUserProfileImage">
+        UPDATE t_user
+        SET USER_PROFILE_IMAGE_NM = #{userProfileImageName},
             USER_UDT_DT = NOW()
         WHERE USER_EMAIL = #{userEmail}
     </update>
@@ -87,6 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             USER_ID
             , USER_EMAIL
             , USER_NICK_NM
+            , USER_PROFILE_IMAGE_NM
             , USER_PW
             , USER_JN_DT
             , USER_UDT_DT
@@ -121,6 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id column="USER_ID" property="userId"/>
         <result column="USER_EMAIL" property="userEmail"/>
         <result column="USER_NICK_NM" property="userNickName"/>
+        <result column="USER_PROFILE_IMAGE_NM" property="userProfileImageName"/>
         <result column="USER_PW" property="userPassword"/>
         <result column="USER_JN_DT" property="userJoinDate"/>
         <result column="USER_UDT_DT" property="userUpdateDate"/>

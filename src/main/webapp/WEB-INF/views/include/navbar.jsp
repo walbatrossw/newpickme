@@ -335,16 +335,30 @@
                         <%-- 계정 관련 메뉴 --%>
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                <c:choose>
+                                    <c:when test="${user.userProfileImageName == ''}">
+                                        <img src="${path}/dist/img/default-user-image.jpg" class="user-image" alt="User Image">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="${path}/dist/img/users/${sessionScope.userProfileImageName}" class="user-image" alt="User Image">
+                                    </c:otherwise>
+                                </c:choose>
                                 <span class="hidden-xs">${sessionScope.userNickName}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <%-- 회원 이미지 --%>
                                 <li class="user-header">
-                                    <img src="/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    <c:choose>
+                                        <c:when test="${sessionScope.userProfileImageName == ''}">
+                                            <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="${path}/dist/img/users/${sessionScope.userProfileImageName}" class="img-circle" alt="User Image">
+                                        </c:otherwise>
+                                    </c:choose>
                                     <p>
-                                            ${sessionScope.userId}
-                                        <small>수정요망</small>
+                                            ${sessionScope.userNickName} 님
+                                        <small>Since : <fmt:formatDate value="${sessionScope.userJoinDate}" pattern="yyyy-MM-dd"/></small>
                                     </p>
                                 </li>
                                 <%-- Menu Body --%>

@@ -1,5 +1,7 @@
 package com.cafe24.newpickme.user.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Date;
 
 /*회원 클래스*/
@@ -9,11 +11,14 @@ public class User {
     private String userEmail;       // 회원 이메일
     private String userNickName;    // 회원 닉네임
     private String userPassword;    // 회원 비밀번호
+    private MultipartFile userProfileImage; // 기업로고 이미지 파일
+    private String userProfileImageName; // 기업로고 이미지 파일명
     private Date userJoinDate;      // 회원 가입일시
     private Date userUpdateDate;    // 회원 수정일시
     private Date userLoginDate;     // 회원 로그인일시
 
     // GETTER, SETTER
+
     public int getUserId() {
         return userId;
     }
@@ -44,6 +49,22 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public MultipartFile getUserProfileImage() {
+        return userProfileImage;
+    }
+
+    public void setUserProfileImage(MultipartFile userProfileImage) {
+        this.userProfileImage = userProfileImage;
+    }
+
+    public String getUserProfileImageName() {
+        return userProfileImageName;
+    }
+
+    public void setUserProfileImageName(String userProfileImageName) {
+        this.userProfileImageName = userProfileImageName;
     }
 
     public Date getUserJoinDate() {
@@ -77,6 +98,8 @@ public class User {
                 ", userEmail='" + userEmail + '\'' +
                 ", userNickName='" + userNickName + '\'' +
                 ", userPassword='" + userPassword + '\'' +
+                ", userProfileImage=" + userProfileImage +
+                ", userProfileImageName='" + userProfileImageName + '\'' +
                 ", userJoinDate=" + userJoinDate +
                 ", userUpdateDate=" + userUpdateDate +
                 ", userLoginDate=" + userLoginDate +

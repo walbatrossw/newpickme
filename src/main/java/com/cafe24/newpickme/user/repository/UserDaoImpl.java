@@ -48,6 +48,12 @@ public class UserDaoImpl implements UserDao {
         sqlSession.update("user.updateUserNickName", user);
     }
 
+    /*회원 프로필 사진 변경*/
+    @Override
+    public void updateUserProfileImage(User user) {
+        sqlSession.update("user.updateUserProfileImage", user);
+    }
+
     /*회원 비밀번호 변경*/
     @Override
     public void updateUserPassword(User user) {

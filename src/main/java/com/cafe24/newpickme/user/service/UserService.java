@@ -25,6 +25,9 @@ public interface UserService {
     /*회원 닉네임 변경*/
     void modifyUserNickName(User user);
 
+    /*회원 프로필 사진 변경*/
+    void modifyUserProfileImage(User user);
+
     /*회원 비밀번호 변경*/
     void modifyUserPassword(User user);
 

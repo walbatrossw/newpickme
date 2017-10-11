@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.List;
 
 @Service
@@ -51,6 +52,23 @@ public class UserServiceImpl implements UserService {
         userDao.updateUserNickName(user);
     }
 
+    /*회원 프로필 사진 변경*/
+    @Override
+    public void modifyUserProfileImage(User user) {
+        if (!user.getUserProfileImage().isEmpty()) {
+            String userProfileImageName = user.getUserProfileImage().getOriginalFilename(); // 원본파일명 추출
+            String path = "D:\\WORKSPACE\\Spring-MVC-NewPickme\\newpickme\\src\\main\\webapp\\resources\\dist\\img\\users\\"; // 업로드 디렉토리
+            try {
+                new File(path).mkdir(); // 디렉토리 생성
+                user.getUserProfileImage().transferTo(new File(path+userProfileImageName)); // 파일을 생성된 디렉토리로 전송
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            user.setUserProfileImageName(userProfileImageName); // 파일명을 setting
+        }
+        userDao.updateUserProfileImage(user);
+    }
+
     /*회원 비밀번호 변경*/
     @Override
     public void modifyUserPassword(User user) {
@@ -78,6 +96,8 @@ public class UserServiceImpl implements UserService {
             session.setAttribute("userId", loginUser.getUserId());
             session.setAttribute("userEmail", loginUser.getUserEmail());
             session.setAttribute("userNickName", loginUser.getUserNickName());
+            session.setAttribute("userProfileImageName", loginUser.getUserProfileImageName());
+            session.setAttribute("userJoinDate", loginUser.getUserJoinDate());
             return true;
         }
         return false;

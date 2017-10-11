@@ -107,6 +107,17 @@ public class UserController {
         return "redirect:/user/profile/"+userId;
     }
 
+    /*
+    * 회원 프로필 사진 변경
+    * Method : POST
+    * URL : /profile/{userId}/image/update/
+    * Method Name : newUserNickName()
+    * */
+    @RequestMapping(value = "/profile/{userId}/image/update", method = RequestMethod.POST)
+    public String newUserProfileImage(@PathVariable int userId, User user) {
+        userService.modifyUserProfileImage(user);
+        return "redirect:/user/profile/"+userId;
+    }
 
     /*
     * 회원 비밀번호 변경

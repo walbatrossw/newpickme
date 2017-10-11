@@ -24,6 +24,9 @@ public interface UserDao {
     /*회원 닉네임 변경*/
     void updateUserNickName(User user);
 
+    /*회원 프로필 사진 변경*/
+    void updateUserProfileImage(User user);
+
     /*회원 비밀번호 변경*/
     void updateUserPassword(User user);
 

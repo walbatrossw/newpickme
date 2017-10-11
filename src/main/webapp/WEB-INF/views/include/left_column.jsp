@@ -9,7 +9,7 @@
                 <%--관리자--%>
                 <c:when test="${sessionScope.adminNickName != null}">
                     <div class="pull-left image">
-                        <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
+                        <img src="${path}/dist/img/default-user-image.jpg" class="img-bordered" alt="User Image">
                     </div>
                     <div class="pull-left info">
                         <p>${sessionScope.adminNickName} 관리자 님</p>
@@ -19,9 +19,18 @@
 
                 <%--회원--%>
                 <c:when test="${sessionScope.userNickName != null}">
-                    <div class="pull-left image">
-                        <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
-                    </div>
+                    <c:choose>
+                        <c:when test="${sessionScope.userProfileImageName == ''}">
+                            <div class="pull-left image">
+                                <img class="profile-user-img img-responsive img-bordered" src="${path}/dist/img/default-user-image.jpg">
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="pull-left image">
+                                <img class="profile-user-img img-responsive img-bordered" src="${path}/dist/img/users/${sessionScope.userProfileImageName}">
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                     <div class="pull-left info">
                         <p>${sessionScope.userNickName} 님</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> ONLINE</a>
@@ -31,7 +40,7 @@
                 <%--비회원--%>
                 <c:otherwise>
                     <div class="pull-left image">
-                        <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
+                        <img src="${path}/dist/img/default-user-image.jpg" class="img-bordered" alt="User Image">
                     </div>
                     <div class="pull-left info">
                         <p>GUEST</p>
