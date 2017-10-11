@@ -2,6 +2,7 @@ package com.cafe24.newpickme.company.domain;
 
 import com.cafe24.newpickme.admin.domain.Admin;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -10,6 +11,8 @@ public class Company {
     private int companyId;
     private String companyType;
     private String companyName;
+    private MultipartFile companyLogoImage; // 기업로고 이미지 파일
+    private String companyLogoImageName; // 기업로고 이미지 파일명
 
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date companyBirthDate;
@@ -49,6 +52,22 @@ public class Company {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public MultipartFile getCompanyLogoImage() {
+        return companyLogoImage;
+    }
+
+    public void setCompanyLogoImage(MultipartFile companyLogoImage) {
+        this.companyLogoImage = companyLogoImage;
+    }
+
+    public String getCompanyLogoImageName() {
+        return companyLogoImageName;
+    }
+
+    public void setCompanyLogoImageName(String companyLogoImageName) {
+        this.companyLogoImageName = companyLogoImageName;
     }
 
     public Date getCompanyBirthDate() {
@@ -153,6 +172,8 @@ public class Company {
                 "companyId=" + companyId +
                 ", companyType='" + companyType + '\'' +
                 ", companyName='" + companyName + '\'' +
+                ", companyLogoImage=" + companyLogoImage +
+                ", companyLogoImageName='" + companyLogoImageName + '\'' +
                 ", companyBirthDate=" + companyBirthDate +
                 ", companyCeo='" + companyCeo + '\'' +
                 ", companyAddress='" + companyAddress + '\'' +

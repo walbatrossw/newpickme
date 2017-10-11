@@ -41,13 +41,13 @@
                             <h3 class="box-title">기업 등록</h3>
                         </div>
 
-                        <form role="form" id="companyCreateForm" action="${path}/company/info/create" method="post">
+                        <form role="form" id="companyCreateForm" action="${path}/company/info/create" method="post" enctype="multipart/form-data">
                             <div class="box-body">
                                 <div class="row">
                                     <%--사진파일 입력 추가예정--%>
-                                    <%--<div class="col-sm-2" align="center">
+                                    <div class="col-sm-2" align="center">
                                         <div class="form-group">
-                                            <label for="companyPhoto">기업 로고</label>
+                                            <label for="companyLogoImage">기업 로고</label>
                                             <div class="input-group">
                                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                                     <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
@@ -57,14 +57,14 @@
                                                     <div>
                                                         <span class="btn btn-default btn-file"><span class="fileinput-new">사진 선택</span>
                                                             <span class="fileinput-exists">변경</span>
-                                                            <input type="file" class="form-control" id="companyPhoto" name="companyPhoto">
+                                                            <input type="file" class="form-control" id="companyLogoImage" name="companyLogoImage">
                                                         </span>
                                                         <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">삭제</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>--%>
+                                    </div>
                                     <div class="col-sm-10">
                                         <div class="col-sm-3">
                                             <div class="form-group">

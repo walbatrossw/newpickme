@@ -13,11 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @Controller
 @RequestMapping("/recruit")
@@ -167,6 +164,7 @@ public class RecruitController {
         return "/recruit/calendar";
     }
 
+    // 채용 달력 페이지 (검색처리)
     @RequestMapping(value = "/calendar", method = RequestMethod.POST)
     public ModelAndView getRecruitsForSearchedCalendar(int[] jobCategory1Id, int[] industryCategory1Id, String[] companyType, String[] recruitJobType, String[] recruitJobEdu) {
         List<Recruit> recruits = recruitService.getRecruits(jobCategory1Id, industryCategory1Id, companyType, recruitJobType, recruitJobEdu); // 채용리스트

@@ -37,8 +37,14 @@
                 <div class="col-md-3">
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                            <img class="profile-user-img img-responsive img-circle"
-                                 src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
+                            <c:choose>
+                                <c:when test="${companyInfo.companyLogoImageName == ''}">
+                                    <img class="profile-user-img img-responsive img-bordered" src="${path}/dist/img/default-company-image.png">
+                                </c:when>
+                                <c:otherwise>
+                                    <img class="profile-user-img img-responsive" src="${path}/dist/img/companies/${companyInfo.companyLogoImageName}">
+                                </c:otherwise>
+                            </c:choose>
 
                             <h3 class="profile-username text-center">${companyInfo.companyName}</h3>
 
@@ -117,7 +123,26 @@
                                             <h4 class="modal-title" id="companyInfoUpdateLabel">기업 정보 수정</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <form role="form" id="companyInfoUpdateForm" method="post" action="${path}/company/info/${companyInfo.companyId}/update">
+                                            <form role="form" id="companyInfoUpdateForm" method="post" action="${path}/company/info/${companyInfo.companyId}/update" enctype="multipart/form-data">
+                                                <div class="form-group" align="center">
+                                                    <label for="companyLogoImage">기업 로고</label>
+                                                    <div class="input-group">
+                                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                            <div class="fileinput-new thumbnail" style="width: 150px; height: 150px;">
+                                                                <img data-src="${path}/dist/img/default-company-image.png">
+                                                            </div>
+                                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 150px; max-height: 150px;"></div>
+                                                            <div>
+                                                                <span class="btn btn-default btn-file">
+                                                                    <span class="fileinput-new">사진 선택</span>
+                                                                    <span class="fileinput-exists">변경</span>
+                                                                    <input type="file" class="form-control" id="companyLogoImage" name="companyLogoImage">
+                                                                </span>
+                                                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">삭제</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="form-group">
                                                     <label for="companyName">기업명</label>
                                                     <input type="text" class="form-control" id="companyName" name="companyName" value="${companyInfo.companyName}">

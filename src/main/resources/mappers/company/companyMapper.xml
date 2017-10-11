@@ -30,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             INDU_CATE2_ID
             , COMP_TYPE
             , COMP_NM
+            , COMP_LOGO_IMAGE_NM
             , COMP_BIRTH_DT
             , COMP_CEO
             , COMP_ADDR
@@ -43,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{industryCategory2Id}
             , #{companyType}
             , #{companyName}
+            , #{companyLogoImageName}
             , #{companyBirthDate}
             , #{companyCeo}
             , #{companyAddress}
@@ -85,6 +87,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             , CPY.INDU_CATE2_ID
             , CPY.COMP_TYPE
             , CPY.COMP_NM
+            , CPY.COMP_LOGO_IMAGE_NM
             , CPY.COMP_BIRTH_DT
             , CPY.COMP_CEO
             , CPY.COMP_ADDR
@@ -115,17 +118,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateCompanyInfo" parameterType="Company">
         UPDATE t_company
         SET
-            INDU_CATE2_ID   = #{industryCategory2Id}
-            , COMP_TYPE     = #{companyType}
-            , COMP_NM       = #{companyName}
-            , COMP_BIRTH_DT = #{companyBirthDate}
-            , COMP_CEO      = #{companyCeo}
-            , COMP_ADDR     = #{companyAddress}
-            , COMP_PHONE    = #{companyPhone}
-            , COMP_HOMEPAGE = #{companyHomePage}
-            , COMP_SALES    = #{companySales}
-            , COMP_UDT_DT   = NOW()
-            , ADMIN_ID      = #{adminId}
+            INDU_CATE2_ID         = #{industryCategory2Id}
+            , COMP_TYPE           = #{companyType}
+            , COMP_NM             = #{companyName}
+            , COMP_LOGO_IMAGE_NM  = #{companyLogoImageName}
+            , COMP_BIRTH_DT       = #{companyBirthDate}
+            , COMP_CEO            = #{companyCeo}
+            , COMP_ADDR           = #{companyAddress}
+            , COMP_PHONE          = #{companyPhone}
+            , COMP_HOMEPAGE       = #{companyHomePage}
+            , COMP_SALES          = #{companySales}
+            , COMP_UDT_DT         = NOW()
+            , ADMIN_ID            = #{adminId}
         WHERE
             COMP_ID = #{companyId}
     </update>
@@ -149,6 +153,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <id column="COMP_ID" property="companyId"/>
         <result column="INDU_CATE2_ID" property="industryCategory2Id"/>
         <result column="COMP_NM" property="companyName"/>
+        <result column="COMP_LOGO_IMAGE_NM" property="companyLogoImageName"/>
         <result column="COMP_TYPE" property="companyType"/>
         <result column="COMP_HOMEPAGE" property="companyHomePage"/>
         <result column="COMP_BIRTH_DT" property="companyBirthDate" javaType="java.sql.Date"/>
