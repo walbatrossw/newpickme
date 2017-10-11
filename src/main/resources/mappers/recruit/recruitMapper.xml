@@ -114,6 +114,71 @@
         ORDER BY REC.RECR_WRT_DT ASC
     </select>
 
+    <!--채용 달력 검색-->
+    <select id="selectRecruitsSearch" parameterType="hashmap" resultMap="recruitResultMap">
+        SELECT
+            DISTINCT(REC.RECR_ID)
+            , REC.RECR_NM
+            , REC.RECR_NM
+            , REC.RECR_BEG_DT
+            , REC.RECR_END_DT
+            , RCJ.RECR_JOB_TYPE
+            , RCJ.RECR_JOB_EDU
+            , CPY.COMP_TYPE
+            , CPY.COMP_NM
+            , IDC1.INDU_CATE1_ID
+            , IDC2.INDU_CATE2_ID
+            , IDC1.INDU_CATE1_NM
+            , IDC2.INDU_CATE2_NM
+            , JOC1.JOB_CATE1_ID
+            , JOC2.JOB_CATE2_ID
+            , JOC1.JOB_CATE1_NM
+            , JOC2.JOB_CATE2_NM
+        FROM t_recruit AS REC
+            JOIN t_recruit_job RCJ ON REC.RECR_ID = RCJ.RECR_ID
+            JOIN t_job_category2 JOC2 ON JOC2.JOB_CATE2_ID = RCJ.JOB_CATE2_ID
+            JOIN t_job_category1 JOC1 ON JOC1.JOB_CATE1_ID = JOC2.JOB_CATE1_ID
+            JOIN t_company CPY ON REC.COMP_ID = CPY.COMP_ID
+            JOIN t_industry_category2 IDC2 ON CPY.INDU_CATE2_ID = IDC2.INDU_CATE2_ID
+            JOIN t_industry_category1 IDC1 ON IDC2.INDU_CATE1_ID = IDC1.INDU_CATE1_ID
+        <where>
+            <if test="recruitJobType != null">
+                <foreach collection="recruitJobType" item="recruitJobType" open="RCJ.RECR_JOB_TYPE =" separator="AND">
+                  #{recruitJobType}
+                </foreach>
+            </if>
+
+            <if test="recruitJobEdu != null">
+                AND
+                <foreach collection="recruitJobEdu" item="recruitJobEdu" open="RCJ.RECR_JOB_EDU = " separator="AND">
+                  #{recruitJobEdu}
+                </foreach>
+            </if>
+
+            <if test="companyType != null">
+                AND
+                <foreach collection="companyType" item="companyType" open="CPY.COMP_TYPE = " separator="AND">
+                  #{companyType}
+                </foreach>
+            </if>
+
+            <if test="industryCategory1Id != null">
+                AND
+                <foreach collection="industryCategory1Id" item="industryCategory1Id" open="IDC1.INDU_CATE1_ID = " separator="AND">
+                  #{industryCategory1Id}
+                </foreach>
+            </if>
+
+            <if test="jobCategory1Id != null">
+                AND
+                <foreach collection="jobCategory1Id" item="jobCategory1Id" open="JOC1.JOB_CATE1_ID =" separator="AND">
+                  #{jobCategory1Id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
 
     <!--채용 상세-->
     <select id="selectRecruitByRecruitId" resultMap="recruitResultMap">

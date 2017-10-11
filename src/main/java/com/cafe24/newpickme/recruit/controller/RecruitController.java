@@ -169,15 +169,21 @@ public class RecruitController {
 
     @RequestMapping(value = "/calendar", method = RequestMethod.POST)
     public ModelAndView getRecruitsForSearchedCalendar(int[] jobCategory1Id, int[] industryCategory1Id, String[] companyType, String[] recruitJobType, String[] recruitJobEdu) {
-
         List<Recruit> recruits = recruitService.getRecruits(jobCategory1Id, industryCategory1Id, companyType, recruitJobType, recruitJobEdu); // 채용리스트
+        System.out.println(recruits);
         List<JobCategory1> jobCategory1s = recruitService.getJobCategory1s(); // 직무 대분류 리스트
         List<IndustryCategory1> industryCategory1s = companyService.getIndustryCategory1s(); // 업종 대분류 리스트
+
         ModelAndView mav = new ModelAndView();
+        mav.addObject("recruits", recruits);
         mav.addObject("jobCategory1s", jobCategory1s);
         mav.addObject("industryCategory1s", industryCategory1s);
+        mav.addObject("jobCategory1Id", jobCategory1Id);
+        mav.addObject("industryCategory1Id", industryCategory1Id);
+        mav.addObject("companyType", companyType);
+        mav.addObject("recruitJobType", recruitJobType);
+        mav.addObject("recruitJobEdu", recruitJobEdu);
         mav.setViewName("/recruit/calendar");
-
         return mav;
     }
 }
