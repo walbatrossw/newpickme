@@ -134,12 +134,9 @@
                                                             <div class="modal-footer">
                                                                 <div class="form-group" id="warningText"
                                                                      style="color: red"></div>
-                                                                <button type="button" class="btn btn-default pull-left"
-                                                                        data-dismiss="modal">닫기
+                                                                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기
                                                                 </button>
-                                                                <button type="button" class="btn btn-primary"
-                                                                        id="companyInfoUpdateBtn">저장
-                                                                </button>
+                                                                <a type="button" class="btn btn-primary" href="${path}/coverletter/create/${recruitJobs.recruitJobId}">자소서 작성</a>
                                                             </div>
                                                         </div>
                                                     </div>

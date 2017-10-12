@@ -178,8 +178,6 @@
         </where>
     </select>
 
-
-
     <!--채용 상세-->
     <select id="selectRecruitByRecruitId" resultMap="recruitResultMap">
         SELECT
@@ -202,6 +200,37 @@
             REC.COMP_ID = CPY.COMP_ID
             AND REC.ADMIN_ID = ADM.ADMIN_ID
             AND RECR_ID = #{recruitId}
+    </select>
+
+    <!--채용직무-->
+    <select id="selectRecruitJobByRecruitJobId" resultMap="recruitResultMap">
+        SELECT
+            REJ.RECR_JOB_ID
+            , REJ.RECR_ID
+            , REJ.JOB_CATE2_ID
+            , REJ.RECR_JOB_TYPE
+            , REJ.RECR_JOB_EDU
+            , REJ.RECR_JOB_DETAIL
+            , REC.COMP_ID
+            , REC.RECR_ID
+            , REC.RECR_NM
+            , REC.RECR_BEG_DT
+            , REC.RECR_END_DT
+            , JC1.JOB_CATE1_NM
+            , JC2.JOB_CATE2_NM
+            , CPY.COMP_NM
+        FROM
+            t_recruit_job AS REJ
+            , t_recruit AS REC
+            , t_job_category1 AS JC1
+            , t_job_category2 AS JC2
+            , t_company AS CPY
+        WHERE
+            REJ.RECR_ID = REC.RECR_ID
+            AND JC2.JOB_CATE2_ID = REJ.JOB_CATE2_ID
+            AND JC1.JOB_CATE1_ID = JC2.JOB_CATE1_ID
+            AND CPY.COMP_ID = REC.COMP_ID
+            AND REJ.RECR_JOB_ID = #{recruitJobId}
     </select>
 
     <!--채용직무 목록-->

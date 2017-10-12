@@ -160,7 +160,7 @@
                     </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="${path}/coverletter/create"><i class="fa fa-pencil"></i> 자기소개서 작성</a></li>
+                            <li><a href="${path}/coverletter/create/default"><i class="fa fa-pencil"></i> 자기소개서 작성</a></li>
                             <li><a href="${path}/coverletter/list"><i class="fa fa-list"></i> 자기소개서 목록</a></li>
                         </ul>
                     </li>
@@ -246,7 +246,7 @@
                     </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="${path}/coverletter/create"><i class="fa fa-pencil"></i> 자기소개서 작성</a></li>
+                            <li><a href="${path}/coverletter/create/default"><i class="fa fa-pencil"></i> 자기소개서 작성</a></li>
                             <li><a href="${path}/coverletter/list"><i class="fa fa-list"></i> 자기소개서 목록</a></li>
                         </ul>
                     </li>
