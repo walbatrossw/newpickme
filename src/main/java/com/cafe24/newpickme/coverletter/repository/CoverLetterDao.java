@@ -15,4 +15,7 @@ public interface CoverLetterDao {
 
     // 자기소개서 목록
     List<UserCoverLetter> selectCoverLetters(int userId);
+
+    // 자기소개서
+    UserCoverLetter selectUserCoverLetter(int userCoverLetterId);
 }

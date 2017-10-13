@@ -58,7 +58,20 @@ public class CoverLetterController {
         model.addAttribute("userCoverLetters", userCoverLetters);
         return "/coverletter/list";
     }
+
+    // 자기소개서 상세보기 및 수정 페이지
+    @RequestMapping(value = "/update/{userCoverLetterId}", method = RequestMethod.GET)
+    public String update(@PathVariable int userCoverLetterId, Model model) {
+        UserCoverLetter userCoverLetter = coverLetterService.getUserCoverLetter(userCoverLetterId);
+        model.addAttribute("userCoverLetter", userCoverLetter);
+        return "/coverletter/update";
+    }
+
     // 자기소개서 수정처리
+    @RequestMapping(value = "/update/{userCoverLetterId}", method = RequestMethod.POST)
+    public String update(@PathVariable int userCoverLetterId, UserCoverLetter userCoverLetter) {
+        return "redirect:/coverletter/list";
+    }
 
     // 자기소개서 삭제처리
 

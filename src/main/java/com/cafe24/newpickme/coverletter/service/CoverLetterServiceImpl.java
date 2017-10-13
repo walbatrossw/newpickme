@@ -29,4 +29,9 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     public List<UserCoverLetter> getCoverLetters(int userId) {
         return coverLetterDao.selectCoverLetters(userId);
     }
+
+    @Override
+    public UserCoverLetter getUserCoverLetter(int userCoverLetterId) {
+        return coverLetterDao.selectUserCoverLetter(userCoverLetterId);
+    }
 }

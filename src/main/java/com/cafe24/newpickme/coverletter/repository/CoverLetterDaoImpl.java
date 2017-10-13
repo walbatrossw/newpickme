@@ -28,4 +28,9 @@ public class CoverLetterDaoImpl implements CoverLetterDao {
     public List<UserCoverLetter> selectCoverLetters(int userId) {
         return sqlSession.selectList("coverLetter.selectCoverLetters", userId);
     }
+
+    @Override
+    public UserCoverLetter selectUserCoverLetter(int userCoverLetterId) {
+        return sqlSession.selectOne("coverLetter.selectUserCoverLetter", userCoverLetterId);
+    }
 }

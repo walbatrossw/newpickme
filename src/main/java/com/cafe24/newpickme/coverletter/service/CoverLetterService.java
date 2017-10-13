@@ -11,4 +11,7 @@ public interface CoverLetterService {
 
     // 자기소개서 목록
     List<UserCoverLetter> getCoverLetters(int userId);
+
+    // 자기소개서
+    UserCoverLetter getUserCoverLetter(int userCoverLetterId);
 }

@@ -54,7 +54,7 @@
                                 <c:forEach var="userCoverLetter" varStatus="i" items="${userCoverLetters}">
                                     <tr>
                                         <td>${i.index+1}</td>
-                                        <td><a href="">${userCoverLetter.userCoverLetterName}</a></td>
+                                        <td><a href="${path}/coverletter/update/${userCoverLetter.userCoverLetterId}">${userCoverLetter.userCoverLetterName}</a></td>
                                         <td><fmt:formatDate value="${userCoverLetter.userCoverLetterEndDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
                                     </tr>
                                 </c:forEach>
