@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class CoverLetterDaoImpl implements CoverLetterDao {
 
@@ -20,5 +22,10 @@ public class CoverLetterDaoImpl implements CoverLetterDao {
     @Override
     public void insert(UserCoverLetterArticle userCoverLetterArticle) {
         sqlSession.insert("coverLetter.insertUserCoverLetterArticle", userCoverLetterArticle);
+    }
+
+    @Override
+    public List<UserCoverLetter> selectCoverLetters(int userId) {
+        return sqlSession.selectList("coverLetter.selectCoverLetters", userId);
     }
 }

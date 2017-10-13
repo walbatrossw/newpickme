@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/coverletter")
@@ -37,7 +38,7 @@ public class CoverLetterController {
         RecruitJob recruitJob = recruitService.getRecruitJobByRecruitJobId(recruitJobId);
         model.addAttribute("recruit", recruit);
         model.addAttribute("recruitJob", recruitJob);
-        return "/coverletter/create";
+        return "redirect:/coverletter/list";
     }
 
     // 자기소개서 작성 처리
@@ -46,11 +47,17 @@ public class CoverLetterController {
         int userId = (Integer) session.getAttribute("userId");
         userCoverLetter.setUserId(userId);
         coverLetterService.create(userCoverLetter);
-        return "redirect:/";
+        return "redirect:/coverletter/list";
     }
 
     // 자기소개서 목록
-    
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String getCoverLetters(HttpSession session, Model model) {
+        int userId = (Integer) session.getAttribute("userId");
+        List<UserCoverLetter> userCoverLetters = coverLetterService.getCoverLetters(userId);
+        model.addAttribute("userCoverLetters", userCoverLetters);
+        return "/coverletter/list";
+    }
     // 자기소개서 수정처리
 
     // 자기소개서 삭제처리

@@ -48,4 +48,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             , ARTICLE_CONTENT = #{userCoverLetterArticleContent}
     </insert>
 
+    <select id="selectCoverLetters" parameterType="int" resultMap="userCoverLetterResultMap">
+        SELECT
+            USER_CVLT_ID
+            , USER_ID
+            , USER_CVLT_NM
+            , USER_CVLT_END_DT
+            , USER_CVLT_WRT_DT
+            , USER_CVLT_UDT_DT
+        FROM t_user_coverletter
+        WHERE USER_ID = #{userId}
+    </select>
+
+    <select id="selectCoverLetterArticles" parameterType="int" resultMap="userCoverLetterArticleResultMap">
+        SELECT
+            USER_CVLT_ARTICLE_ID
+            , USER_CVLT_ID
+            , ARTICLE_TITLE
+            , ARTICLE_CONTENT
+        FROM t_user_coverletter_article
+        WHERE USER_CVLT_ID = #{USER_CVLT_ID}
+    </select>
+
+    <resultMap id="userCoverLetterResultMap" type="UserCoverLetter">
+        <id column="USER_CVLT_ID" property="userCoverLetterId"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="USER_CVLT_NM" property="userCoverLetterName"/>
+        <result column="USER_CVLT_END_DT" property="userCoverLetterEndDate"/>
+        <result column="USER_CVLT_WRT_DT" property="userCoverLetterWriteDate"/>
+        <result column="USER_CVLT_UDT_DT" property="userCoverLetterUpdateDate"/>
+        <collection property="userCoverLetterArticles"
+                    javaType="java.util.ArrayList"
+                    column="USER_CVLT_ID"
+                    ofType="UserCoverLetterArticle"
+                    select="selectCoverLetterArticles" />
+    </resultMap>
+
+    <resultMap id="userCoverLetterArticleResultMap" type="UserCoverLetterArticle">
+        <id column="USER_CVLT_ARTICLE_ID" property="userCoverLetterArticleId"/>
+        <result column="USER_CVLT_ID" property="userCoverLetterId"/>
+        <result column="ARTICLE_TITLE" property="userCoverLetterArticleTitle"/>
+        <result column="ARTICLE_CONTENT" property="userCoverLetterArticleContent"/>
+    </resultMap>
 </mapper>
