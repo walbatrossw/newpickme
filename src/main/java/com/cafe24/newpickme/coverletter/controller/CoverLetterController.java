@@ -1,6 +1,9 @@
 package com.cafe24.newpickme.coverletter.controller;
 
+import com.cafe24.newpickme.coverletter.domain.UserCoverLetter;
+import com.cafe24.newpickme.coverletter.service.CoverLetterService;
 import com.cafe24.newpickme.recruit.domain.Recruit;
+import com.cafe24.newpickme.recruit.domain.RecruitJob;
 import com.cafe24.newpickme.recruit.service.RecruitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +19,9 @@ import javax.servlet.http.HttpSession;
 public class CoverLetterController {
 
     @Autowired
+    CoverLetterService coverLetterService;
+
+    @Autowired
     RecruitService recruitService;
 
     // 기본 자기소개서 작성 페이지
@@ -24,16 +30,36 @@ public class CoverLetterController {
         return "/coverletter/create";
     }
 
-    // 기본 자기소개서 작성 페이지
-    @RequestMapping(value = "/create/{recruitJobId}", method = RequestMethod.GET)
-    public String create(@PathVariable int recruitJobId, HttpSession session, Model model) {
-        Recruit recruit = recruitService.getRecruitJobByRecruitJobId(recruitJobId);
-        System.out.println(recruit);
+    // 기본 자기소개서 작성 처리
+    @RequestMapping(value = "/create/default", method = RequestMethod.POST)
+    public String create(UserCoverLetter userCoverLetter, HttpSession session) {
+        int userId = (Integer) session.getAttribute("userId");
+        userCoverLetter.setUserId(userId);
+        userCoverLetter.setRecruitJobId(0);
+        coverLetterService.create(userCoverLetter);
+        return "redirect:/";
+    }
+
+
+    // 채용직무별별 자기소개서 작성 페이지
+    @RequestMapping(value = "/create/{recruitId}/{recruitJobId}", method = RequestMethod.GET)
+    public String create(@PathVariable int recruitId, @PathVariable int recruitJobId, Model model) {
+        Recruit recruit = recruitService.getRecruitByRecruitId(recruitId);
+        RecruitJob recruitJob = recruitService.getRecruitJobByRecruitJobId(recruitJobId);
         model.addAttribute("recruit", recruit);
+        model.addAttribute("recruitJob", recruitJob);
         return "/coverletter/create";
     }
 
-    // 자기소개서 작성 처리
+    // 채용직무별별 자기소개서 작성 처리
+    @RequestMapping(value = "/create/{recruitId}/{recruitJobId}", method = RequestMethod.POST)
+    public String create(@PathVariable int recruitId, @PathVariable int recruitJobId, UserCoverLetter userCoverLetter, HttpSession session) {
+        int userId = (Integer) session.getAttribute("userId");
+        userCoverLetter.setUserId(userId);
+        userCoverLetter.setRecruitJobId(recruitJobId);
+        coverLetterService.create(userCoverLetter);
+        return "redirect:/";
+    }
 
     // 자기소개서 목록
 

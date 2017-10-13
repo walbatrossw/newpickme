@@ -28,7 +28,7 @@
             </ol>
         </section>
 
-        <div class="pad margin no-print col-lg-6">
+        <div class="pad margin no-print col-lg-8">
             <div class="callout callout-success" style="margin-bottom: 0!important;">
                 <p>PickMe는 자기소개서의 이름과 제출일자 편집을 제공합니다</p>
                 <p>사용자가 원하는 이름과 마감일자로 변경해보세요</p>
@@ -47,28 +47,23 @@
                             <h3 class="box-title">자기소개서 작성 도우미</h3>
                         </div>
                         <div class="box-body">
-                            <a class="btn btn-app">
+                            <a class="btn btn-app myCoverLetterBtn">
+                                <i class="fa fa-list"></i> 나의 자소서
+                            </a>
+                            <a class="btn btn-app recruitJobListBtn">
+                                <i class="fa fa-list"></i> 채용직무 리스트
+                            </a>
+                            <a class="btn btn-app coverLetterSaveBtn">
                                 <i class="fa fa-save"></i> 저장
                             </a>
-                            <c:choose>
-                                <c:when test="${recruit != null}">
-                                    <a class="btn btn-app articleAddBtn" disabled>
-                                        <i class="fa fa-plus-square"></i> 자소서문항 추가
-                                    </a>
-                                    <a class="btn btn-app articleDelBtn" disabled>
-                                        <i class="fa fa-minus-square"></i> 자소서문항 삭제
-                                    </a>
-                                </c:when>
-                                <c:otherwise>
-                                    <a class="btn btn-app articleAddBtn" id="memoDelBtn">
-                                        <i class="fa fa-plus-square"></i> 자소서문항 추가
-                                    </a>
-                                    <a class="btn btn-app articleDelBtn" id="memoDelBtn">
-                                        <i class="fa fa-minus-square"></i> 자소서문항 삭제
-                                    </a>
-                                </c:otherwise>
-                            </c:choose>
-
+                            <c:if test="${recruit == null}">
+                                <a class="btn btn-app articleAddBtn">
+                                    <i class="fa fa-plus-square"></i> 문항 추가
+                                </a>
+                                <a class="btn btn-app articleDelBtn">
+                                    <i class="fa fa-minus-square"></i> 문항 삭제
+                                </a>
+                            </c:if>
                             <a class="btn btn-app memoAddBtn">
                                 <i class="fa fa-edit"></i> 메모장 추가
                             </a>
@@ -82,101 +77,116 @@
                                 <i class="fa fa-print"></i> 인쇄
                             </a>
                             <a class="btn btn-app">
-                                <i class="fa fa-file-pdf-o"></i> PDF파일로 저장
+                                <i class="fa fa-file-pdf-o"></i> PDF
                             </a>
                             <a class="btn btn-app">
                                 <i class="fa fa-file"></i> 공채핵심 자료
                             </a>
                         </div>
                     </div>
+                    <c:choose>
+                        <c:when test="${recruit == null}">
+                            <form class="userCoverLetterCreateForm" method="post" action="/coverletter/create/default">
+                        </c:when>
+                        <c:otherwise>
+                            <form class="userCoverLetterCreateForm" method="post" action="/coverletter/create/${recruit.recruitId}/${recruitJob.recruitJobId}">
+                        </c:otherwise>
+                    </c:choose>
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title"> 자기소개서 작성 </h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <c:choose>
+                                            <c:when test="${recruit == null}">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="userCoverLetterName">자기소개서 이름</label>
+                                                        <input type="text" class="form-control" id="userCoverLetterName" name="userCoverLetterName">
+                                                    </div>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="userCoverLetterName">자기소개서 이름</label>
+                                                        <input type="text" class="form-control" id="userCoverLetterName" name="userCoverLetterName" value="${recruit.company.companyName} / ${recruit.recruitName} / ${recruitJob.recruitJobDetail}">
+                                                    </div>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="userCoverLetterEndDate">자기소개서 제출 마감일시</label>
+                                                <input type="datetime-local" class="form-control" id="userCoverLetterEndDate" name="userCoverLetterEndDate" value="<fmt:formatDate value="${recruit.recruitEndDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>">
 
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"> 자기소개서 작성 </h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="coverLetterArticleName">자기소개서 이름</label>
-                                            <input type="text" class="form-control" id="coverLetterArticleName" name="coverLetterArticleName" value="${recruit.company.companyName}  ${recruit.recruitJobs.get(0).recruitJobDetail}">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="recruitEndDate">자기소개서 제출 마감일시</label>
-                                            <input type="datetime-local" class="form-control" id="recruitEndDate" name="recruitEndDate" value="<fmt:formatDate value="${recruit.recruitEndDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>">
-
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label for="recruitEndDate">저장 시간</label>
-                                            <input type="datetime-local" class="form-control" id="recruitEndDate" name="recruitEndDate" readonly>
-                                        </div>
+                                        <%--<div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label for="userCoverLetterWriteDate">저장 시간</label>
+                                                <input type="datetime-local" class="form-control" id="userCoverLetterWriteDate" name="userCoverLetterWriteDate" readonly>
+                                            </div>
+                                        </div>--%>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="box box-primary">
-                        <div class="box-body articles">
-                            <c:choose>
-                                <c:when test="${recruit != null}">
-                                    <c:forEach varStatus="i" var="coverLetterArticle" items="${recruit.recruitJobs.get(0).coverLetterArticles}">
+                        <div class="box box-primary">
+                            <div class="box-body no-padding articles">
+                                <c:choose>
+                                    <c:when test="${recruitJob != null}">
+                                        <c:forEach varStatus="i" var="coverLetterArticle" items="${recruitJob.coverLetterArticles}">
+                                            <table class="table table-bordered table-hover article">
+                                                <tr>
+                                                    <th class="col-sm-1">${i.index+1} 번 문항</th>
+                                                    <td>
+                                                        <textarea class="form-control" rows="2" name="userCoverLetterArticleTitle" style="resize:none" placeholder="자기소개서 문항을 입력해주세요">${coverLetterArticle.coverLetterArticleTitle}</textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-sm-1">${i.index+1} 번 내용</th>
+                                                    <td>
+                                                        <textarea class="form-control content" id="userCoverLetterArticleContent${i.index}" name="userCoverLetterArticleContent" rows="10" style="resize:none" placeholder="내용을 입력해주세요"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="col-sm-1">글자수</th>
+                                                    <td>
+                                                        <span id="counter${i.index}">###</span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
                                         <table class="table table-hover article">
                                             <tr>
-                                                <th class="col-sm-1">${i.index+1} 번 문항</th>
+                                                <th class="col-sm-1">문항</th>
                                                 <td>
-                                                    <div>
-                                                        <textarea class="form-control" rows="2" name="" style="resize:none" placeholder="자기소개서 문항을 입력해주세요">${coverLetterArticle.coverLetterArticleTitle}</textarea>
-                                                    </div>
+                                                    <textarea class="form-control" rows="2" name="userCoverLetterArticleTitle" style="resize:none" placeholder="자기소개서 문항을 입력해주세요"></textarea>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th class="col-sm-1">${i.index+1} 번 내용</th>
+                                                <th class="col-sm-1">내용</th>
                                                 <td>
-                                                    <textarea class="form-control content" id="coverLetterArticleContent${i.index}" rows="10" name="" style="resize:none" placeholder="내용을 입력해주세요"></textarea>
+                                                    <textarea class="form-control" id="userCoverLetterArticleContent" rows="10" name="userCoverLetterArticleContent" style="resize:none" placeholder="내용을 입력해주세요"></textarea>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th class="col-sm-1">글자수</th>
                                                 <td>
-                                                    <span id="counter${i.index}">###</span>
+                                                    <span id="counter">###</span>
                                                 </td>
                                             </tr>
                                         </table>
-                                    </c:forEach>
-                                </c:when>
-                                <c:otherwise>
-                                    <table class="table table-hover article">
-                                        <tr>
-                                            <th class="col-sm-1">문항</th>
-                                            <td>
-                                                <div>
-                                                    <textarea class="form-control" rows="2" name="" style="resize:none" placeholder="자기소개서 문항을 입력해주세요"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-sm-1">내용</th>
-                                            <td>
-                                                <textarea class="form-control" id="coverLetterArticleContent" rows="10" name="coverLetterArticleContent" style="resize:none" placeholder="내용을 입력해주세요"></textarea>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-sm-1">글자수</th>
-                                            <td>
-                                                <span id="counter">###</span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </c:otherwise>
-                            </c:choose>
-
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </section>
                 <section class="col-lg-3 memos">
 
@@ -219,15 +229,15 @@
 <script>
     $(function () {
 
-        <c:forEach var="coverLetterArticle" varStatus="i" items="${recruit.recruitJobs.get(0).coverLetterArticles}">
-            $("#coverLetterArticleContent${i.index}").keyup(function (e){
+        <c:forEach var="coverLetterArticle" varStatus="i" items="${recruitJob.coverLetterArticles}">
+            $("#userCoverLetterArticleContent${i.index}").keyup(function (e){
                 var content = $(this).val();
                 $("#counter${i.index}").html(content.length + "자 : (공백포함)");
             });
-            $('#coverLetterArticleContent${i.index}').keyup();
+            $('#userCoverLetterArticleContent${i.index}').keyup();
         </c:forEach>
 
-        $("#coverLetterArticleContent").keyup(function (e){
+        $("#userCoverLetterArticleContent").keyup(function (e){
             var content = $(this).val();
             $(this)
                 .parent()
@@ -235,9 +245,7 @@
                 .parent()
                 .find("#counter").html(content.length + "자 : (공백포함)");
         });
-        $("#coverLetterArticleContent").keyup();
-
-
+        $("#userCoverLetterArticleContent").keyup();
 
         // 메모 버튼 클릭시
         $(".memoAddBtn").on("click", function () {
@@ -255,7 +263,6 @@
             );
         });
 
-
         // 메모 삭제 버튼 클릭시
         $(document).on("click", ".memoDelBtn", function () {
             $(".memo:last").remove();
@@ -268,76 +275,24 @@
                 .find("textarea").val("").end()
                 .find("#counter").empty().end()
                 .appendTo(".articles");
-
         });
 
-        // 대학교 삭제 버튼 클릭시
+        // 자소서 문항 삭제 버튼 클릭시
         $(".articleDelBtn").on("click", function () {
             if ( $(".article").length === 1) {
                 alert("자기소개서 문항 입력칸 모두를 삭제할 수 없습니다.")
             } else {
                 $(".article:last").remove();
             }
-
         });
 
-
-        $(".resumeSaveBtn").on("click", function () {
-
-            $(".university").each(function (index) {
-                $(this).find("input[name=universityName]").attr("name", "universities["+index+"].universityName");
-                $(this).find("select[name=universityType]").attr("name", "universities["+index+"].universityType");
-                $(this).find("input[name=universityBeginDate]").attr("name", "universities["+index+"].universityBeginDate");
-                $(this).find("input[name=universityEndDate]").attr("name", "universities["+index+"].universityEndDate");
-                $(this).find("input[name=universityMajor]").attr("name", "universities["+index+"].universityMajor");
-                $(this).find("input[name=universityDoubleMajor]").attr("name", "universities["+index+"].universityDoubleMajor");
-                $(this).find("input[name=universityCredit]").attr("name", "universities["+index+"].universityCredit");
+        // 자소서 저장 버튼 클릭시
+        $(".coverLetterSaveBtn").on("click", function () {
+            $(".article").each(function (index) {
+                $(this).find("textarea[name=userCoverLetterArticleTitle]").attr("name", "userCoverLetterArticles["+index+"].userCoverLetterArticleTitle");
+                $(this).find("textarea[name=userCoverLetterArticleContent]").attr("name", "userCoverLetterArticles["+index+"].userCoverLetterArticleContent");
             });
-
-            $(".language").each(function (index) {
-                $(this).find("input[name=languageName]").attr("name", "languages["+index+"].languageName");
-                $(this).find("input[name=languageGrade]").attr("name", "languages["+index+"].languageGrade");
-                $(this).find("input[name=languageHost]").attr("name", "languages["+index+"].languageHost");
-                $(this).find("input[name=languageNumber]").attr("name", "languages["+index+"].languageNumber");
-                $(this).find("input[name=languageBeginDate]").attr("name", "languages["+index+"].languageBeginDate");
-                $(this).find("input[name=languageEndDate]").attr("name", "languages["+index+"].languageEndDate");
-            });
-
-            $(".certificate").each(function (index) {
-                $(this).find("input[name=certificateName]").attr("name", "certificates["+index+"].certificateName");
-                $(this).find("input[name=certificateGrade]").attr("name", "certificates["+index+"].certificateGrade");
-                $(this).find("input[name=certificateHost]").attr("name", "certificates["+index+"].certificateHost");
-                $(this).find("input[name=certificateNumber]").attr("name", "certificates["+index+"].certificateNumber");
-                $(this).find("input[name=certificateBeginDate]").attr("name", "certificates["+index+"].certificateBeginDate");
-                $(this).find("input[name=certificateEndDate]").attr("name", "certificates["+index+"].certificateEndDate");
-            });
-
-            $(".career").each(function (index) {
-                $(this).find("input[name=careerCompany]").attr("name", "careers["+index+"].careerCompany");
-                $(this).find("input[name=careerBeginDate]").attr("name", "careers["+index+"].careerBeginDate");
-                $(this).find("input[name=careerEndDate]").attr("name", "careers["+index+"].careerEndDate");
-                $(this).find("input[name=careerPosition]").attr("name", "careers["+index+"].careerPosition");
-                $(this).find("input[name=careerDepartment]").attr("name", "careers["+index+"].careerDepartment");
-                $(this).find("input[name=careerTask]").attr("name", "careers["+index+"].careerTask");
-                $(this).find("input[name=careerResign]").attr("name", "careers["+index+"].careerResign");
-            });
-
-            $(".activity").each(function (index) {
-                $(this).find("input[name=activityName]").attr("name", "activities["+index+"].activityName");
-                $(this).find("input[name=activityHost]").attr("name", "activities["+index+"].activityHost");
-                $(this).find("input[name=activityBeginDate]").attr("name", "activities["+index+"].activityBeginDate");
-                $(this).find("input[name=activityEndDate]").attr("name", "activities["+index+"].activityEndDate");
-                $(this).find("input[name=activityContent]").attr("name", "activities["+index+"].activityContent");
-            });
-
-            $(".etc").each(function (index) {
-                $(this).find("input[name=etcName]").attr("name", "etcs["+index+"].etcName");
-                $(this).find("input[name=etcBeginDate]").attr("name", "etcs["+index+"].etcBeginDate");
-                $(this).find("input[name=etcEndDate]").attr("name", "etcs["+index+"].etcEndDate");
-                $(this).find("input[name=etcContent]").attr("name", "etcs["+index+"].etcContent");
-            });
-
-            $("#resumeCreateForm").submit();
+            $(".userCoverLetterCreateForm").submit();
         });
 
 

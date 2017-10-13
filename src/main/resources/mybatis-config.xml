@@ -23,6 +23,8 @@
         <typeAlias type="com.cafe24.newpickme.resume.domain.Certificate" alias="Certificate"/>
         <typeAlias type="com.cafe24.newpickme.resume.domain.Career" alias="Career"/>
         <typeAlias type="com.cafe24.newpickme.resume.domain.Etc" alias="Etc"/>
+        <typeAlias type="com.cafe24.newpickme.coverletter.domain.UserCoverLetter" alias="UserCoverLetter"/>
+        <typeAlias type="com.cafe24.newpickme.coverletter.domain.UserCoverLetterArticle" alias="UserCoverLetterArticle"/>
         <package name="com.cafe24.newpickme"/>
     </typeAliases>
 

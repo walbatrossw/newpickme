@@ -31,7 +31,7 @@ public interface RecruitDao {
     Recruit selectRecruitByRecruitId(int recruitId);
 
     // 채용 직무
-    Recruit selectRecruitJobByRecruitJobId(int recruitJobId);
+    RecruitJob selectRecruitJobByRecruitJobId(int recruitJobId);
 
     // 채용 수정 처리
     void updateRecruit(Recruit recruit);

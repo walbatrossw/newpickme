@@ -147,28 +147,24 @@
                   #{recruitJobType}
                 </foreach>
             </if>
-
             <if test="recruitJobEdu != null">
                 AND
                 <foreach collection="recruitJobEdu" item="recruitJobEdu" open="RCJ.RECR_JOB_EDU = " separator="AND">
                   #{recruitJobEdu}
                 </foreach>
             </if>
-
             <if test="companyType != null">
                 AND
                 <foreach collection="companyType" item="companyType" open="CPY.COMP_TYPE = " separator="AND">
                   #{companyType}
                 </foreach>
             </if>
-
             <if test="industryCategory1Id != null">
                 AND
                 <foreach collection="industryCategory1Id" item="industryCategory1Id" open="IDC1.INDU_CATE1_ID = " separator="AND">
                   #{industryCategory1Id}
                 </foreach>
             </if>
-
             <if test="jobCategory1Id != null">
                 AND
                 <foreach collection="jobCategory1Id" item="jobCategory1Id" open="JOC1.JOB_CATE1_ID =" separator="AND">
@@ -203,7 +199,7 @@
     </select>
 
     <!--채용직무-->
-    <select id="selectRecruitJobByRecruitJobId" resultMap="recruitResultMap">
+    <select id="selectRecruitJobByRecruitJobId" resultMap="recruitJobResultMap">
         SELECT
             REJ.RECR_JOB_ID
             , REJ.RECR_ID
@@ -211,25 +207,15 @@
             , REJ.RECR_JOB_TYPE
             , REJ.RECR_JOB_EDU
             , REJ.RECR_JOB_DETAIL
-            , REC.COMP_ID
-            , REC.RECR_ID
-            , REC.RECR_NM
-            , REC.RECR_BEG_DT
-            , REC.RECR_END_DT
             , JC1.JOB_CATE1_NM
             , JC2.JOB_CATE2_NM
-            , CPY.COMP_NM
         FROM
             t_recruit_job AS REJ
-            , t_recruit AS REC
             , t_job_category1 AS JC1
             , t_job_category2 AS JC2
-            , t_company AS CPY
         WHERE
-            REJ.RECR_ID = REC.RECR_ID
-            AND JC2.JOB_CATE2_ID = REJ.JOB_CATE2_ID
+            JC2.JOB_CATE2_ID = REJ.JOB_CATE2_ID
             AND JC1.JOB_CATE1_ID = JC2.JOB_CATE1_ID
-            AND CPY.COMP_ID = REC.COMP_ID
             AND REJ.RECR_JOB_ID = #{recruitJobId}
     </select>
 
@@ -332,7 +318,6 @@
 
     <!--채용 resultMap-->
     <resultMap id="recruitResultMap" type="Recruit">
-
         <id column="RECR_ID" property="recruitId"/>
         <result column="RECR_NM" property="recruitName"/>
         <result column="RECR_IMAGE_NM" property="recruitImageName"/>
@@ -355,7 +340,6 @@
 
     <!--채용직무 resultMap-->
     <resultMap id="recruitJobResultMap" type="RecruitJob">
-
         <id column="RECR_JOB_ID" property="recruitJobId"/>
         <result column="RECR_JOB_TYPE" property="recruitJobType"/>
         <result column="RECR_JOB_EDU" property="recruitJobEdu"/>
@@ -370,45 +354,33 @@
                     ofType="CoverLetterArticle"
                     select="selectCoverLetterArticlesByRecruitJobId"
         />
-
     </resultMap>
 
     <!--채용직무별자소서항목 resultMap-->
     <resultMap id="coverLetterArticleResultMap" type="CoverLetterArticle">
-
         <id column="CVLT_ARTICLE_ID" property="coverLetterArticleId"/>
         <result column="CVLT_ARTICLE_TITLE" property="coverLetterArticleTitle"/>
         <result column="RECR_JOB_ID" property="recruitJobId"/>
         <association property="recruitJob" resultMap="recruitJobResultMap"/>
-
     </resultMap>
 
     <!--직무 대분류 resultMap-->
     <resultMap id="jobCategory1ResultMap" type="JobCategory1">
-
         <id column="JOB_CATE1_ID" property="jobCategory1Id"/>
-
         <result column="JOB_CATE1_NM" property="jobCategory1Name"/>
-
     </resultMap>
 
     <!--직무 소분류 resultMap-->
     <resultMap id="jobCategory2ResultMap" type="JobCategory2">
-
         <id column="JOB_CATE2_ID" property="jobCategory2Id"/>
-
         <result column="JOB_CATE2_NM" property="jobCategory2Name"/>
         <result column="JOB_CATE1_ID" property="jobCategory1Id"/>
-
         <association property="jobCategory1" resultMap="jobCategory1ResultMap"/>
-
     </resultMap>
 
     <!--기업 resultMap-->
     <resultMap id="companyResultMap" type="Company">
-
         <id column="COMP_ID" property="companyId"/>
-
         <result column="COMP_NM" property="companyName"/>
         <result column="COMP_TYPE" property="companyType"/>
         <result column="COMP_HOMEPAGE" property="companyHomePage"/>
@@ -420,12 +392,10 @@
         <result column="COMP_SALES" property="companySales"/>
         <result column="COMP_REG_DT" property="companyRegisterDate"/>
         <result column="COMP_UDT_DT" property="companyUpdateDate"/>
-
         <result column="INDU_CATE2_ID" property="industryCategory2Id"/>
         <result column="ADMIN_ID" property="adminId"/>
         <association property="admin" resultMap="adminResultMap"/>
         <association property="industryCategory2" resultMap="industryCategory2ResultMap"/>
-
     </resultMap>
 
     <!--관리자 resultMap-->

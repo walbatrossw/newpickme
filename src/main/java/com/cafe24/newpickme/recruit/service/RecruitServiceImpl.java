@@ -76,7 +76,7 @@ public class RecruitServiceImpl implements RecruitService{
 
     // 채용 직무
     @Override
-    public Recruit getRecruitJobByRecruitJobId(int recruitJobId) {
+    public RecruitJob getRecruitJobByRecruitJobId(int recruitJobId) {
         return recruitDao.selectRecruitJobByRecruitJobId(recruitJobId);
     }
 

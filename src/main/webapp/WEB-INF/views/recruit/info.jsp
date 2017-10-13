@@ -136,7 +136,7 @@
                                                                      style="color: red"></div>
                                                                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기
                                                                 </button>
-                                                                <a type="button" class="btn btn-primary" href="${path}/coverletter/create/${recruitJobs.recruitJobId}">자소서 작성</a>
+                                                                <a type="button" class="btn btn-primary" href="${path}/coverletter/create/${recruit.recruitId}/${recruitJobs.recruitJobId}">자소서 작성</a>
                                                             </div>
                                                         </div>
                                                     </div>

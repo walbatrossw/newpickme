@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="coverLetter">
+
+	<insert id="insertUserCoverLetter"
+            parameterType="UserCoverLetter"
+            useGeneratedKeys="true"
+            keyProperty="userCoverLetterId">
+        INSERT INTO t_user_coverletter (
+            USER_CVLT_ID
+            , RECR_JOB_ID
+            , USER_ID
+            , USER_CVLT_NM
+            , USER_CVLT_END_DT
+            , USER_CVLT_WRT_DT
+            , USER_CVLT_UDT_DT
+        ) VALUES (
+            #{userCoverLetterId}
+            , #{recruitJobId}
+            , #{userId}
+            , #{userCoverLetterName}
+            , #{userCoverLetterEndDate}
+            , NOW()
+            , NOW()
+        ) ON DUPLICATE KEY UPDATE
+            USER_CVLT_NM = #{userCoverLetterName}
+            , USER_CVLT_END_DT = #{userCoverLetterEndDate}
+            , USER_CVLT_UDT_DT = NOW()
+    </insert>
+
+    <insert id="insertUserCoverLetterArticle"
+            parameterType="UserCoverLetterArticle"
+            useGeneratedKeys="true"
+            keyProperty="userCoverLetterArticleId">
+        INSERT INTO t_user_coverletter_article (
+            USER_CVLT_ARTICLE_ID
+            , USER_CVLT_ID
+            , ARTICLE_TITLE
+            , ARTICLE_CONTENT
+        ) VALUES (
+            #{userCoverLetterArticleId}
+            , #{userCoverLetterId}
+            , #{userCoverLetterArticleTitle}
+            , #{userCoverLetterArticleContent}
+        ) ON DUPLICATE KEY UPDATE
+            ARTICLE_TITLE = #{userCoverLetterArticleTitle}
+            , ARTICLE_CONTENT = #{userCoverLetterArticleContent}
+    </insert>
+
+</mapper>

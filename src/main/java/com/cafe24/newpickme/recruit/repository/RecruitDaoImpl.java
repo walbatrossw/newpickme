@@ -71,7 +71,7 @@ public class RecruitDaoImpl implements RecruitDao{
 
     // 채용 직무
     @Override
-    public Recruit selectRecruitJobByRecruitJobId(int recruitJobId) {
+    public RecruitJob selectRecruitJobByRecruitJobId(int recruitJobId) {
         return sqlSession.selectOne("recruit.selectRecruitJobByRecruitJobId", recruitJobId);
     }
 

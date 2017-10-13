@@ -3,7 +3,7 @@ package com.cafe24.newpickme.coverletter.domain;
 public class UserCoverLetterArticle {
 
     private int userCoverLetterArticleId;           // 자기소개서 항목 id
-    private int CoverLetterId;                      // 자기소개서 id
+    private int userCoverLetterId;                      // 자기소개서 id
     private String userCoverLetterArticleTitle;     // 자기소개서 제목
     private String userCoverLetterArticleContent;   // 자기소개서 내용
 
@@ -15,12 +15,12 @@ public class UserCoverLetterArticle {
         this.userCoverLetterArticleId = userCoverLetterArticleId;
     }
 
-    public int getCoverLetterId() {
-        return CoverLetterId;
+    public int getUserCoverLetterId() {
+        return userCoverLetterId;
     }
 
-    public void setCoverLetterId(int coverLetterId) {
-        CoverLetterId = coverLetterId;
+    public void setUserCoverLetterId(int userCoverLetterId) {
+        this.userCoverLetterId = userCoverLetterId;
     }
 
     public String getUserCoverLetterArticleTitle() {
@@ -43,7 +43,7 @@ public class UserCoverLetterArticle {
     public String toString() {
         return "UserCoverLetterArticle{" +
                 "userCoverLetterArticleId=" + userCoverLetterArticleId +
-                ", CoverLetterId=" + CoverLetterId +
+                ", userCoverLetterId=" + userCoverLetterId +
                 ", userCoverLetterArticleTitle='" + userCoverLetterArticleTitle + '\'' +
                 ", userCoverLetterArticleContent='" + userCoverLetterArticleContent + '\'' +
                 '}';

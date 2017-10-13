@@ -25,7 +25,7 @@ public interface RecruitService {
     Recruit getRecruitByRecruitId(int recruitId);
 
     // 채용직무
-    Recruit getRecruitJobByRecruitJobId(int recruitJob);
+    RecruitJob getRecruitJobByRecruitJobId(int recruitJob);
 
     // 채용 수정 처리
     void modifyRecruit(Recruit recruit);
