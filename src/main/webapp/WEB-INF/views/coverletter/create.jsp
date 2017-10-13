@@ -84,14 +84,7 @@
                             </a>
                         </div>
                     </div>
-                    <c:choose>
-                        <c:when test="${recruit == null}">
-                            <form class="userCoverLetterCreateForm" method="post" action="/coverletter/create/default">
-                        </c:when>
-                        <c:otherwise>
-                            <form class="userCoverLetterCreateForm" method="post" action="/coverletter/create/${recruit.recruitId}/${recruitJob.recruitJobId}">
-                        </c:otherwise>
-                    </c:choose>
+                    <form class="userCoverLetterCreateForm" method="post" action="${path}/coverletter/create">
                         <div class="box box-primary">
                             <div class="box-header with-border">
                                 <h3 class="box-title"> 자기소개서 작성 </h3>
@@ -121,7 +114,6 @@
                                             <div class="form-group">
                                                 <label for="userCoverLetterEndDate">자기소개서 제출 마감일시</label>
                                                 <input type="datetime-local" class="form-control" id="userCoverLetterEndDate" name="userCoverLetterEndDate" value="<fmt:formatDate value="${recruit.recruitEndDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>">
-
                                             </div>
                                         </div>
                                         <%--<div class="col-sm-3">

@@ -8,7 +8,6 @@ import java.util.List;
 public class UserCoverLetter {
 
     private int userCoverLetterId;              // 자기소개서 id
-    private int recruitJobId;                   // 채용직무 id
     private int userId;                         // 회원 id
     private String userCoverLetterName;         // 자기소개서 이름
     @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
@@ -25,14 +24,6 @@ public class UserCoverLetter {
 
     public void setUserCoverLetterId(int userCoverLetterId) {
         this.userCoverLetterId = userCoverLetterId;
-    }
-
-    public int getRecruitJobId() {
-        return recruitJobId;
-    }
-
-    public void setRecruitJobId(int recruitJobId) {
-        this.recruitJobId = recruitJobId;
     }
 
     public int getUserId() {
@@ -87,7 +78,6 @@ public class UserCoverLetter {
     public String toString() {
         return "UserCoverLetter{" +
                 "userCoverLetterId=" + userCoverLetterId +
-                ", recruitJobId=" + recruitJobId +
                 ", userId=" + userId +
                 ", userCoverLetterName='" + userCoverLetterName + '\'' +
                 ", userCoverLetterEndDate=" + userCoverLetterEndDate +
