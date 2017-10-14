@@ -34,4 +34,15 @@ public class CoverLetterServiceImpl implements CoverLetterService {
     public UserCoverLetter getUserCoverLetter(int userCoverLetterId) {
         return coverLetterDao.selectUserCoverLetter(userCoverLetterId);
     }
+
+    @Override
+    public void deleteUserCoverLetter(int userCoverLetterId) {
+        coverLetterDao.deleteUserCoverLetterArticles(userCoverLetterId);
+        coverLetterDao.deleteUserCoverLetter(userCoverLetterId);
+    }
+
+    @Override
+    public void deleteUserCoverLetterArticle(int userCoverLetterArticleId) {
+        coverLetterDao.deleteUserCoverLetterArticle(userCoverLetterArticleId);
+    }
 }

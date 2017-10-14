@@ -14,4 +14,10 @@ public interface CoverLetterService {
 
     // 자기소개서
     UserCoverLetter getUserCoverLetter(int userCoverLetterId);
+
+    // 자기소개서 삭제
+    void deleteUserCoverLetter(int userCoverLetterId);
+
+    // 자기소개서 항목 삭제
+    void deleteUserCoverLetterArticle(int userCoverLetterArticleId);
 }

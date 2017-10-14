@@ -106,7 +106,8 @@
                                                         <div class="form-group">
                                                             <label for="userCoverLetterName">자기소개서 이름</label>
                                                             <input type="text" class="form-control"
-                                                                   id="userCoverLetterName" name="userCoverLetterName">
+                                                                   id="userCoverLetterName" name="userCoverLetterName"
+                                                                   value="기본 자기소개서">
                                                         </div>
                                                     </div>
                                                 </c:when>

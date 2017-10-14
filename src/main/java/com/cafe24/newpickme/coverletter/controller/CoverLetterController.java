@@ -6,6 +6,8 @@ import com.cafe24.newpickme.recruit.domain.Recruit;
 import com.cafe24.newpickme.recruit.domain.RecruitJob;
 import com.cafe24.newpickme.recruit.service.RecruitService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -84,5 +86,24 @@ public class CoverLetterController {
     }
 
     // 자기소개서 삭제처리
+    @RequestMapping(value = "/delete/{userCoverLetterId}", method = RequestMethod.GET)
+    public String delete(@PathVariable int userCoverLetterId) {
+        coverLetterService.deleteUserCoverLetter(userCoverLetterId);
+        return "redirect:/coverletter/list";
+    }
 
+
+    // 자기소개서 항목 삭제처리
+    @RequestMapping(value = "/{userCoverLetterId}/{userCoverLetterArticleId}/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteUserCoverLetterArticle(@PathVariable int userCoverLetterArticleId, HttpSession session) {
+        ResponseEntity<String> entity = null;
+        try {
+            coverLetterService.deleteUserCoverLetterArticle(userCoverLetterArticleId);
+            entity = new ResponseEntity<String>("success", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
 }

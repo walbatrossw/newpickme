@@ -60,9 +60,9 @@
                                 <a class="btn btn-app articleAddBtn">
                                     <i class="fa fa-plus-square"></i> 문항 추가
                                 </a>
-                                <a class="btn btn-app articleDelBtn">
+                                <%--<a class="btn btn-app articleDelBtn">
                                     <i class="fa fa-minus-square"></i> 문항 삭제
-                                </a>
+                                </a>--%>
                             </c:if>
                             <a class="btn btn-app memoAddBtn">
                                 <i class="fa fa-edit"></i> 메모장 추가
@@ -135,32 +135,66 @@
                         </div>
                         <div class="box box-primary">
                             <div class="box-body no-padding articles">
+                                <div class="hiddenArticle" hidden>
+                                    <table class="table table-bordered table-hover article">
+                                        <tr>
+                                            <th class="col-sm-1">문항</th>
+                                            <td>
+                                            <textarea class="form-control" rows="2"
+                                                      id="userCoverLetterArticleTitle"
+                                                      name="userCoverLetterArticleTitle"
+                                                      style="resize:none"
+                                                      placeholder="자기소개서 문항을 입력해주세요"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-sm-1">내용</th>
+                                            <td>
+                                                <textarea class="form-control"
+                                                          id="userCoverLetterArticleContent" rows="10"
+                                                          name="userCoverLetterArticleContent"
+                                                          style="resize:none"
+                                                          placeholder="내용을 입력해주세요"></textarea>
+                                                <a type="button" class="btn btn-default btn-xs articleDelBtn pull-right"><i class="fa fa-trash"></i> 삭제</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="col-sm-1">글자수</th>
+                                            <td>
+                                                <span id="counter">###</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                                 <c:forEach varStatus="i" var="userCoverLetterArticle"
                                            items="${userCoverLetter.userCoverLetterArticles}">
                                     <table class="table table-bordered table-hover article">
                                         <tr>
-                                            <th class="col-sm-1">${i.index+1} 번 문항</th>
+                                            <th class="col-sm-1">문항</th>
                                             <td>
                                                 <input type="hidden" name="userCoverLetterArticleId" value="${userCoverLetterArticle.userCoverLetterArticleId}">
-                                                <textarea class="form-control" rows="2"
+                                                <textarea class="form-control" rows="1"
                                                           name="userCoverLetterArticleTitle" style="resize:none"
                                                           placeholder="자기소개서 문항을 입력해주세요">${userCoverLetterArticle.userCoverLetterArticleTitle}</textarea>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="col-sm-1">${i.index+1} 번 내용</th>
+                                            <th class="col-sm-1">내용</th>
                                             <td>
                                                 <textarea class="form-control content"
                                                           id="userCoverLetterArticleContent${i.index}"
                                                           name="userCoverLetterArticleContent" rows="10"
                                                           style="resize:none"
                                                           placeholder="내용을 입력해주세요">${userCoverLetterArticle.userCoverLetterArticleContent}</textarea>
+                                                <br/>
+                                                <a type="button" class="btn btn-default btn-xs articleDelBtn pull-right"><i class="fa fa-trash"></i> 삭제</a>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th class="col-sm-1">글자수</th>
                                             <td>
                                                 <span id="counter${i.index}">###</span>
+
                                             </td>
                                         </tr>
                                     </table>
@@ -251,24 +285,43 @@
 
         // 자소서 문항 추가 버튼 클릭시
         $(".articleAddBtn").on("click", function () {
-            $(".article:last")
+            $(".hiddenArticle").find(".article")
                 .clone(true)
                 .find("textarea").val("").end()
-                .find("#counter").empty().end()
+                .find("span").empty().end()
                 .appendTo(".articles");
         });
 
-        // 자소서 문항 삭제 버튼 클릭시
+        // 자소서 문항 삭제 버튼 클릭시 --
         $(".articleDelBtn").on("click", function () {
-            if ($(".article").length === 1) {
+            if ($(".article").length === 2) {
                 alert("자기소개서 문항 입력칸 모두를 삭제할 수 없습니다.")
             } else {
-                $(".article:last").remove();
+                var userCoverLetterArticle = $(this).parent().parent().parent().find("input[type=hidden]"); // articleId;
+                var userCoverLetterId = "${userCoverLetter.userCoverLetterId}";
+                if (confirm("삭제하시겠습니까?")) {
+                    if (userCoverLetterArticle.val() == null) {
+                        $(this)
+                            .parent()
+                            .parent()
+                            .parent()
+                            .parent().remove();
+                    } else {
+                        $.ajax({
+                            type: "delete",
+                            url: "${path}/coverletter/"+userCoverLetterId+"/"+userCoverLetterArticle.val()+"/delete",
+                            success: function () {
+                                userCoverLetterArticle.parent().parent().parent().remove();
+                            }
+                        });
+                    }
+                }
             }
         });
 
         // 자소서 저장 버튼 클릭시
         $(".coverLetterSaveBtn").on("click", function () {
+            $(".hiddenArticle").remove();
             $(".article").each(function (index) {
                 $(this).find("input[name=userCoverLetterArticleId]").attr("name", "userCoverLetterArticles[" + index + "].userCoverLetterArticleId");
                 $(this).find("textarea[name=userCoverLetterArticleTitle]").attr("name", "userCoverLetterArticles[" + index + "].userCoverLetterArticleTitle");

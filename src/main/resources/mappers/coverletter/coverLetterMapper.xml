@@ -92,6 +92,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE USER_CVLT_ID = #{userCoverLetterId}
     </select>
 
+    <delete id="deleteUserCoverLetter">
+        DELETE FROM t_user_coverletter
+        WHERE USER_CVLT_ID = #{userCoverLetterId}
+    </delete>
+
+    <delete id="deleteUserCoverLetterArticle">
+        DELETE FROM t_user_coverletter_article
+        WHERE USER_CVLT_ARTICLE_ID = #{userCoverLetterArticleId}
+    </delete>
+
+    <delete id="deleteUserCoverLetterArticles">
+        DELETE FROM t_user_coverletter_article
+        WHERE USER_CVLT_ID = #{userCoverLetterId}
+    </delete>
+
     <resultMap id="userCoverLetterResultMap" type="UserCoverLetter">
         <id column="USER_CVLT_ID" property="userCoverLetterId"/>
         <result column="USER_ID" property="userId"/>

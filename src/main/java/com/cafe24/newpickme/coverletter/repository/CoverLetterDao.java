@@ -18,4 +18,13 @@ public interface CoverLetterDao {
 
     // 자기소개서
     UserCoverLetter selectUserCoverLetter(int userCoverLetterId);
+
+    // 자기소개서 삭제
+    void deleteUserCoverLetter(int userCoverLetterId);
+
+    // 자기소개서 항목 삭제
+    void deleteUserCoverLetterArticle(int userCoverLetterArticleId);
+
+    // 자기소개서 항목 일괄 삭제
+    void deleteUserCoverLetterArticles(int userCoverLetterId);
 }

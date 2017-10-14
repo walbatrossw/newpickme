@@ -33,4 +33,19 @@ public class CoverLetterDaoImpl implements CoverLetterDao {
     public UserCoverLetter selectUserCoverLetter(int userCoverLetterId) {
         return sqlSession.selectOne("coverLetter.selectUserCoverLetter", userCoverLetterId);
     }
+
+    @Override
+    public void deleteUserCoverLetter(int userCoverLetterId) {
+        sqlSession.delete("coverLetter.deleteUserCoverLetter", userCoverLetterId);
+    }
+
+    @Override
+    public void deleteUserCoverLetterArticle(int userCoverLetterArticleId) {
+        sqlSession.delete("coverLetter.deleteUserCoverLetterArticle", userCoverLetterArticleId);
+    }
+
+    @Override
+    public void deleteUserCoverLetterArticles(int userCoverLetterId) {
+        sqlSession.delete("coverLetter.deleteUserCoverLetterArticles", userCoverLetterId);
+    }
 }
