@@ -9,6 +9,7 @@ public class UserCoverLetter {
 
     private int userCoverLetterId;              // 자기소개서 id
     private int userId;                         // 회원 id
+    private int recruitJobId;                   // 채용직무 id
     private String userCoverLetterName;         // 자기소개서 이름
     @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
     private Date userCoverLetterEndDate;         // 회원이 설정한 마감제출 시간
@@ -32,6 +33,14 @@ public class UserCoverLetter {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getRecruitJobId() {
+        return recruitJobId;
+    }
+
+    public void setRecruitJobId(int recruitJobId) {
+        this.recruitJobId = recruitJobId;
     }
 
     public String getUserCoverLetterName() {
@@ -79,6 +88,7 @@ public class UserCoverLetter {
         return "UserCoverLetter{" +
                 "userCoverLetterId=" + userCoverLetterId +
                 ", userId=" + userId +
+                ", recruitJobId=" + recruitJobId +
                 ", userCoverLetterName='" + userCoverLetterName + '\'' +
                 ", userCoverLetterEndDate=" + userCoverLetterEndDate +
                 ", userCoverLetterWriteDate=" + userCoverLetterWriteDate +

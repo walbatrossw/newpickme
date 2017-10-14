@@ -56,12 +56,14 @@
                             <a class="btn btn-app coverLetterSaveBtn">
                                 <i class="fa fa-save"></i> 저장
                             </a>
-                            <a class="btn btn-app articleAddBtn">
-                                <i class="fa fa-plus-square"></i> 문항 추가
-                            </a>
-                            <a class="btn btn-app articleDelBtn">
-                                <i class="fa fa-minus-square"></i> 문항 삭제
-                            </a>
+                            <c:if test="${userCoverLetter.recruitJobId == 0}">
+                                <a class="btn btn-app articleAddBtn">
+                                    <i class="fa fa-plus-square"></i> 문항 추가
+                                </a>
+                                <a class="btn btn-app articleDelBtn">
+                                    <i class="fa fa-minus-square"></i> 문항 삭제
+                                </a>
+                            </c:if>
                             <a class="btn btn-app memoAddBtn">
                                 <i class="fa fa-edit"></i> 메모장 추가
                             </a>
@@ -93,25 +95,38 @@
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="userCoverLetterName">자기소개서 이름</label>
-                                                <input type="text" class="form-control" id="userCoverLetterName" name="userCoverLetterName" value="${userCoverLetter.userCoverLetterName}">
+                                                <input type="hidden" class="form-control" id="userCoverLetterId"
+                                                       name="userCoverLetterId"
+                                                       value="${userCoverLetter.userCoverLetterId}">
+                                                <input type="text" class="form-control" id="userCoverLetterName"
+                                                       name="userCoverLetterName"
+                                                       value="${userCoverLetter.userCoverLetterName}">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="userCoverLetterEndDate">자기소개서 제출 마감일시</label>
-                                                <input type="datetime-local" class="form-control" id="userCoverLetterEndDate" name="userCoverLetterEndDate" value="<fmt:formatDate value="${userCoverLetter.userCoverLetterEndDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>">
+                                                <input type="datetime-local" class="form-control"
+                                                       id="userCoverLetterEndDate" name="userCoverLetterEndDate"
+                                                       value="<fmt:formatDate value="${userCoverLetter.userCoverLetterEndDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>">
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="userCoverLetterEndDate">자기소개서 작성 시간</label>
-                                                <input type="datetime-local" class="form-control" id="userCoverLetterWriteDate" name="userCoverLetterWriteDate" value="<fmt:formatDate value="${userCoverLetter.userCoverLetterWriteDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>" readonly>
+                                                <input type="datetime-local" class="form-control"
+                                                       id="userCoverLetterWriteDate" name="userCoverLetterWriteDate"
+                                                       value="<fmt:formatDate value="${userCoverLetter.userCoverLetterWriteDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>"
+                                                       readonly>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">
                                             <div class="form-group">
                                                 <label for="userCoverLetterEndDate">자기소개서 수정 시간</label>
-                                                <input type="datetime-local" class="form-control" id="userCoverLetterUpdateDate" name="userCoverLetterUpdateDate" value="<fmt:formatDate value="${userCoverLetter.userCoverLetterUpdateDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>" readonly>
+                                                <input type="datetime-local" class="form-control"
+                                                       id="userCoverLetterUpdateDate" name="userCoverLetterUpdateDate"
+                                                       value="<fmt:formatDate value="${userCoverLetter.userCoverLetterUpdateDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>"
+                                                       readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -120,18 +135,26 @@
                         </div>
                         <div class="box box-primary">
                             <div class="box-body no-padding articles">
-                                <c:forEach varStatus="i" var="userCoverLetterArticle" items="${userCoverLetter.userCoverLetterArticles}">
+                                <c:forEach varStatus="i" var="userCoverLetterArticle"
+                                           items="${userCoverLetter.userCoverLetterArticles}">
                                     <table class="table table-bordered table-hover article">
                                         <tr>
                                             <th class="col-sm-1">${i.index+1} 번 문항</th>
                                             <td>
-                                                <textarea class="form-control" rows="2" name="userCoverLetterArticleTitle" style="resize:none" placeholder="자기소개서 문항을 입력해주세요">${userCoverLetterArticle.userCoverLetterArticleTitle}</textarea>
+                                                <input type="hidden" name="userCoverLetterArticleId" value="${userCoverLetterArticle.userCoverLetterArticleId}">
+                                                <textarea class="form-control" rows="2"
+                                                          name="userCoverLetterArticleTitle" style="resize:none"
+                                                          placeholder="자기소개서 문항을 입력해주세요">${userCoverLetterArticle.userCoverLetterArticleTitle}</textarea>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th class="col-sm-1">${i.index+1} 번 내용</th>
                                             <td>
-                                                <textarea class="form-control content" id="userCoverLetterArticleContent${i.index}" name="userCoverLetterArticleContent" rows="10" style="resize:none" placeholder="내용을 입력해주세요">${userCoverLetterArticle.userCoverLetterArticleContent}</textarea>
+                                                <textarea class="form-control content"
+                                                          id="userCoverLetterArticleContent${i.index}"
+                                                          name="userCoverLetterArticleContent" rows="10"
+                                                          style="resize:none"
+                                                          placeholder="내용을 입력해주세요">${userCoverLetterArticle.userCoverLetterArticleContent}</textarea>
                                             </td>
                                         </tr>
                                         <tr>
@@ -187,15 +210,15 @@
 <script>
     $(function () {
 
-        <c:forEach var="coverLetterArticle" varStatus="i" items="${recruitJob.coverLetterArticles}">
-            $("#userCoverLetterArticleContent${i.index}").keyup(function (e){
-                var content = $(this).val();
-                $("#counter${i.index}").html(content.length + "자 : (공백포함)");
-            });
-            $('#userCoverLetterArticleContent${i.index}').keyup();
+        <c:forEach var="userCoverLetterArticle" varStatus="i" items="${userCoverLetter.userCoverLetterArticles}">
+        $("#userCoverLetterArticleContent${i.index}").keyup(function (e) {
+            var content = $(this).val();
+            $("#counter${i.index}").html(content.length + "자 : (공백포함)");
+        });
+        $('#userCoverLetterArticleContent${i.index}').keyup();
         </c:forEach>
 
-        $("#userCoverLetterArticleContent").keyup(function (e){
+        $("#userCoverLetterArticleContent").keyup(function (e) {
             var content = $(this).val();
             $(this)
                 .parent()
@@ -209,14 +232,14 @@
         $(".memoAddBtn").on("click", function () {
             $(".memos").append(
                 "<div class=\"box box-primary memo\">\n" +
-                    "<div class=\"box-header\">\n" +
-                        "<h2 class=\"box-title\">메모장</h2>\n" +
-                    "</div>\n" +
-                    "<div class=\"box-body\">\n" +
-                        "<div class=\"form-group\">\n" +
-                            "<textarea class=\"form-control\" rows=\"30\" placeholder=\"내용을 입력해주세요. 작성된 내용은 저장되지 않습니다\" style=\"resize: none\"></textarea>\n" +
-                        "</div>\n" +
-                    "</div>\n" +
+                "<div class=\"box-header\">\n" +
+                "<h2 class=\"box-title\">메모장</h2>\n" +
+                "</div>\n" +
+                "<div class=\"box-body\">\n" +
+                "<div class=\"form-group\">\n" +
+                "<textarea class=\"form-control\" rows=\"30\" placeholder=\"내용을 입력해주세요. 작성된 내용은 저장되지 않습니다\" style=\"resize: none\"></textarea>\n" +
+                "</div>\n" +
+                "</div>\n" +
                 "</div>"
             );
         });
@@ -237,7 +260,7 @@
 
         // 자소서 문항 삭제 버튼 클릭시
         $(".articleDelBtn").on("click", function () {
-            if ( $(".article").length === 1) {
+            if ($(".article").length === 1) {
                 alert("자기소개서 문항 입력칸 모두를 삭제할 수 없습니다.")
             } else {
                 $(".article:last").remove();
@@ -247,13 +270,12 @@
         // 자소서 저장 버튼 클릭시
         $(".coverLetterSaveBtn").on("click", function () {
             $(".article").each(function (index) {
-                $(this).find("textarea[name=userCoverLetterArticleTitle]").attr("name", "userCoverLetterArticles["+index+"].userCoverLetterArticleTitle");
-                $(this).find("textarea[name=userCoverLetterArticleContent]").attr("name", "userCoverLetterArticles["+index+"].userCoverLetterArticleContent");
+                $(this).find("input[name=userCoverLetterArticleId]").attr("name", "userCoverLetterArticles[" + index + "].userCoverLetterArticleId");
+                $(this).find("textarea[name=userCoverLetterArticleTitle]").attr("name", "userCoverLetterArticles[" + index + "].userCoverLetterArticleTitle");
+                $(this).find("textarea[name=userCoverLetterArticleContent]").attr("name", "userCoverLetterArticles[" + index + "].userCoverLetterArticleContent");
             });
             $(".userCoverLetterCreateForm").submit();
         });
-
-
 
     });
 

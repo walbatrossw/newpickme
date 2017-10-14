@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         INSERT INTO t_user_coverletter (
             USER_CVLT_ID
             , USER_ID
+            , RECR_JOB_ID
             , USER_CVLT_NM
             , USER_CVLT_END_DT
             , USER_CVLT_WRT_DT
@@ -19,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         ) VALUES (
             #{userCoverLetterId}
             , #{userId}
+            , #{recruitJobId}
             , #{userCoverLetterName}
             , #{userCoverLetterEndDate}
             , NOW()
@@ -48,10 +50,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             , ARTICLE_CONTENT = #{userCoverLetterArticleContent}
     </insert>
 
-    <select id="selectCoverLetters" parameterType="int" resultMap="userCoverLetterResultMap">
+    <select id="selectCoverLetters"
+            parameterType="int"
+            resultMap="userCoverLetterResultMap">
         SELECT
             USER_CVLT_ID
             , USER_ID
+            , RECR_JOB_ID
             , USER_CVLT_NM
             , USER_CVLT_END_DT
             , USER_CVLT_WRT_DT
@@ -60,7 +65,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE USER_ID = #{userId}
     </select>
 
-    <select id="selectCoverLetterArticles" parameterType="int" resultMap="userCoverLetterArticleResultMap">
+    <select id="selectCoverLetterArticles"
+            parameterType="int"
+            resultMap="userCoverLetterArticleResultMap">
         SELECT
             USER_CVLT_ARTICLE_ID
             , USER_CVLT_ID
@@ -70,10 +77,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE USER_CVLT_ID = #{USER_CVLT_ID}
     </select>
 
-    <select id="selectUserCoverLetter" parameterType="int" resultMap="userCoverLetterResultMap">
+    <select id="selectUserCoverLetter"
+            parameterType="int"
+            resultMap="userCoverLetterResultMap">
         SELECT
             USER_CVLT_ID
             , USER_ID
+            , RECR_JOB_ID
             , USER_CVLT_NM
             , USER_CVLT_END_DT
             , USER_CVLT_WRT_DT
@@ -85,6 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap id="userCoverLetterResultMap" type="UserCoverLetter">
         <id column="USER_CVLT_ID" property="userCoverLetterId"/>
         <result column="USER_ID" property="userId"/>
+        <result column="RECR_JOB_ID" property="recruitJobId"/>
         <result column="USER_CVLT_NM" property="userCoverLetterName"/>
         <result column="USER_CVLT_END_DT" property="userCoverLetterEndDate"/>
         <result column="USER_CVLT_WRT_DT" property="userCoverLetterWriteDate"/>

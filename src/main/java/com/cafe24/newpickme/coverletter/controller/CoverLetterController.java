@@ -31,6 +31,15 @@ public class CoverLetterController {
         return "/coverletter/create";
     }
 
+    // 기본 자기소개서 작성 처리
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public String create(UserCoverLetter userCoverLetter, HttpSession session) {
+        int userId = (Integer) session.getAttribute("userId");
+        userCoverLetter.setUserId(userId);
+        coverLetterService.create(userCoverLetter);
+        return "redirect:/coverletter/list";
+    }
+
     // 채용직무별 자기소개서 작성 페이지
     @RequestMapping(value = "/create/{recruitId}/{recruitJobId}", method = RequestMethod.GET)
     public String create(@PathVariable int recruitId, @PathVariable int recruitJobId, Model model) {
@@ -38,14 +47,15 @@ public class CoverLetterController {
         RecruitJob recruitJob = recruitService.getRecruitJobByRecruitJobId(recruitJobId);
         model.addAttribute("recruit", recruit);
         model.addAttribute("recruitJob", recruitJob);
-        return "redirect:/coverletter/list";
+        return "/coverletter/create";
     }
 
-    // 자기소개서 작성 처리
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(UserCoverLetter userCoverLetter, HttpSession session) {
+    // 채용직무별 자기소개서 작성 처리
+    @RequestMapping(value = "/create/{recruitJobId}", method = RequestMethod.POST)
+    public String create(@PathVariable int recruitJobId, UserCoverLetter userCoverLetter, HttpSession session) {
         int userId = (Integer) session.getAttribute("userId");
         userCoverLetter.setUserId(userId);
+        userCoverLetter.setRecruitJobId(recruitJobId);
         coverLetterService.create(userCoverLetter);
         return "redirect:/coverletter/list";
     }
