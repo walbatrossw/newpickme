@@ -48,6 +48,7 @@
                                     <th>번호</th>
                                     <th>자소서 명</th>
                                     <th>자소서 제출 마감 일자</th>
+                                    <th>D-DAY</th>
                                     <th>자소서 삭제</th>
                                 </tr>
                                 </thead>
@@ -91,9 +92,9 @@
                 }
             });
 
-            dDay${i.index}();
+            dDayCount${i.index}();
 
-            function dDay${i.index}() {
+            function dDayCount${i.index}() {
                 var now = new Date();
                 var then = new Date("<fmt:formatDate value="${userCoverLetter.userCoverLetterEndDate}" pattern="yyyy-MM-dd HH:mm"/>");
                 var diff = then - now;
@@ -120,12 +121,9 @@
                     $("#dateView${i.index}").html(viewStr2);
                 }
 
-
-
-
-
             }
         </c:forEach>
+
         $(".coverLettersTable").DataTable();
     });
 </script>

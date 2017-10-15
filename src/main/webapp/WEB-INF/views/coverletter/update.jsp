@@ -24,7 +24,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 자기소개서</a></li>
-                <li class="active"> 작성</li>
+                <li class="active"> 수정</li>
             </ol>
         </section>
 
@@ -60,9 +60,6 @@
                                 <a class="btn btn-app articleAddBtn">
                                     <i class="fa fa-plus-square"></i> 문항 추가
                                 </a>
-                                <%--<a class="btn btn-app articleDelBtn">
-                                    <i class="fa fa-minus-square"></i> 문항 삭제
-                                </a>--%>
                             </c:if>
                             <a class="btn btn-app memoAddBtn">
                                 <i class="fa fa-edit"></i> 메모장 추가
@@ -194,7 +191,6 @@
                                             <th class="col-sm-1">글자수</th>
                                             <td>
                                                 <span id="counter${i.index}">###</span>
-
                                             </td>
                                         </tr>
                                     </table>
