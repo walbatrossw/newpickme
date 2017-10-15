@@ -69,7 +69,7 @@
                                 <i class="fa fa-language"></i> 맞춤법 검사
                             </a>
                             <a class="btn btn-app">
-                                <i class="fa fa-print"></i> 인쇄
+                                <i class="fa fa-print coverLetterPrintBtn"></i> 인쇄
                             </a>
                             <a class="btn btn-app">
                                 <i class="fa fa-file-pdf-o"></i> PDF
@@ -80,110 +80,146 @@
                         </div>
                     </div>
                     <c:choose>
-                    <c:when test="${recruit == null}">
-                    <form class="userCoverLetterCreateForm" method="post" action="${path}/coverletter/create">
+                        <c:when test="${recruit == null}">
+                            <form class="userCoverLetterCreateForm" method="post" action="${path}/coverletter/create">
                         </c:when>
                         <c:otherwise>
-                        <form class="userCoverLetterCreateForm" method="post"
-                              action="${path}/coverletter/create/${recruitJob.recruitJobId}">
-                            </c:otherwise>
-                            </c:choose>
-                            <div class="box box-primary">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title"> 자기소개서 작성 </h3>
-                                </div>
-                                <div class="box-body">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <c:choose>
-                                                <c:when test="${recruit == null}">
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="userCoverLetterName">자기소개서 이름</label>
-                                                            <input type="text" class="form-control"
-                                                                   id="userCoverLetterName" name="userCoverLetterName"
-                                                                   value="기본 자기소개서">
+                            <form class="userCoverLetterCreateForm" method="post" action="${path}/coverletter/create/${recruitJob.recruitJobId}">
+                        </c:otherwise>
+                    </c:choose>
+                            <div class="coverLetterPrintSection">
+                                <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title"> 자기소개서</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <c:choose>
+                                                    <c:when test="${recruit == null}">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="userCoverLetterName">자기소개서 이름</label>
+                                                                <input type="text" class="form-control"
+                                                                       id="userCoverLetterName" name="userCoverLetterName"
+                                                                       value="기본 자기소개서">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <label for="userCoverLetterName">자기소개서 이름</label>
-                                                            <input type="text" class="form-control"
-                                                                   id="userCoverLetterName" name="userCoverLetterName"
-                                                                   value="${recruit.company.companyName} / ${recruit.recruitName} / ${recruitJob.recruitJobDetail}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label for="userCoverLetterName">자기소개서 이름</label>
+                                                                <input type="text" class="form-control"
+                                                                       id="userCoverLetterName" name="userCoverLetterName"
+                                                                       value="${recruit.company.companyName} / ${recruit.recruitName} / ${recruitJob.recruitJobDetail}">
+                                                            </div>
                                                         </div>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <label for="userCoverLetterEndDate">자기소개서 제출 마감일시</label>
+                                                        <input type="datetime-local" class="form-control"
+                                                               id="userCoverLetterEndDate" name="userCoverLetterEndDate"
+                                                               value="<fmt:formatDate value="${recruit.recruitEndDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>">
                                                     </div>
-                                                </c:otherwise>
-                                            </c:choose>
-                                            <div class="col-sm-3">
-                                                <div class="form-group">
-                                                    <label for="userCoverLetterEndDate">자기소개서 제출 마감일시</label>
-                                                    <input type="datetime-local" class="form-control"
-                                                           id="userCoverLetterEndDate" name="userCoverLetterEndDate"
-                                                           value="<fmt:formatDate value="${recruit.recruitEndDate}" pattern="yyyy-MM-dd'T'HH:mm:ss"/>">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="box box-primary">
-                                <div class="box-body no-padding articles">
-                                    <c:choose>
-                                        <c:when test="${recruitJob != null}">
-                                            <div class="hiddenArticle" hidden>
-                                                <table class="table table-bordered table-hover article">
-                                                    <tr>
-                                                        <th class="col-sm-1">문항</th>
-                                                        <td>
+                                <div class="box box-primary">
+                                    <div class="box-body no-padding articles">
+                                        <c:choose>
+                                            <c:when test="${recruitJob != null}">
+                                                <div class="hiddenArticle" hidden>
+                                                    <table class="table table-bordered table-hover article">
+                                                        <tr>
+                                                            <th class="col-sm-1">문항</th>
+                                                            <td>
                                                             <textarea class="form-control" rows="2"
                                                                       id="userCoverLetterArticleTitle"
                                                                       name="userCoverLetterArticleTitle"
                                                                       style="resize:none"
                                                                       placeholder="자기소개서 문항을 입력해주세요"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="col-sm-1">내용</th>
-                                                        <td>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="col-sm-1">내용</th>
+                                                            <td>
                                                             <textarea class="form-control"
                                                                       id="userCoverLetterArticleContent" rows="10"
                                                                       name="userCoverLetterArticleContent"
                                                                       style="resize:none"
                                                                       placeholder="내용을 입력해주세요"></textarea>
-                                                            <a type="button" class="btn btn-default btn-xs articleDelBtn pull-right"><i class="fa fa-trash"></i> 삭제</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="col-sm-1">글자수</th>
-                                                        <td>
-                                                            <span id="counter">###</span>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                            <c:forEach varStatus="i" var="coverLetterArticle"
-                                                       items="${recruitJob.coverLetterArticles}">
-                                                <table class="table table-bordered table-hover article">
-                                                    <tr>
-                                                        <th class="col-sm-1">문항</th>
-                                                        <td>
+                                                                <a type="button"
+                                                                   class="btn btn-default btn-xs articleDelBtn pull-right"><i
+                                                                        class="fa fa-trash"></i> 삭제</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="col-sm-1">글자수</th>
+                                                            <td>
+                                                                <span id="counter">###</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <c:forEach varStatus="i" var="coverLetterArticle"
+                                                           items="${recruitJob.coverLetterArticles}">
+                                                    <table class="table table-bordered table-hover article">
+                                                        <tr>
+                                                            <th class="col-sm-1">문항</th>
+                                                            <td>
                                                             <textarea class="form-control" rows="2"
                                                                       name="userCoverLetterArticleTitle"
                                                                       style="resize:none"
                                                                       placeholder="자기소개서 문항을 입력해주세요">${coverLetterArticle.coverLetterArticleTitle}</textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th class="col-sm-1">내용</th>
-                                                        <td>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="col-sm-1">내용</th>
+                                                            <td>
                                                             <textarea class="form-control content"
                                                                       id="userCoverLetterArticleContent${i.index}"
                                                                       name="userCoverLetterArticleContent" rows="10"
                                                                       style="resize:none"
                                                                       placeholder="내용을 입력해주세요"></textarea>
+                                                                <br/>
+                                                                <a type="button"
+                                                                   class="btn btn-default btn-xs articleDelBtn pull-right"><i
+                                                                        class="fa fa-trash"></i> 삭제</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="col-sm-1">글자수</th>
+                                                            <td>
+                                                                <span id="counter${i.index}">###</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </c:forEach>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <table class="table table-hover article">
+                                                    <tr>
+                                                        <th class="col-sm-1">문항</th>
+                                                        <td>
+                                                        <textarea class="form-control" rows="2"
+                                                                  name="userCoverLetterArticleTitle" style="resize:none"
+                                                                  placeholder="자기소개서 문항을 입력해주세요"></textarea>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="col-sm-1">내용</th>
+                                                        <td>
+                                                        <textarea class="form-control"
+                                                                  id="userCoverLetterArticleContent" rows="10"
+                                                                  name="userCoverLetterArticleContent"
+                                                                  style="resize:none"
+                                                                  placeholder="내용을 입력해주세요"></textarea>
                                                             <br/>
                                                             <a type="button"
                                                                class="btn btn-default btn-xs articleDelBtn pull-right"><i
@@ -193,46 +229,13 @@
                                                     <tr>
                                                         <th class="col-sm-1">글자수</th>
                                                         <td>
-                                                            <span id="counter${i.index}">###</span>
+                                                            <span id="counter">###</span>
                                                         </td>
                                                     </tr>
                                                 </table>
-                                            </c:forEach>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <table class="table table-hover article">
-                                                <tr>
-                                                    <th class="col-sm-1">문항</th>
-                                                    <td>
-                                                        <textarea class="form-control" rows="2"
-                                                                  name="userCoverLetterArticleTitle" style="resize:none"
-                                                                  placeholder="자기소개서 문항을 입력해주세요"></textarea>
-
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th class="col-sm-1">내용</th>
-                                                    <td>
-                                                        <textarea class="form-control"
-                                                                  id="userCoverLetterArticleContent" rows="10"
-                                                                  name="userCoverLetterArticleContent"
-                                                                  style="resize:none"
-                                                                  placeholder="내용을 입력해주세요"></textarea>
-                                                        <br/>
-                                                        <a type="button"
-                                                           class="btn btn-default btn-xs articleDelBtn pull-right"><i
-                                                                class="fa fa-trash"></i> 삭제</a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th class="col-sm-1">글자수</th>
-                                                    <td>
-                                                        <span id="counter">###</span>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </c:otherwise>
-                                    </c:choose>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -278,14 +281,7 @@
 <script>
     $(function () {
 
-        <c:forEach var="coverLetterArticle" varStatus="i" items="${recruitJob.coverLetterArticles}">
-        $("#userCoverLetterArticleContent${i.index}").keyup(function (e) {
-            var content = $(this).val();
-            $("#counter${i.index}").html(content.length + "자 : (공백포함)");
-        });
-        $('#userCoverLetterArticleContent${i.index}').keyup();
-        </c:forEach>
-
+        // 기본 자기소개서 내용 글자수 세기
         $("#userCoverLetterArticleContent").keyup(function (e) {
             var content = $(this).val();
             $(this)
@@ -295,6 +291,15 @@
                 .find("#counter").html(content.length + "자 : (공백포함)");
         });
         $("#userCoverLetterArticleContent").keyup();
+
+        // 채용 직무별 자기소개서 내용 글자수 세기
+        <c:forEach var="coverLetterArticle" varStatus="i" items="${recruitJob.coverLetterArticles}">
+        $("#userCoverLetterArticleContent${i.index}").keyup(function (e) {
+            var content = $(this).val();
+            $("#counter${i.index}").html(content.length + "자 : (공백포함)");
+        });
+        $('#userCoverLetterArticleContent${i.index}').keyup();
+        </c:forEach>
 
         // 메모 버튼 클릭시
         $(".memoAddBtn").on("click", function () {
@@ -319,13 +324,14 @@
 
         // 자소서 문항 추가 버튼 클릭시
         $(".articleAddBtn").on("click", function () {
+            // 기본자소서 문항을 추가할 경우
             if (${recruitJob == null}) {
                 $(".article:last")
                     .clone(true)
                     .find("textarea").val("").end()
                     .find("#counter").empty().end()
                     .appendTo(".articles");
-            } else {
+            } else {    // 채용직무별 자소서 문항을 추가할 경우
                 $(".hiddenArticle").find(".article")
                     .clone(true)
                     .find("textarea").val("").end()
@@ -336,6 +342,7 @@
 
         // 자소서 문항 삭제 버튼 클릭시
         $(".articleDelBtn").on("click", function () {
+            // 기본 자소서 문항을 삭제할 경우
             if (${recruitJob == null}) {
                 if ($(".article").length === 1) {
                     alert("자기소개서 문항 입력칸 모두를 삭제할 수 없습니다.")
@@ -348,8 +355,8 @@
                             .parent().remove();
                     }
                 }
-            } else {
-                if ($(".article").length === 2) {
+            } else {    // 채용 직무별 자소서 문항을 삭제할 경우
+                if ($(".article").length === 2) {   // hidden article이 존재하기 떄문에 length는 2
                     alert("자기소개서 문항 입력칸 모두를 삭제할 수 없습니다.")
                 } else {
                     if (confirm("삭제하시겠습니까?")) {
@@ -366,6 +373,7 @@
 
         // 자소서 저장 버튼 클릭시
         $(".coverLetterSaveBtn").on("click", function () {
+            // 자기소개서 항목별 name 변경
             $(".article").each(function (index) {
                 $(this).find("textarea[name=userCoverLetterArticleTitle]").attr("name", "userCoverLetterArticles[" + index + "].userCoverLetterArticleTitle");
                 $(this).find("textarea[name=userCoverLetterArticleContent]").attr("name", "userCoverLetterArticles[" + index + "].userCoverLetterArticleContent");
@@ -373,6 +381,10 @@
             $(".userCoverLetterCreateForm").submit();
         });
 
+        // 자기소개서 인쇄 버튼 클릭시
+        $(".coverLetterPrintBtn").on("click", function () {
+            $(".coverLetterPrintSection").printThis();
+        });
 
     });
 

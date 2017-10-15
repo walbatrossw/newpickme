@@ -24,3 +24,4 @@
 <script src="/plugins/select2/select2.full.min.js"></script>
 <%--image-upload--%>
 <script src="/plugins/image-upload/jasny-bootstrap.min.js"></script>
+<script src="/plugins/printThis/printThis.js"></script>
