@@ -32,7 +32,7 @@
         <section class="content">
             <div class="row">
                 <%-- 프로필 : 가입정보 --%>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="box box-primary">
                         <div class="box-body box-profile">
                             <c:choose>
@@ -40,7 +40,7 @@
                                     <img class="profile-user-img img-responsive img-circle" src="${path}/dist/img/default-user-image.jpg">
                                 </c:when>
                                 <c:otherwise>
-                                    <img class="profile-user-img img-responsive img-circle" src="${path}/dist/img/users/${user.userProfileImageName}">
+                                    <img class="profile-user-img img-responsive img-circle" src="${path}/dist/img/users/profile/${user.userProfileImageName}">
                                 </c:otherwise>
                             </c:choose>
                             <h3 class="profile-username text-center">${user.userNickName}</h3>
@@ -144,9 +144,7 @@
                                                         <div class="fileinput-new thumbnail" style="width: 120px; height: 160px;">
                                                             <img src="${path}/dist/img/default-user-image.jpg" alt="...">
                                                         </div>
-
-                                                        <div class="fileinput-preview fileinput-exists thumbnail" style="width: 120px; height: 160px;"></div>
-
+                                                        <div class="fileinput-preview fileinput-exists thumbnail" style="width: 120px; height: 140px;"></div>
                                                         <div>
                                                             <span class="btn btn-default btn-file">
                                                                 <span class="fileinput-new">사진 선택</span>
@@ -264,7 +262,7 @@
                     </div>
                 </div>
                 <%-- 프로필 : 이력서, 채용북마크, 나의 자소서, 나의 게시글, 게시판북마크, 프로젝트 진행하면서 추가...--%>
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#resume" data-toggle="tab">이력서</a></li>
@@ -277,7 +275,6 @@
 
                             <div class="active tab-pane" id="resume">
                                 <%--이력서 작성 추가--%>
-                                <jsp:include page="user_resume.jsp"/>
                                 1. 내가 작성한 이력서 <br/>
                                 2. 이력서 PDF파일 생성 버튼 <br/>
                                 3. 이력서 수정버튼... <br/>

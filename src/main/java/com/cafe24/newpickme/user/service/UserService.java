@@ -2,7 +2,9 @@ package com.cafe24.newpickme.user.service;
 
 import com.cafe24.newpickme.user.domain.User;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 public interface UserService {
@@ -26,7 +28,7 @@ public interface UserService {
     void modifyUserNickName(User user);
 
     /*회원 프로필 사진 변경*/
-    void modifyUserProfileImage(User user);
+    void modifyUserProfileImage(User user, HttpServletRequest request, HttpSession session) throws IOException;
 
     /*회원 비밀번호 변경*/
     void modifyUserPassword(User user);

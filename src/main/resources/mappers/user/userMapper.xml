@@ -60,6 +60,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE USER_EMAIL = #{userEmail}
     </update>
 
+    <!--회원 프로필 사진 파일명-->
+    <select id="selectUserProfileImageName" resultType="String" parameterType="int">
+        SELECT
+            USER_PROFILE_IMAGE_NM
+        FROM t_user
+        WHERE USER_ID = #{userId}
+    </select>
+
     <!--회원 프로필 사진 변경-->
     <update id="updateUserProfileImage">
         UPDATE t_user

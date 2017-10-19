@@ -28,7 +28,7 @@
                         <c:otherwise>
                             <div class="pull-left image">
                                 <img class="img-circle"
-                                     src="${path}/dist/img/users/${sessionScope.userProfileImageName}">
+                                     src="${path}/dist/img/users/profile/${sessionScope.userProfileImageName}">
                             </div>
                         </c:otherwise>
                     </c:choose>

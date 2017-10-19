@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 /*회원 컨트롤러*/
@@ -20,51 +22,27 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    /*
-    * 회원 가입 페이지
-    * Method : GET
-    * URL : /register
-    * Method Name : userRegister()
-    * */
+    // 회원 가입 페이지
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String userRegister() {
         return "/user/register";
     }
 
-
-    /*
-    *
-    * 회원 가입 페이지 이메일 중복 확인
-    * Method : POST
-    * URL : /duplicate/email
-    * Method Name : duplicateEmailCheck()
-    * */
+    // 회원 가입 페이지 이메일 중복 확인
     @RequestMapping(value = "/duplicate/email", method = RequestMethod.POST)
     @ResponseBody
     public int duplicateEmailCheck(@RequestParam String userEmail) {
         return userService.getOneByEmail(userEmail);
     }
 
-
-    /*
-    * 회원 가입 페이지 닉네임 중복 확인
-    * Method : POST
-    * URL : /duplicate/nickname
-    * Method Name : duplicateNicknameCheck()
-    * */
+    // 회원 가입 페이지 닉네임 중복 확인
     @RequestMapping(value = "/duplicate/nickname", method = RequestMethod.POST)
     @ResponseBody
     public int duplicateNicknameCheck(@RequestParam String userNickName) {
         return userService.getOneByNickName(userNickName);
     }
 
-
-    /*
-    * 회원 가입 처리
-    * Method : POST
-    * URL : /register
-    * Method Name : userRegister()
-    * */
+    // 회원 가입 처리
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView userRegister(@ModelAttribute User user) {
         // 입력받은 비밀번호 암호화
@@ -80,26 +58,14 @@ public class UserController {
         return mav;
     }
 
-
-    /*
-    * 회원 프로필 페이지
-    * Method : GET
-    * URL : /profile
-    * Method Name : userProfile()
-    * */
+    // 회원 프로필 페이지
     @RequestMapping(value = "/profile/{userId}", method = RequestMethod.GET)
     public String userProfile(@PathVariable int userId, Model model) {
         model.addAttribute("user", userService.getUserById(userId));
         return "user/profile";
     }
 
-
-    /*
-    * 회원 닉네임 변경
-    * Method : POST
-    * URL : /profile/{userId}/update/nickname
-    * Method Name : newUserNickName()
-    * */
+    // 회원 닉네임 변경
     @RequestMapping(value = "/profile/{userId}/update/nickname", method = RequestMethod.POST)
     public String newUserNickName(@PathVariable int userId, @ModelAttribute User user, HttpSession session) {
         userService.modifyUserNickName(user);
@@ -107,24 +73,14 @@ public class UserController {
         return "redirect:/user/profile/"+userId;
     }
 
-    /*
-    * 회원 프로필 사진 변경
-    * Method : POST
-    * URL : /profile/{userId}/image/update/
-    * Method Name : newUserNickName()
-    * */
+    // 회원 프로필 사진 변경
     @RequestMapping(value = "/profile/{userId}/image/update", method = RequestMethod.POST)
-    public String newUserProfileImage(@PathVariable int userId, User user) {
-        userService.modifyUserProfileImage(user);
+    public String newUserProfileImage(@PathVariable int userId, User user, HttpServletRequest request, HttpSession session) throws IOException {
+        userService.modifyUserProfileImage(user, request, session);
         return "redirect:/user/profile/"+userId;
     }
 
-    /*
-    * 회원 비밀번호 변경
-    * Method : POST
-    * URL : /profile/{userId}/update/password
-    * Method Name : newUserPassword()
-    * */
+    // 회원 비밀번호 변경
     @RequestMapping(value = "/profile/{userId}/update/password", method = RequestMethod.POST)
     public ModelAndView newUserPassword(@PathVariable int userId, @ModelAttribute User user, HttpSession session) {
         // 변경하려는 비밀번호 암호화
@@ -142,13 +98,7 @@ public class UserController {
         return mav;
     }
 
-
-    /*
-    * 회원 탈퇴
-    * Method : POST
-    * URL : /profile/{userId}/withdraw
-    * Method Name : userWithdraw()
-    * */
+    // 회원 탈퇴
     @RequestMapping(value = "/profile/{userId}/withdrawal", method = RequestMethod.POST)
     public ModelAndView userWithdraw(@PathVariable int userId, @ModelAttribute User user, HttpSession session) {
         // 회원 삭제 처리
@@ -163,38 +113,20 @@ public class UserController {
         return mav;
     }
 
-
-    /*
-    * 회원 비밀번호 확인
-    * Method : POST
-    * URL : /profile/password/check
-    * Method Name : userPwCheck()
-    * */
+    // 회원 비밀번호 확인
     @RequestMapping(value = "/password/check", method = RequestMethod.POST)
     @ResponseBody
     public boolean userPwCheck(@RequestParam String userEmail, @RequestParam String userPassword) {
         return userService.checkPassword(userEmail, userPassword);
     }
 
-
-    /*
-    * 회원 로그인 페이지
-    * Method : GET
-    * URL : /login
-    * Method Name : userLogin()
-    * */
+    // 회원 로그인 페이지
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String userLogin() {
         return "/user/login";
     }
 
-
-    /*
-    * 회원 로그인 처리
-    * Method : POST
-    * URL : /login
-    * Method Name : userLogin()
-    * */
+    // 회원 로그인 처리
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView userLogin(@ModelAttribute User user, HttpSession session) {
         // 로그인 처리
@@ -213,12 +145,7 @@ public class UserController {
         return mav;
     }
 
-    /*
-    * 회원 로그아웃
-    * Method : GET
-    * URL : /logout
-    * Method Name : userLogout()
-    * */
+    // 회원 로그아웃
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ModelAndView userLogout(HttpSession session) {
         userService.logout(session);
@@ -228,11 +155,7 @@ public class UserController {
         return mav;
     }
     
-    /*
-    * 회원 목록
-    * Method : GET
-    * URL : /list
-    * */
+    // 회원 목록
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String users(Model model) {
         List<User> users = userService.getUsers();

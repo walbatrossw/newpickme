@@ -34,19 +34,20 @@ public class ResumeServiceImpl implements ResumeService {
 
         // 업로드 이미지파일이 있으면
         if (!resume.getPersonal().getPersonalImage().isEmpty()) {
-            final String realPath = request.getSession().getServletContext().getRealPath("/")+"resources/dist/img/resume/personal/"; // 서버 업로드 디렉토리
-            final String path = "D:\\WORKSPACE\\Spring-MVC-NewPickme\\newpickme\\src\\main\\webapp\\resources\\dist\\img\\resume\\personal\\"; // 로컬 업로드 디렉토리
+            final String REAL_PATH = request.getSession().getServletContext().getRealPath("/")+"resources/dist/img/resume/personal/"; // 서버 업로드 디렉토리
+            final String PATH = "D:\\WORKSPACE\\Spring-MVC-NewPickme\\newpickme\\src\\main\\webapp\\resources\\dist\\img\\resume\\personal\\"; // 로컬 업로드 디렉토리
             // 이미지파일 수정처리 기존의 파일을 삭제
             if (resume.getResumeId() != 0) {
                 String personalImageName = resumeDao.selectPersonalImageName(resume.getResumeId());
                 if (personalImageName != null) {
-                    new File(path + personalImageName.replace('/', File.separatorChar)).delete();
+                    new File(PATH + personalImageName.replace('/', File.separatorChar)).delete();
                 }
             }
             String originalFilename = resume.getPersonal().getPersonalImage().getOriginalFilename(); // 원본파일명 추출
             byte[] file = resume.getPersonal().getPersonalImage().getBytes();   // 파일 추출
             try {
-                String personalImageName = UploadFileUtils.uploadFile(path, originalFilename, file);
+                // 파일업로드, 경로+UUID+파일명 생성
+                String personalImageName = UploadFileUtils.uploadFile(PATH, originalFilename, file);
                 resume.getPersonal().setPersonalImageName(personalImageName);
             } catch (Exception e) {
                 e.printStackTrace();

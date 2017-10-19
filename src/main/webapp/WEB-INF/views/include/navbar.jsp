@@ -340,7 +340,7 @@
                                         <img src="${path}/dist/img/default-user-image.jpg" class="user-image" alt="User Image">
                                     </c:when>
                                     <c:otherwise>
-                                        <img src="${path}/dist/img/users/${sessionScope.userProfileImageName}" class="user-image" alt="User Image">
+                                        <img src="${path}/dist/img/users/profile/${sessionScope.userProfileImageName}" class="user-image" alt="User Image">
                                     </c:otherwise>
                                 </c:choose>
                                 <span class="hidden-xs">${sessionScope.userNickName}</span>
@@ -353,7 +353,7 @@
                                             <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
                                         </c:when>
                                         <c:otherwise>
-                                            <img src="${path}/dist/img/users/${sessionScope.userProfileImageName}" class="img-circle" alt="User Image">
+                                            <img src="${path}/dist/img/users/profile/${sessionScope.userProfileImageName}" class="img-circle" alt="User Image">
                                         </c:otherwise>
                                     </c:choose>
                                     <p>
