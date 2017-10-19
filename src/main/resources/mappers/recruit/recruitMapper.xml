@@ -313,6 +313,16 @@
     </delete>
 
 
+    <!--채용 이미지 파일명-->
+    <select id="selectRecruitImageName" parameterType="int" resultType="String">
+        SELECT
+            RECR_IMAGE_NM
+        FROM
+            t_recruit
+        WHERE
+            RECR_ID = #{recruitId}
+    </select>
+
     <!-- ==== ResultMaps ==== -->
 
 

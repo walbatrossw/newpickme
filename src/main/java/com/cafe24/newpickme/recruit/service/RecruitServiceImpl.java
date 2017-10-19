@@ -1,11 +1,14 @@
 package com.cafe24.newpickme.recruit.service;
 
+import com.cafe24.newpickme.commons.fileupload.UploadFileUtils;
 import com.cafe24.newpickme.recruit.domain.*;
 import com.cafe24.newpickme.recruit.repository.RecruitDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -28,18 +31,20 @@ public class RecruitServiceImpl implements RecruitService{
 
     // 채용 입력 처리
     @Override
-    public void create(Recruit recruit) {
-        // 채용공고 사진파일
+    public void create(Recruit recruit, HttpServletRequest request) throws IOException {
+        // 채용공고 이미지 파일이 있으면
         if (!recruit.getRecruitImage().isEmpty()) {
-            String recruitImageName = recruit.getRecruitImage().getOriginalFilename(); // 원본파일명 추출
-            String path = "D:\\WORKSPACE\\Spring-MVC-NewPickme\\newpickme\\src\\main\\webapp\\resources\\dist\\img\\recruits\\"; // 업로드 디렉토리
+            final String REAL_PATH = request.getSession().getServletContext().getRealPath("/")+"resources/dist/img/recruits/"; // 서버 업로드 디렉토리
+            final String PATH = "D:\\WORKSPACE\\Spring-MVC-NewPickme\\newpickme\\src\\main\\webapp\\resources\\dist\\img\\recruits\\"; // 로컬 업로드 디렉토리
+            String originalFileName = recruit.getRecruitImage().getOriginalFilename(); // 원본 파일이름 추출
+            byte[] file = recruit.getRecruitImage().getBytes(); // 파일 추출
             try {
-                new File(path).mkdir(); // 디렉토리 생성
-                recruit.getRecruitImage().transferTo(new File(path+recruitImageName)); // 파일을 생성된 디렉토리로 전송
+                // 파일 업로드, 경로 + UUID + 파일명 생성 처리
+                String recruitImageName = UploadFileUtils.uploadFile(PATH, originalFileName, file);
+                recruit.setRecruitImageName(recruitImageName);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            recruit.setRecruitImageName(recruitImageName); // 파일명을 setting
         }
         recruitDao.insert(recruit); // 채용 입력 처리
         int recruitId = recruit.getRecruitId(); // 채용 id
@@ -82,18 +87,24 @@ public class RecruitServiceImpl implements RecruitService{
 
     // 채용 수정 처리
     @Override
-    public void modifyRecruit(Recruit recruit) {
-        // 채용공고 사진파일
+    public void modifyRecruit(Recruit recruit, HttpServletRequest request) throws IOException {
+        // 채용공고 사진파일이 존재하면
         if (!recruit.getRecruitImage().isEmpty()) {
-            String recruitImageName = recruit.getRecruitImage().getOriginalFilename(); // 원본파일명 추출
-            String path = "D:\\WORKSPACE\\Spring-MVC-NewPickme\\newpickme\\src\\main\\webapp\\resources\\dist\\img\\recruits\\"; // 업로드 디렉토리
+            final String REAL_PATH = request.getSession().getServletContext().getRealPath("/")+"resources/dist/img/recruits/"; // 서버 업로드 디렉토리
+            final String PATH = "D:\\WORKSPACE\\Spring-MVC-NewPickme\\newpickme\\src\\main\\webapp\\resources\\dist\\img\\recruits\\"; // 로컬 업로드 디렉토리
+            String oldRecruitImageName = recruitDao.selectRecruitImageName(recruit.getRecruitId()); // 기존의 채용공고 사진파일명
+            // 기존의 사진파일명이 존재하면 파일을 삭제
+            if (oldRecruitImageName != null) {
+                new File(PATH + oldRecruitImageName.replace('/', File.separatorChar)).delete();
+            }
+            String originalFileName = recruit.getRecruitImage().getOriginalFilename(); // 원본파일명 추출
+            byte[] file = recruit.getRecruitImage().getBytes(); // 파일 추출
             try {
-                new File(path).mkdir(); // 디렉토리 생성
-                recruit.getRecruitImage().transferTo(new File(path+recruitImageName)); // 파일을 생성된 디렉토리로 전송
+                String newRecruitImageName = UploadFileUtils.uploadFile(PATH, originalFileName, file);
+                recruit.setRecruitImageName(newRecruitImageName);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            recruit.setRecruitImageName(recruitImageName); // 파일명을 setting
         }
         recruitDao.updateRecruit(recruit);
     }

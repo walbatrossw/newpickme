@@ -54,5 +54,6 @@ public interface RecruitDao {
     // 채용직무별 자기소개서 항목 일괄 삭제 처리
     void deleteCoverLetterArticles(int recruitJobId);
 
-
+    // 채용 이미지 파일명
+    String selectRecruitImageName(int recruitId);
 }

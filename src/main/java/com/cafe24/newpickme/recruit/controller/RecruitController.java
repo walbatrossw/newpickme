@@ -12,7 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -45,12 +48,12 @@ public class RecruitController {
 
     // 채용 입력 처리 (/recruit/create, post)
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(@ModelAttribute Recruit recruit, HttpSession session) {
+    public String create(@ModelAttribute Recruit recruit, HttpSession session, HttpServletRequest request) throws IOException {
         int adminId = (Integer) session.getAttribute("adminId"); // 세션 조회 (관리자 id)
         int companyId = companyService.getCompanyIdByCompanyName(recruit.getCompanyName()); // 기업 id 조회
         recruit.setAdminId(adminId); // 관리자 id setting
         recruit.setCompanyId(companyId); // 기업 id setting
-        recruitService.create(recruit);
+        recruitService.create(recruit, request);
         return "redirect:/recruit/list";
     }
 
@@ -86,11 +89,11 @@ public class RecruitController {
 
     // 채용 수정 처리 (/recruit/{recruitId}/update, post)
     @RequestMapping(value = "/{recruitId}/update", method = RequestMethod.POST)
-    public String updateRecruit(@PathVariable int recruitId, @ModelAttribute Recruit recruit, HttpSession session) {
+    public String updateRecruit(@PathVariable int recruitId, @ModelAttribute Recruit recruit, HttpSession session, HttpServletRequest request) throws IOException {
         int adminId = (Integer) session.getAttribute("adminId"); // 수정한 관리자 아이디
         recruit.setAdminId(adminId);
         recruit.setRecruitId(recruitId);
-        recruitService.modifyRecruit(recruit);
+        recruitService.modifyRecruit(recruit, request);
         return "redirect:/recruit/" + recruitId + "/update";
     }
 

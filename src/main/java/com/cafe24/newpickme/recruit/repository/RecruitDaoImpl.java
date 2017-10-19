@@ -117,6 +117,11 @@ public class RecruitDaoImpl implements RecruitDao{
         sqlSession.delete("recruit.deleteCoverLetterArticles", recruitJobId);
     }
 
+    // 채용이미지 파일명
+    @Override
+    public String selectRecruitImageName(int recruitId) {
+        return sqlSession.selectOne("recruit.selectRecruitImageName", recruitId);
+    }
 
 
 }

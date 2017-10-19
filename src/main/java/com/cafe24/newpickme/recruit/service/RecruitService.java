@@ -2,6 +2,8 @@ package com.cafe24.newpickme.recruit.service;
 
 import com.cafe24.newpickme.recruit.domain.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 public interface RecruitService {
@@ -13,7 +15,7 @@ public interface RecruitService {
     List<JobCategory2> getJobCategory2sByJobCategory1Id(int jobCategory1Id);
 
     // 채용 입력 처리
-    void create(Recruit recruit);
+    void create(Recruit recruit, HttpServletRequest request) throws IOException;
 
     // 채용 목록
     List<Recruit> getRecruits();
@@ -28,7 +30,7 @@ public interface RecruitService {
     RecruitJob getRecruitJobByRecruitJobId(int recruitJob);
 
     // 채용 수정 처리
-    void modifyRecruit(Recruit recruit);
+    void modifyRecruit(Recruit recruit, HttpServletRequest request) throws IOException;
 
     // 채용직무 수정 처리 1 - 직무 일괄 수정
     void modifyRecruitJob(RecruitJob recruitJob);
@@ -47,7 +49,5 @@ public interface RecruitService {
 
     // 채용직무별 자기소개서항목 삭제 처리
     void removeCoverLetterArticle(int coverLetterArticleId);
-
-
 
 }
