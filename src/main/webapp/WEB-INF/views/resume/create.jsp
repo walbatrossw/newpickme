@@ -2,26 +2,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!--헤드(CSS) include-->
+    <%--헤드(CSS) include--%>
     <%@ include file="../include/head.jsp" %>
 </head>
-<body class="fixed skin-blue-light sidebar-mini">
+<body class="fixed sidebar-mini skin-green">
 <div class="wrapper">
 
-    <!--헤더 네비바 include-->
+    <%--헤더 네비바 include--%>
     <%@ include file="../include/navbar.jsp" %>
 
-    <!--사이드 메뉴 include-->
+    <%--사이드 메뉴 include--%>
     <%@ include file="../include/left_column.jsp" %>
 
-    <!--본문 페이지-->
+    <%--본문 페이지--%>
     <div class="content-wrapper">
 
-        <!--본문 페이지 헤더-->
+        <%--본문 페이지 헤더--%>
         <section class="content-header">
             <h1>
-                이력서
-                <small>페이지 소제목</small>
+                ${sessionScope.userNickName}님의 이력서
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> 대분류</a></li>
@@ -29,14 +28,46 @@
             </ol>
         </section>
 
-        <!--본문 페이지 내용-->
+        <div class="pad margin no-print col-lg-10">
+            <div class="callout callout-success" style="margin-bottom: 0!important;">
+                <p>PickMe는 이력서 편집 기능을 제공합니다</p>
+                <p>주요 이력서 항목들을 저장해두고 지원시 빠르고 정확하게 복붙하세요!!!</p>
+                <p>로그인이 필요한 서비스입니다</p>
+            </div>
+        </div>
+
+        <%--본문 페이지 내용--%>
         <section class="content">
-            <!-- 페이지 내용 -->
-            <form id="resumeCreateForm" action="${path}/resume/create" method="post">
+            <%-- 페이지 내용 --%>
+            <form id="resumeCreateForm" action="${path}/resume/create" method="post" enctype="multipart/form-data">
                 <div class="row">
-                <section class="col-lg-8">
-                    <label for="resumeName">이력서 이름</label>
-                    <input type="text" class="form-control" id="resumeName" name="resumeName">
+                <section class="col-lg-10">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <h3 class="box-title">이력서 작성 도우미</h3>
+                        </div>
+                        <div class="box-body">
+                            <button class="btn btn-app" type="reset">
+                                <i class="fa fa-trash"></i> 초기화
+                            </button>
+                            <a class="btn btn-app resumeSaveBtn">
+                                <i class="fa fa-save"></i> 저장
+                            </a>
+                            <a class="btn btn-app" data-toggle="modal" data-target="#languageTestLinkModal">
+                                <i class="fa fa-language"></i> 어학시험 Link
+                            </a>
+                            <a class="btn btn-app" data-toggle="modal" data-target="#certificateLinkModal">
+                                <i class="fa fa-certificate"></i> 주요 자격증 Link
+                            </a>
+                            <a class="btn btn-app">
+                                <i class="fa fa-print coverLetterPrintBtn"></i> 인쇄
+                            </a>
+                            <a class="btn btn-app">
+                                <i class="fa fa-file-pdf-o"></i> PDF
+                            </a>
+                        </div>
+                    </div>
+
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title"><i class="fa fa-user-secret"></i> 개인 신상 정보</h3>
@@ -45,17 +76,15 @@
                             <div class="row">
                                 <div class="col-sm-2" align="center">
                                     <div class="fileinput fileinput-new" data-provides="fileinput">
-                                        <div class="fileinput-new thumbnail" style="width: 120px; height: 160px;">
+                                        <div class="fileinput-new thumbnail" style="width: 120px; height: 140px;">
                                             <img src="${path}/dist/img/default-user-image.jpg" alt="...">
                                         </div>
-
-                                        <div class="fileinput-preview fileinput-exists thumbnail" style="width: 120px; height: 160px;"></div>
-
+                                        <div class="fileinput-preview fileinput-exists thumbnail" style="width: 120px; height: 140px;"></div>
                                         <div>
                                             <span class="btn btn-default btn-file">
                                                 <span class="fileinput-new">사진 선택</span>
                                                 <span class="fileinput-exists">변경</span>
-                                                <input type="file" id="personalImage" name="...">
+                                                <input type="file" id="personalImage" name="personal.personalImage">
                                             </span>
                                             <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">삭제</a>
                                         </div>
@@ -120,13 +149,13 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="highSchoolName">고등학교명</label>
                                             <input type="text" class="form-control" id="highSchoolName" name="highSchool.highSchoolName">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="highSchoolType">분류</label>
                                             <select class="form-control" id="highSchoolType">
@@ -138,13 +167,13 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="highSchoolBeginDate">입학일자</label>
                                             <input type="date" class="form-control" id="highSchoolBeginDate" name="highSchool.highSchoolBeginDate">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="highSchoolEndDate">졸업일자</label>
                                             <input type="date" class="form-control" id="highSchoolEndDate" name="highSchool.highSchoolEndDate">
@@ -166,13 +195,13 @@
                         <div class="box-body universities">
                             <div class="row university">
                                 <div class="col-sm-12">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="universityName">대학교명</label>
                                             <input type="text" class="form-control" id="universityName" name="universityName">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="universityType">분류</label>
                                             <select class="form-control" id="universityType" name="universityType">
@@ -184,31 +213,31 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="universityBeginDate">입학일자</label>
                                             <input type="date" class="form-control" id="universityBeginDate" name="universityBeginDate">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="universityEndDate">졸업일자</label>
                                             <input type="date" class="form-control" id="universityEndDate" name="universityEndDate">
                                         </div>
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="universityMajor">전공명</label>
                                             <input type="text" class="form-control" id="universityMajor" name="universityMajor">
                                         </div>
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="universityDoubleMajor">복수/부전공명</label>
                                             <input type="text" class="form-control" id="universityDoubleMajor" name="universityDoubleMajor">
                                         </div>
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="universityCredit">학점</label>
                                             <input type="text" class="form-control" id="universityCredit" name="universityCredit">
@@ -230,37 +259,37 @@
                         <div class="box-body languages">
                             <div class="row language">
                                 <div class="col-sm-12">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="languageName">어학시험명</label>
                                             <input type="text" class="form-control" id="languageName" name="languageName">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="languageGrade">취득점수</label>
                                             <input type="text" class="form-control" id="languageGrade" name="languageGrade">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="languageBeginDate">취득일자</label>
                                             <input type="date" class="form-control" id="languageBeginDate" name="languageBeginDate">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="languageEndDate">만료일자</label>
                                             <input type="date" class="form-control" id="languageEndDate" name="languageEndDate">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="languageHost">주관처</label>
                                             <input type="text" class="form-control" id="languageHost" name="languageHost">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="languageNumber">등록번호</label>
                                             <input type="text" class="form-control" id="languageNumber" name="languageNumber">
@@ -282,37 +311,37 @@
                         <div class="box-body certificates">
                             <div class="row certificate">
                                 <div class="col-sm-12">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="certificateName">자격증명</label>
                                             <input type="text" class="form-control" id="certificateName" name="certificateName">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="certificateGrade">등급</label>
                                             <input type="text" class="form-control" id="certificateGrade" name="certificateGrade">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="certificateBeginDate">취득일자</label>
                                             <input type="date" class="form-control" id="certificateBeginDate" name="certificateBeginDate">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="certificateEndDate">만료일자</label>
                                             <input type="date" class="form-control" id="certificateEndDate" name="certificateEndDate">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="certificateHost">주관처</label>
                                             <input type="text" class="form-control" id="certificateHost" name="certificateHost">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="certificateNumber">등록번호</label>
                                             <input type="text" class="form-control" id="certificateNumber" name="certificateNumber">
@@ -334,43 +363,43 @@
                         <div class="box-body careers">
                             <div class="row career">
                                 <div class="col-sm-12">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="careerCompany">회사명</label>
                                             <input type="text" class="form-control" id="careerCompany" name="careerCompany">
                                         </div>
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="careerPosition">직급</label>
                                             <input type="text" class="form-control" id="careerPosition" name="careerPosition">
                                         </div>
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="careerDepartment">부서</label>
                                             <input type="text" class="form-control" id="careerDepartment" name="careerDepartment">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="careerTask">담당업무</label>
                                             <input type="text" class="form-control" id="careerTask" name="careerTask">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="careerBeginDate">입사일자</label>
                                             <input type="date" class="form-control" id="careerBeginDate" name="careerBeginDate">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="careerEndDate">퇴사일자</label>
                                             <input type="date" class="form-control" id="careerEndDate" name="careerEndDate">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="careerResign">퇴사사유</label>
                                             <input type="text" class="form-control" id="careerResign" name="careerResign">
@@ -392,31 +421,31 @@
                         <div class="box-body activities">
                             <div class="row activity">
                                 <div class="col-sm-12">
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="activityName">활동명</label>
                                             <input type="text" class="form-control" id="activityName" name="activityName">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="activityHost">주관단체</label>
                                             <input type="text" class="form-control" id="activityHost" name="activityHost">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="activityBeginDate">시작일자</label>
                                             <input type="date" class="form-control" id="activityBeginDate" name="activityBeginDate">
                                         </div>
                                     </div>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="activityEndDate">종료일자</label>
                                             <input type="date" class="form-control" id="activityEndDate" name="activityEndDate">
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <div class="form-group">
                                             <label for="activityContent">활동내용</label>
                                             <input type="text" class="form-control" id="activityContent" name="activityContent">
@@ -456,7 +485,7 @@
                                             <input type="date" class="form-control" id="etcEndDate" name="etcEndDate">
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-12">
                                         <div class="form-group">
                                             <label for="personalName">기타내용</label>
                                             <input type="text" class="form-control" id="etcContent" name="etcContent">
@@ -472,17 +501,148 @@
             <button type="button" class="btn btn-primary btn-sm resumeSaveBtn"><i class="fa fa-save"></i> 이력서 저장</button>
         </section>
 
+        <%--어학시험 사이트 LINK modal--%>
+        <div class="modal fade" id="languageTestLinkModal" tabindex="-1" role="dialog"
+             aria-labelledby="languageTestLinkModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="languageTestLinkModalLabel">어학시험 사이트 LINK</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr>
+                                <th>번호</th>
+                                <th>어학시험명</th>
+                                <th>사이트 링크</th>
+                                <th>비고</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td><strong> TOEIC / TOEIC SPEAKING </strong></td>
+                                <td><a href="http://exam.ybmnet.co.kr/" onclick="window.open(this.href); return false;">http://exam.ybmnet.co.kr/</a></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong> TOEFL </strong></td>
+                                <td><a href="https://www.ets.org/ko/toefl" onclick="window.open(this.href); return false;">https://www.ets.org/ko/toefl</a></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong> TEPS </strong></td>
+                                <td><a href="https://www.teps.or.kr/" onclick="window.open(this.href); return false;">https://www.teps.or.kr/</a></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong> OPIC </strong></td>
+                                <td><a href="https://www.opic.or.kr/opics/jsp/senior/index.jsp" onclick="window.open(this.href); return false;">https://www.opic.or.kr/opics/jsp/senior/index.jsp</a></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><strong> IELTS </strong></td>
+                                <td><a href="https://reg.britishcouncil.kr/ko/main/index" onclick="window.open(this.href); return false;">https://reg.britishcouncil.kr/ko/main/index</a></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%--주요 자격증 사이트 LINK modal--%>
+        <div class="modal fade" id="certificateLinkModal" tabindex="-1" role="dialog"
+             aria-labelledby="certificateLinkModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="certificateLinkModalLabel">자격증 사이트 LINK</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr>
+                                <th>번호</th>
+                                <th>주관처</th>
+                                <th>사이트 링크</th>
+                                <th>주요자격증</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td><strong> 한국산업인력공단(큐넷) </strong></td>
+                                <td><a href="http://www.q-net.or.kr/" onclick="window.open(this.href); return false;">http://www.q-net.or.kr/</a></td>
+                                <td>기사, 산업기사, 등등</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong> 대한상공회의소 </strong></td>
+                                <td><a href="http://license.korcham.net/" onclick="window.open(this.href); return false;">http://license.korcham.net/</a></td>
+                                <td>유통관리사, 워드프로세서, 컴활, 등등</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong> 국사편찬위원회 </strong></td>
+                                <td><a href="http://www.historyexam.go.kr/" onclick="window.open(this.href); return false;">http://www.historyexam.go.kr/</a></td>
+                                <td>한국사 능력검정 시험</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong> YBMIT </strong></td>
+                                <td><a href="https://www.ybmit.com/" onclick="window.open(this.href); return false;">https://www.ybmit.com/</a></td>
+                                <td>MOS</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><strong> 금융투자협회 </strong></td>
+                                <td><a href="https://license.kofia.or.kr/" onclick="window.open(this.href); return false;">https://license.kofia.or.kr/</a></td>
+                                <td>금융3종 자격증</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><strong> 한국세무사회 </strong></td>
+                                <td><a href="http://license.kacpta.or.kr/" onclick="window.open(this.href); return false;">http://license.kacpta.or.kr/</a></td>
+                                <td>전산 세무/회계 자격증</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td><strong> 무역협회 </strong></td>
+                                <td><a href="http://www.tradecampus.com/" onclick="window.open(this.href); return false;">http://www.tradecampus.com/</a></td>
+                                <td> 국제무역사/무역관리사/원산지 관리사</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!--풋터 include-->
+    <%--풋터 include--%>
     <%@ include file="../include/footer.jsp" %>
 
-    <!--컨트롤 사이드바 -->
+    <%--컨트롤 사이드바 --%>
     <%@ include file="../include/control_sidebar.jsp" %>
 
 
 </div>
-<!-- 풋(JS) include-->
+<%-- 풋(JS) include--%>
 <%@ include file="../include/js.jsp" %>
 <script>
     $(function () {
@@ -700,8 +860,6 @@
 
             $("#resumeCreateForm").submit();
         });
-
-
 
     });
 

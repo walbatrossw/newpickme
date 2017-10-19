@@ -5,7 +5,7 @@
     <!--헤드(CSS) include-->
     <%@ include file="../include/head.jsp" %>
 </head>
-<body class="fixed skin-blue-light sidebar-mini">
+<body class="fixed sidebar-mini skin-green">
 <div class="wrapper">
 
     <!--헤더 네비바 include-->
@@ -32,38 +32,50 @@
         <!--본문 페이지 내용-->
         <section class="content">
             <!-- 페이지 내용 -->
-            <form id="resumeUpdateForm" action="${path}/resume/${sessionScope.userId}/update" method="post">
+            <form id="resumeUpdateForm" action="${path}/resume/${sessionScope.userId}/update" method="post" enctype="multipart/form-data">
                 <div class="row">
-                    <section class="col-lg-8">
+                    <section class="col-lg-10">
                         <div class="box box-primary">
-                            <div class="box-header with-border">
-                                <h3 class="box-title"><i class="fa fa-user-secret"></i> 이력서 정보</h3>
-                                <div class="box-tools">
-                                    <a href="${path}/resume/${sessionScope.userId}/delete" type="button" class="btn btn-primary"><i class="fa fa-remove"></i> 이력서 초기화(cascade)</a>
-                                    <a href="${path}/resume/${sessionScope.userId}/delete/${resume.resumeId}" type="button" class="btn btn-primary"><i class="fa fa-remove"></i> 이력서 초기화(none cascade)</a>
-                                </div>
+                            <div class="box-header">
+                                <h3 class="box-title">이력서 작성 도우미</h3>
                             </div>
                             <div class="box-body">
-                                <div class="form-group col-sm-4">
-                                    <label for="resumeName">이력서 이름</label>
-                                    <input type="text" class="form-control" id="resumeName" name="resumeName" value="${resume.resumeName}">
-                                    <input type="hidden" class="form-control" id="resumeId" name="resumeId" value="${resume.resumeId}">
+                                <div class="form-group col-sm-6">
+                                    <a class="btn btn-app resumeUpdateBtn">
+                                        <i class="fa fa-save"></i> 수정 저장
+                                    </a>
+                                    <a class="btn btn-app resumeSaveBtn" href="${path}/resume/${sessionScope.userId}/delete/${resume.resumeId}">
+                                        <i class="fa fa-trash"></i> 이력서 삭제
+                                    </a>
+                                    <a class="btn btn-app" data-toggle="modal" data-target="#languageTestLinkModal">
+                                        <i class="fa fa-language"></i> 어학시험 Link
+                                    </a>
+                                    <a class="btn btn-app" data-toggle="modal" data-target="#certificateLinkModal">
+                                        <i class="fa fa-certificate"></i> 주요 자격증 Link
+                                    </a>
+                                    <a class="btn btn-app">
+                                        <i class="fa fa-print coverLetterPrintBtn"></i> 인쇄
+                                    </a>
+                                    <a class="btn btn-app">
+                                        <i class="fa fa-file-pdf-o"></i> PDF
+                                    </a>
                                 </div>
-                                <div class="form-group col-sm-4">
+                                <div class="form-group col-sm-3">
                                     <strong> 이력서 작성일자</strong>
                                     <p class="text-muted">
+                                        <input type="hidden" class="form-control" id="resumeId" name="resumeId" value="${resume.resumeId}">
                                         <fmt:formatDate value="${resume.resumeWriteDate}" pattern="yyyy-MM-dd a HH:mm:ss"/>
                                     </p>
                                 </div>
-                                <div class="form-group col-sm-4">
+                                <div class="form-group col-sm-3">
                                     <strong> 이력서 수정일자</strong>
                                     <p class="text-muted">
                                         <fmt:formatDate value="${resume.resumeUpdateDate}" pattern="yyyy-MM-dd a HH:mm:ss"/>
                                     </p>
                                 </div>
                             </div>
-
                         </div>
+
                         <div class="box box-primary">
                             <div class="box-header with-border">
                                 <h3 class="box-title"><i class="fa fa-user-secret"></i> 개인 신상 정보</h3>
@@ -72,17 +84,24 @@
                                 <div class="row">
                                     <div class="col-sm-2" align="center">
                                         <div class="fileinput fileinput-new" data-provides="fileinput">
-                                            <div class="fileinput-new thumbnail" style="width: 120px; height: 160px;">
-                                                <img src="${path}/dist/img/default-user-image.jpg" alt="...">
-                                            </div>
-
+                                            <c:choose>
+                                                <c:when test="${resume.personal.personalImageName == null}">
+                                                    <div class="fileinput-new thumbnail" style="width: 120px; height: 160px;">
+                                                        <img src="${path}/dist/img/default-user-image.jpg" alt="...">
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div class="fileinput-new thumbnail" style="width: 120px; height: 140px;">
+                                                        <img src="${path}/dist/img/resume/personal${resume.personal.personalImageName}" alt="...">
+                                                    </div>
+                                                </c:otherwise>
+                                            </c:choose>
                                             <div class="fileinput-preview fileinput-exists thumbnail" style="width: 120px; height: 160px;"></div>
-
                                             <div>
                                             <span class="btn btn-default btn-file">
                                                 <span class="fileinput-new">사진 선택</span>
                                                 <span class="fileinput-exists">변경</span>
-                                                <input type="file" id="personalImage" name="...">
+                                                <input type="file" id="personalImage" name="personal.personalImage">
                                             </span>
                                                 <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">삭제</a>
                                             </div>
@@ -158,7 +177,7 @@
                                         <div class="col-sm-2">
                                             <div class="form-group">
                                                 <label for="highSchoolType">분류</label>
-                                                <select class="form-control" id="highSchoolType">
+                                                <select class="form-control" id="highSchoolType" name="highSchool.highSchoolType">
                                                     <option value="">::::선택::::</option>
                                                     <option value="문과">문과</option>
                                                     <option value="이과">이과</option>
@@ -564,8 +583,139 @@
                     </section>
                 </div>
             </form>
-            <button type="button" class="btn btn-primary btn-sm resumeUpdateBtn"><i class="fa fa-save"></i> 이력서 수정</button>
         </section>
+
+        <%--어학시험 사이트 LINK modal--%>
+        <div class="modal fade" id="languageTestLinkModal" tabindex="-1" role="dialog"
+             aria-labelledby="languageTestLinkModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="languageTestLinkModalLabel">어학시험 사이트 LINK</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr>
+                                <th>번호</th>
+                                <th>어학시험명</th>
+                                <th>사이트 링크</th>
+                                <th>비고</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td><strong> TOEIC / TOEIC SPEAKING </strong></td>
+                                <td><a href="http://exam.ybmnet.co.kr/" onclick="window.open(this.href); return false;">http://exam.ybmnet.co.kr/</a></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong> TOEFL </strong></td>
+                                <td><a href="https://www.ets.org/ko/toefl" onclick="window.open(this.href); return false;">https://www.ets.org/ko/toefl</a></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong> TEPS </strong></td>
+                                <td><a href="https://www.teps.or.kr/" onclick="window.open(this.href); return false;">https://www.teps.or.kr/</a></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong> OPIC </strong></td>
+                                <td><a href="https://www.opic.or.kr/opics/jsp/senior/index.jsp" onclick="window.open(this.href); return false;">https://www.opic.or.kr/opics/jsp/senior/index.jsp</a></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><strong> IELTS </strong></td>
+                                <td><a href="https://reg.britishcouncil.kr/ko/main/index" onclick="window.open(this.href); return false;">https://reg.britishcouncil.kr/ko/main/index</a></td>
+                                <td></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%--주요 자격증 사이트 LINK modal--%>
+        <div class="modal fade" id="certificateLinkModal" tabindex="-1" role="dialog"
+             aria-labelledby="certificateLinkModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="certificateLinkModalLabel">자격증 사이트 LINK</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr>
+                                <th>번호</th>
+                                <th>주관처</th>
+                                <th>사이트 링크</th>
+                                <th>주요자격증</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td><strong> 한국산업인력공단(큐넷) </strong></td>
+                                <td><a href="http://www.q-net.or.kr/" onclick="window.open(this.href); return false;">http://www.q-net.or.kr/</a></td>
+                                <td>기사, 산업기사, 등등</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><strong> 대한상공회의소 </strong></td>
+                                <td><a href="http://license.korcham.net/" onclick="window.open(this.href); return false;">http://license.korcham.net/</a></td>
+                                <td>유통관리사, 워드프로세서, 컴활, 등등</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><strong> 국사편찬위원회 </strong></td>
+                                <td><a href="http://www.historyexam.go.kr/" onclick="window.open(this.href); return false;">http://www.historyexam.go.kr/</a></td>
+                                <td>한국사 능력검정 시험</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td><strong> YBMIT </strong></td>
+                                <td><a href="https://www.ybmit.com/" onclick="window.open(this.href); return false;">https://www.ybmit.com/</a></td>
+                                <td>MOS</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td><strong> 금융투자협회 </strong></td>
+                                <td><a href="https://license.kofia.or.kr/" onclick="window.open(this.href); return false;">https://license.kofia.or.kr/</a></td>
+                                <td>금융3종 자격증</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><strong> 한국세무사회 </strong></td>
+                                <td><a href="http://license.kacpta.or.kr/" onclick="window.open(this.href); return false;">http://license.kacpta.or.kr/</a></td>
+                                <td>전산 세무/회계 자격증</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td><strong> 무역협회 </strong></td>
+                                <td><a href="http://www.tradecampus.com/" onclick="window.open(this.href); return false;">http://www.tradecampus.com/</a></td>
+                                <td> 국제무역사/무역관리사/원산지 관리사</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">닫기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -886,6 +1036,7 @@
 
             $("#resumeUpdateForm").submit();
         });
+
     });
 
 </script>

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/resume")
@@ -22,37 +24,39 @@ public class ResumeController {
     @Autowired
     ResumeService resumeService;
 
-    /*
-    * 이력서 작성 페이지
-    *
-    *
-    * */
+    // 이력서 작성 페이지
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public String create(HttpSession session) {
-        int userId = (Integer) session.getAttribute("userId");
-        boolean isResume = resumeService.isResume(userId);
-        if (isResume) {
-            return "redirect:/resume/"+userId+"/view";
+    public ModelAndView create(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        // 세션이 null 이면 작성페이지로
+        if (session.getAttribute("userId") == null) {
+            mav.addObject("noLogin", "noLogin");
+            mav.setViewName("/resume/create");
+            return mav;
+        } else {
+            // 세션에 저장된 id 로 이력서 조회
+            int userId = (Integer) session.getAttribute("userId");
+            boolean resumeCheck = resumeService.resumeCheck(userId);
+            // 이력서가 존재하면 이력서 보기 페이지로
+            if (resumeCheck) {
+                mav.setViewName("redirect:/resume/"+userId+"/view");
+                return mav;
+            }
+            // 이력서가 존재하지 않으면 작성페이지로
+            mav.setViewName("/resume/create");
+            return mav;
         }
-        return "/resume/create";
     }
 
-    /*
-     * 이력서 입력 처리
-     *
-     *
-     * */
+    // 이력서 작성 처리
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String create(@ModelAttribute Resume resume, HttpSession session) {
-        resumeService.create(resume, session);
-        return "/resume/create";
+    public String create(@ModelAttribute Resume resume, HttpSession session, HttpServletRequest request) throws IOException {
+        resumeService.create(resume, session, request);
+        int userId = resume.getUserId();
+        return "redirect:/resume/"+userId+"/view";
     }
 
-    /*
-    * 이력서 수정 페이지
-    *
-    *
-    * */
+    // 이력서 수정페이지
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.GET)
     public String update(@PathVariable int userId, Model model) {
         Resume resume = resumeService.getResume(userId);
@@ -60,25 +64,15 @@ public class ResumeController {
         return "/resume/update";
     }
 
-    /*
-    * 이력서 수정 처리
-    *
-    *
-    *
-    * */
+    // 이력서 수정처리
     @RequestMapping(value = "/{userId}/update", method = RequestMethod.POST)
-    public String update(@PathVariable int userId, @ModelAttribute Resume resume, HttpSession session) {
-        resumeService.create(resume, session);
+    public String update(@PathVariable int userId, @ModelAttribute Resume resume, HttpSession session, HttpServletRequest request) throws IOException {
+        resumeService.create(resume, session, request);
         return "redirect:/resume/"+userId+"/view";
     }
 
 
-    /*
-    * 이력서 보기
-    *
-    *
-    *
-    * */
+    // 이력서 보기
     @RequestMapping(value = "/{userId}/view", method = RequestMethod.GET)
     public String view(@PathVariable int userId, Model model) {
         Resume resume = resumeService.getResume(userId);
@@ -86,24 +80,15 @@ public class ResumeController {
         return "/resume/view";
     }
 
-    /*
-    * 이력서 삭제(초기화) 처리 (CASCADE 설정시)
-    *
-    *
-    *
-    * */
+    // 이력서 삭제(초기화) 처리 (CASCADE 설정시)
     @RequestMapping(value = "/{userId}/delete", method = RequestMethod.GET)
     public String deleteResume(@PathVariable int userId) {
         resumeService.deleteResume(userId);
         return "redirect:/resume/create";
     }
 
-    /*
-    * 이력서 삭제(초기화) 처리 (CASCADE 미지원시)
-    *
-    *
-    *
-    * */
+
+    // 이력서 삭제(초기화) 처리 (CASCADE 미지원시)
     @RequestMapping(value = "/{userId}/delete/{resumeId}", method = RequestMethod.GET)
     public String deleteResumeNoneCascade(@PathVariable int userId, @PathVariable int resumeId) {
         resumeService.deleteResumeNoneCascade(resumeId);
@@ -111,10 +96,7 @@ public class ResumeController {
     }
 
 
-    /**
-     * 이력서 항목 삭제 : 대학교, 대학원
-     *
-     * */
+    // 이력서 항목 삭제 : 대학교, 대학원
     @RequestMapping(value = "/{userId}/university/{universityId}/delete", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteUniversity(@PathVariable int userId, @PathVariable int universityId) {
         ResponseEntity<String> entity = null;

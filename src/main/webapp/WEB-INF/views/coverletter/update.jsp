@@ -5,7 +5,7 @@
     <!--헤드(CSS) include-->
     <%@ include file="../include/head.jsp" %>
 </head>
-<body class="fixed skin-blue-light sidebar-mini">
+<body class="fixed sidebar-mini skin-green">
 <div class="wrapper">
 
     <!--헤더 네비바 include-->

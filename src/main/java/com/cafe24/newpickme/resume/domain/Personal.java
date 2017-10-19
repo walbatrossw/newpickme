@@ -1,6 +1,7 @@
 package com.cafe24.newpickme.resume.domain;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -23,7 +24,9 @@ public class Personal {
 
     private String personalAddress;
 
-    private String personalImage;
+    private MultipartFile personalImage;
+
+    private String personalImageName;
 
     private int resumeId;
 
@@ -93,12 +96,20 @@ public class Personal {
         this.personalAddress = personalAddress;
     }
 
-    public String getPersonalImage() {
+    public MultipartFile getPersonalImage() {
         return personalImage;
     }
 
-    public void setPersonalImage(String personalImage) {
+    public void setPersonalImage(MultipartFile personalImage) {
         this.personalImage = personalImage;
+    }
+
+    public String getPersonalImageName() {
+        return personalImageName;
+    }
+
+    public void setPersonalImageName(String personalImageName) {
+        this.personalImageName = personalImageName;
     }
 
     public int getResumeId() {
@@ -128,7 +139,8 @@ public class Personal {
                 ", personalEmail='" + personalEmail + '\'' +
                 ", personalSns='" + personalSns + '\'' +
                 ", personalAddress='" + personalAddress + '\'' +
-                ", personalImage='" + personalImage + '\'' +
+                ", personalImage=" + personalImage +
+                ", personalImageName='" + personalImageName + '\'' +
                 ", resumeId=" + resumeId +
                 ", resume=" + resume +
                 '}';

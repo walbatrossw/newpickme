@@ -10,8 +10,6 @@ public class Resume {
 
     private int resumeId;
 
-    private String resumeName;
-
     @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
     private Date resumeWriteDate;
 
@@ -44,14 +42,6 @@ public class Resume {
 
     public void setResumeId(int resumeId) {
         this.resumeId = resumeId;
-    }
-
-    public String getResumeName() {
-        return resumeName;
-    }
-
-    public void setResumeName(String resumeName) {
-        this.resumeName = resumeName;
     }
 
     public Date getResumeWriteDate() {
@@ -154,7 +144,6 @@ public class Resume {
     public String toString() {
         return "Resume{" +
                 "resumeId=" + resumeId +
-                ", resumeName='" + resumeName + '\'' +
                 ", resumeWriteDate=" + resumeWriteDate +
                 ", resumeUpdateDate=" + resumeUpdateDate +
                 ", userId=" + userId +

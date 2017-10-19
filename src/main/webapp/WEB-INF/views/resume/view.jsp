@@ -5,7 +5,7 @@
     <!--헤드(CSS) include-->
     <%@ include file="../include/head.jsp" %>
 </head>
-<body class="fixed skin-blue-light sidebar-mini">
+<body class="fixed sidebar-mini skin-green">
 <div class="wrapper">
 
     <!--헤더 네비바 include-->
@@ -34,36 +34,39 @@
             <!-- 페이지 내용 -->
             <form id="resumeUpdateForm" action="${path}/resume/${sessionScope.userId}/update" method="post">
                 <div class="row">
-                    <section class="col-lg-8">
+                    <section class="col-lg-10">
                         <div class="box box-primary">
                             <div class="box-header with-border">
-                                <h3 class="box-title"><i class="fa fa-user-secret"></i> 이력서 정보</h3>
-                                <div class="box-tools">
-                                    <a href="${path}/resume/${sessionScope.userId}/update" type="button" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> 이력서 수정</a>
-                                    <a href="${path}/resume/${sessionScope.userId}/delete" type="button" class="btn btn-primary btn-xs"><i class="fa fa-remove"></i> 이력서 초기화(cascade)</a>
-                                    <a href="${path}/resume/${sessionScope.userId}/delete/${resume.resumeId}" type="button" class="btn btn-primary btn-xs"><i class="fa fa-remove"></i> 이력서 초기화(none cascade)</a>
-                                </div>
+                                <h3 class="box-title">이력서 정보</h3>
                             </div>
                             <div class="box-body">
                                 <div class="form-group col-sm-4">
-                                    <label for="resumeName">이력서 이름</label>
-                                    <input type="text" class="form-control" id="resumeName" name="resumeName" value="${resume.resumeName}">
-                                    <input type="hidden" class="form-control" id="resumeId" name="resumeId" value="${resume.resumeId}">
+                                    <a class="btn btn-app resumeUpdateBtn" href="${path}/resume/${sessionScope.userId}/update">
+                                        <i class="fa fa-save"></i> 이력서 수정
+                                    </a>
+                                    <a class="btn btn-app resumeSaveBtn" href="${path}/resume/${sessionScope.userId}/delete/${resume.resumeId}">
+                                        <i class="fa fa-trash"></i> 이력서 삭제
+                                    </a>
+                                    <a class="btn btn-app">
+                                        <i class="fa fa-print coverLetterPrintBtn"></i> 인쇄
+                                    </a>
+                                    <a class="btn btn-app">
+                                        <i class="fa fa-file-pdf-o"></i> PDF
+                                    </a>
                                 </div>
-                                <div class="form-group col-sm-4">
+                                <div class="form-group col-sm-3">
                                     <strong> 이력서 작성일자</strong>
                                     <p class="text-muted">
                                         <fmt:formatDate value="${resume.resumeWriteDate}" pattern="yyyy-MM-dd a HH:mm:ss"/>
                                     </p>
                                 </div>
-                                <div class="form-group col-sm-4">
+                                <div class="form-group col-sm-3">
                                     <strong> 이력서 수정일자</strong>
                                     <p class="text-muted">
                                         <fmt:formatDate value="${resume.resumeUpdateDate}" pattern="yyyy-MM-dd a HH:mm:ss"/>
                                     </p>
                                 </div>
                             </div>
-
                         </div>
                         <div class="box box-primary">
                             <div class="box-header with-border">
@@ -72,7 +75,19 @@
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-sm-2" align="center">
-                                        <img class="profile-user-img img-bordered" src="${path}/dist/img/default-user-image.jpg" style="width: 180px; height: 200px;">
+                                        <c:choose>
+                                            <c:when test="${resume.personal.personalImageName == null}">
+                                                <div class="fileinput-new thumbnail" style="width: 120px; height: 160px;">
+                                                    <img src="${path}/dist/img/default-user-image.jpg" alt="...">
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="fileinput-new thumbnail" style="width: 120px; height: 160px;">
+                                                    <img class="img-responsive" src="${path}/dist/img/resume/personal${resume.personal.personalImageName}" style="width: 120px; height: 140px;">
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
+
                                     </div>
                                     <div class="col-sm-10">
                                         <table class="table table-striped">
