@@ -33,7 +33,7 @@
                         </span>
                 </c:if>
                 <%--권한이 필요한 페이지 접근시--%>
-                <c:if test="${param.msg == 'nologin'}">
+                <c:if test="${param.msg == 'noLogin'}">
                         <span style="color: red">
                             로그인 유저만 사용이 가능합니다. 로그인해주세요
                         </span>

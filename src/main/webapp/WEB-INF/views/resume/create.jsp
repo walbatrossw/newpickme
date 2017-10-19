@@ -498,7 +498,6 @@
                 </section>
             </div>
             </form>
-            <button type="button" class="btn btn-primary btn-sm resumeSaveBtn"><i class="fa fa-save"></i> 이력서 저장</button>
         </section>
 
         <%--어학시험 사이트 LINK modal--%>
