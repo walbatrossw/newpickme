@@ -4,6 +4,8 @@ import com.cafe24.newpickme.company.domain.Company;
 import com.cafe24.newpickme.company.domain.IndustryCategory1;
 import com.cafe24.newpickme.company.domain.IndustryCategory2;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
 public interface CompanyService {
@@ -15,7 +17,7 @@ public interface CompanyService {
     List<IndustryCategory2> getIndustryCategory2sByIndustryCategory1Id(int industryCategory1Id);
 
     /*기업정보 등록 처리*/
-    void create(Company company);
+    void create(Company company, HttpServletRequest request) throws IOException;
 
     /*기업정보 목록*/
     List<Company> getCompanies();

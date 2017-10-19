@@ -63,4 +63,9 @@ public class CompanyDaoImpl implements CompanyDao{
         return sqlSession.selectOne("company.selectCompanyIdByCompanyName", companyName);
     }
 
+    @Override
+    public String selectCompanyLogoImageName(int companyId) {
+        return sqlSession.selectOne("company.selectCompanyLogoImageName", companyId);
+    }
+
 }

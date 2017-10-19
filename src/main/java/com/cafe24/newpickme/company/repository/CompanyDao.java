@@ -8,27 +8,30 @@ import java.util.List;
 
 public interface CompanyDao {
 
-    /*기업정보 등록 페이지 : 업종대분류 목록*/
+    //기업정보 등록 페이지 : 업종대분류 목록
     List<IndustryCategory1> selectIndustryCategory1s();
 
-    /*기업정보 등록 페이지 : 업종소분류 목록*/
+    //기업정보 등록 페이지 : 업종소분류 목록
     List<IndustryCategory2> selectIndustryCategory2sByIndustryCategory1Id(int industryCategory1Id);
 
-    /*기업정보 등록 처리*/
+    //기업정보 등록 처리
     void insert(Company company);
 
-    /*기업정보 목록*/
+    //기업정보 목록
     List<Company> selectList();
 
-    /*기업정보 상세조회*/
+    //기업정보 상세조회
     Company selectCompanyByCompanyId(int companyId);
 
-    /*기업정보 수정*/
+    //기업정보 수정
     void updateCompanyInfo(Company company);
 
-    /*기업정보 삭제*/
+    //기업정보 삭제
     void deleteCompanyInfo(int companyId);
 
-    /*기업 ID 조회*/
+    //기업 ID 조회
     int selectCompanyIdByCompanyName(String companyName);
+
+    // 기업 로고 이미지 파일명
+    String selectCompanyLogoImageName(int companyId);
 }

@@ -42,7 +42,7 @@
                                     <img class="profile-user-img img-responsive img-bordered" src="${path}/dist/img/default-company-image.png">
                                 </c:when>
                                 <c:otherwise>
-                                    <img class="profile-user-img img-responsive" src="${path}/dist/img/companies/${companyInfo.companyLogoImageName}">
+                                    <img class="profile-user-img img-responsive" src="${path}/dist/img/companies/logos/${companyInfo.companyLogoImageName}">
                                 </c:otherwise>
                             </c:choose>
 

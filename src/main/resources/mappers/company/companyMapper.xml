@@ -24,10 +24,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         WHERE INDU_CATE1_ID = #{industryCategory1Id}
     </select>
 
-    <!--기업정보 등록 처리-->
-    <insert id="insertCompany" parameterType="Company">
+    <!--기업정보 등록 및 수정 처리-->
+    <insert id="insertCompany" parameterType="Company" useGeneratedKeys="true" keyProperty="companyId">
         INSERT INTO t_company (
-            INDU_CATE2_ID
+            COMP_ID
+            , INDU_CATE2_ID
             , COMP_TYPE
             , COMP_NM
             , COMP_LOGO_IMAGE_NM
@@ -41,7 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             , COMP_UDT_DT
             , ADMIN_ID
         ) VALUES (
-            #{industryCategory2Id}
+            #{companyId}
+            , #{industryCategory2Id}
             , #{companyType}
             , #{companyName}
             , #{companyLogoImageName}
@@ -54,8 +56,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             , NOW()
             , NOW()
             , #{adminId}
-        )
+        ) ON DUPLICATE KEY UPDATE
+            INDU_CATE2_ID         = #{industryCategory2Id}
+            , COMP_TYPE           = #{companyType}
+            , COMP_NM             = #{companyName}
+            <if test="companyLogoImageName != null">
+                , COMP_LOGO_IMAGE_NM  = #{companyLogoImageName}
+            </if>
+            , COMP_BIRTH_DT       = #{companyBirthDate}
+            , COMP_CEO            = #{companyCeo}
+            , COMP_ADDR           = #{companyAddress}
+            , COMP_PHONE          = #{companyPhone}
+            , COMP_HOMEPAGE       = #{companyHomePage}
+            , COMP_SALES          = #{companySales}
+            , COMP_UDT_DT         = NOW()
+            , ADMIN_ID            = #{adminId}
     </insert>
+
+    <!--기업 로고 이미지명-->
+    <select id="selectCompanyLogoImageName" resultType="String" parameterType="int">
+        SELECT
+            COMP_LOGO_IMAGE_NM
+        FROM
+            t_company
+        WHERE
+            COMP_ID = #{companyId}
+    </select>
 
     <!--기업정보 목록-->
     <select id="selectList" resultMap="companyResultMap">
