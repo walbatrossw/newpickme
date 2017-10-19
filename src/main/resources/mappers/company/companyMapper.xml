@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <!--기업정보 등록 및 수정 처리-->
-    <insert id="insertCompany" parameterType="Company" useGeneratedKeys="true" keyProperty="companyId">
+    <insert id="insertAndUpdateCompany" parameterType="Company" useGeneratedKeys="true" keyProperty="companyId">
         INSERT INTO t_company (
             COMP_ID
             , INDU_CATE2_ID

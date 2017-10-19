@@ -29,8 +29,8 @@ public class CompanyDaoImpl implements CompanyDao{
 
     /*기업정보 등록 처리*/
     @Override
-    public void insert(Company company) {
-        sqlSession.insert("company.insertCompany", company);
+    public void insertAndUpdate(Company company) {
+        sqlSession.insert("company.insertAndUpdateCompany", company);
     }
 
     /*기업정보 목록*/
@@ -43,12 +43,6 @@ public class CompanyDaoImpl implements CompanyDao{
     @Override
     public Company selectCompanyByCompanyId(int companyId) {
         return sqlSession.selectOne("company.selectCompanyByCompanyId", companyId);
-    }
-
-    /*기업정보 수정*/
-    @Override
-    public void updateCompanyInfo(Company company) {
-        sqlSession.update("company.updateCompanyInfo", company);
     }
 
     /*기업정보 삭제*/

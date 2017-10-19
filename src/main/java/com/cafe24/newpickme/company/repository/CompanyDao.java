@@ -14,17 +14,14 @@ public interface CompanyDao {
     //기업정보 등록 페이지 : 업종소분류 목록
     List<IndustryCategory2> selectIndustryCategory2sByIndustryCategory1Id(int industryCategory1Id);
 
-    //기업정보 등록 처리
-    void insert(Company company);
+    //기업정보 등록 및 수정 처리
+    void insertAndUpdate(Company company);
 
     //기업정보 목록
     List<Company> selectList();
 
     //기업정보 상세조회
     Company selectCompanyByCompanyId(int companyId);
-
-    //기업정보 수정
-    void updateCompanyInfo(Company company);
 
     //기업정보 삭제
     void deleteCompanyInfo(int companyId);

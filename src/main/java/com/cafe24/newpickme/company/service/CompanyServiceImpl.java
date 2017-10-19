@@ -35,7 +35,7 @@ public class CompanyServiceImpl implements CompanyService {
     //기업정보 등록 및 수정 처리
     @Transactional
     @Override
-    public void create(Company company, HttpServletRequest request) throws IOException {
+    public void createAndModify(Company company, HttpServletRequest request) throws IOException {
         // 업로드 이미지 파일이 있으면
         if (!company.getCompanyLogoImage().isEmpty()) {
             final String REAL_PATH = request.getSession().getServletContext().getRealPath("/")+"resources/dist/img/companies/logos/"; // 서버 업로드 디렉토리
@@ -53,7 +53,7 @@ public class CompanyServiceImpl implements CompanyService {
                 // 파일 업로드, 경로+UUID+파일명 생성
                 String newCompanyLogoImageName = UploadFileUtils.uploadFile(PATH, originalFilename, file);
                 company.setCompanyLogoImageName(newCompanyLogoImageName);
-                companyDao.insert(company);
+                companyDao.insertAndUpdate(company);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -72,26 +72,15 @@ public class CompanyServiceImpl implements CompanyService {
         return companyDao.selectCompanyByCompanyId(companyId);
     }
 
-    //기업정보 수정
-    @Override
-    public void modifyCompanyInfo(Company company) {
-        if (!company.getCompanyLogoImage().isEmpty()) {
-            String companyLogoImageName = company.getCompanyLogoImage().getOriginalFilename(); // 원본파일명 추출
-            String path = "D:\\WORKSPACE\\Spring-MVC-NewPickme\\newpickme\\src\\main\\webapp\\resources\\dist\\img\\companies\\"; // 업로드 디렉토리
-            try {
-                new File(path).mkdir(); // 디렉토리 생성
-                company.getCompanyLogoImage().transferTo(new File(path+companyLogoImageName)); // 파일을 생성된 디렉토리로 전송
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            company.setCompanyLogoImageName(companyLogoImageName); // 파일명을 setting
-        }
-        companyDao.updateCompanyInfo(company);
-    }
-
     //기업정보 삭제
+    @Transactional
     @Override
     public void removeCompanyInfo(int companyId) {
+        // 이미지 파일 삭제
+        //final String REAL_PATH = request.getSession().getServletContext().getRealPath("/")+"resources/dist/img/companies/logos/"; // 서버 업로드 디렉토리
+        final String PATH = "D:\\WORKSPACE\\Spring-MVC-NewPickme\\newpickme\\src\\main\\webapp\\resources\\dist\\img\\companies\\logos\\"; // 로컬 업로드 디렉토리
+        String oldCompanyLogoImageName = companyDao.selectCompanyLogoImageName(companyId);
+        new File(PATH + oldCompanyLogoImageName.replace('/', File.separatorChar)).delete();
         companyDao.deleteCompanyInfo(companyId);
     }
 

@@ -39,7 +39,7 @@ public class CompanyController {
     public String companyCreate(@ModelAttribute Company company, HttpServletRequest request, HttpSession session) throws IOException {
         int writerId = (Integer) session.getAttribute("adminId");
         company.setAdminId(writerId);
-        companyService.create(company, request);
+        companyService.createAndModify(company, request);
         return "redirect:/company/info/list";
     }
 
@@ -64,7 +64,7 @@ public class CompanyController {
         company.setCompanyId(companyId);
         int writerId = (Integer) session.getAttribute("adminId");
         company.setAdminId(writerId);
-        companyService.create(company, request);
+        companyService.createAndModify(company, request);
         return "redirect:/company/info/list";
     }
 
