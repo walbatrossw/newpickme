@@ -1,6 +1,8 @@
 package com.cafe24.newpickme.admin.domain;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Date;
 
 public class Admin {
@@ -9,6 +11,8 @@ public class Admin {
     private String adminEmail;
     private String adminNickName;
     private String adminPassword;
+    private MultipartFile adminProfileImage;
+    private String adminProfileImageName;
     private Date adminJoinDate;
     private Date adminUpdateDate;
     private Date adminLoginDate;
@@ -45,6 +49,22 @@ public class Admin {
         this.adminPassword = adminPassword;
     }
 
+    public MultipartFile getAdminProfileImage() {
+        return adminProfileImage;
+    }
+
+    public void setAdminProfileImage(MultipartFile adminProfileImage) {
+        this.adminProfileImage = adminProfileImage;
+    }
+
+    public String getAdminProfileImageName() {
+        return adminProfileImageName;
+    }
+
+    public void setAdminProfileImageName(String adminProfileImageName) {
+        this.adminProfileImageName = adminProfileImageName;
+    }
+
     public Date getAdminJoinDate() {
         return adminJoinDate;
     }
@@ -76,6 +96,8 @@ public class Admin {
                 ", adminEmail='" + adminEmail + '\'' +
                 ", adminNickName='" + adminNickName + '\'' +
                 ", adminPassword='" + adminPassword + '\'' +
+                ", adminProfileImage=" + adminProfileImage +
+                ", adminProfileImageName='" + adminProfileImageName + '\'' +
                 ", adminJoinDate=" + adminJoinDate +
                 ", adminUpdateDate=" + adminUpdateDate +
                 ", adminLoginDate=" + adminLoginDate +

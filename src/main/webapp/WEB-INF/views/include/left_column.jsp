@@ -8,9 +8,19 @@
 
                 <%--관리자--%>
                 <c:when test="${sessionScope.adminNickName != null}">
-                    <div class="pull-left image">
-                        <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
-                    </div>
+                    <c:choose>
+                        <c:when test="${sessionScope.adminProfileImageName == ''}">
+                            <div class="pull-left image">
+                                <img class="img-circle" src="${path}/dist/img/default-user-image.jpg">
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="pull-left image">
+                                <img class="img-circle"
+                                     src="${path}/dist/img/admins/profile/${sessionScope.adminProfileImageName}">
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                     <div class="pull-left info">
                         <p>${sessionScope.adminNickName} 관리자 님</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> ONLINE</a>

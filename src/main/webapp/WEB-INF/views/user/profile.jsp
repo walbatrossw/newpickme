@@ -124,7 +124,7 @@
                                 </div>
                             </div>
 
-                            <%--닉네임 수정 modal--%>
+                            <%--프로필 사진 수정 modal--%>
                             <div class="modal fade" id="profileImageUpdateModal" tabindex="-1" role="dialog"
                                  aria-labelledby="profileImageUpdateModalLabel">
                                 <div class="modal-dialog" role="document">
@@ -158,15 +158,9 @@
                                             </form>
                                         </div>
                                         <div class="modal-footer">
-
-                                            <div class="form-group" id="warningText" style="color: red">
                                             </div>
-
-                                            <button type="button" class="btn btn-default pull-left"
-                                                    data-dismiss="modal">닫기
-                                            </button>
-                                            <button type="button" class="btn btn-primary" id="profileImageUpdateBtn"> 프로필사진 수정
-                                            </button>
+                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">닫기 </button>
+                                            <button type="button" class="btn btn-primary" id="profileImageUpdateBtn"> 프로필사진 수정 </button>
                                         </div>
                                     </div>
                                 </div>

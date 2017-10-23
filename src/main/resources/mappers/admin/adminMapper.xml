@@ -43,6 +43,7 @@
             ADMIN_ID
             , ADMIN_EMAIL
             , ADMIN_NICK_NM
+            , ADMIN_PROFILE_IMAGE_NM
             , ADMIN_JN_DT
             , ADMIN_UDT_DT
             , ADMIN_LOG_DT
@@ -66,6 +67,22 @@
         WHERE ADMIN_EMAIL = #{adminEmail}
     </update>
 
+    <!--관리자 이미지파일명-->
+    <select id="selectAdminProfileImageName" parameterType="int" resultType="String">
+        SELECT
+          ADMIN_PROFILE_IMAGE_NM
+        FROM
+          t_admin
+        WHERE ADMIN_ID = #{adminId}
+    </select>
+
+    <!--관리자 이미지파일 변경-->
+    <update id="updateAdminProfileImage">
+        UPDATE t_admin
+        SET ADMIN_PROFILE_IMAGE_NM = #{adminProfileImageName}
+        WHERE ADMIN_ID = #{adminId}
+    </update>
+
     <!--관리자 탈퇴-->
     <delete id="deleteAdmin">
         DELETE FROM t_admin
@@ -87,6 +104,7 @@
             , ADMIN_EMAIL
             , ADMIN_PW
             , ADMIN_NICK_NM
+            , ADMIN_PROFILE_IMAGE_NM
             , ADMIN_JN_DT
             , ADMIN_UDT_DT
             , ADMIN_LOG_DT
@@ -109,6 +127,7 @@
             ADMIN_ID
             , ADMIN_EMAIL
             , ADMIN_NICK_NM
+            , ADMIN_PROFILE_IMAGE_NM
             , ADMIN_JN_DT
             , ADMIN_UDT_DT
             , ADMIN_LOG_DT
@@ -120,6 +139,7 @@
         <id column="ADMIN_ID" property="adminId"/>
         <result column="ADMIN_EMAIL" property="adminEmail"/>
         <result column="ADMIN_NICK_NM" property="adminNickName"/>
+        <result column="ADMIN_PROFILE_IMAGE_NM" property="adminProfileImageName"/>
         <result column="ADMIN_PW" property="adminPassword"/>
         <result column="ADMIN_JN_DT" property="adminJoinDate"/>
         <result column="ADMIN_UDT_DT" property="adminUpdateDate"/>

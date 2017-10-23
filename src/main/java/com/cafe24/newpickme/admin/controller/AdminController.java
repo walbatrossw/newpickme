@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,49 +22,27 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    /*
-    * 관리자 가입 페이지
-    * Method : GET
-    * URL : /register
-    * Method Name : adminRegister()
-    * */
+    // 관리자 가입 페이지
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String adminRegister() {
         return "/admin/register";
     }
 
-    /*
-    * 관리자 가입 페이지 이메일 중복 확인
-    * Method : POST
-    * URL : /duplicate/email
-    * Method Name : duplicateEmailCheck()
-    * */
+    // 관리자 가입 페이지 이메일 중복 확인
     @RequestMapping(value = "/duplicate/email", method = RequestMethod.POST)
     @ResponseBody
     public int duplicateEmailCheck(@RequestParam String adminEmail) {
-        System.out.println(adminService.getOneByEmail(adminEmail)+"----------------------------------------");
         return adminService.getOneByEmail(adminEmail);
     }
 
-    /*
-    * 관리자 가입 페이지 닉네임 중복 확인
-    * Method : POST
-    * URL : /duplicate/nickname
-    * Method Name : duplicateNicknameCheck()
-    * */
+    // 관리자 가입 페이지 닉네임 중복 확인
     @RequestMapping(value = "/duplicate/nickname", method = RequestMethod.POST)
     @ResponseBody
     public int duplicateNicknameCheck(@RequestParam String adminNickName) {
-        System.out.println(adminService.getOneByNickName(adminNickName)+"--------------------------------------->>>>");
         return adminService.getOneByNickName(adminNickName);
     }
 
-    /*
-    * 관리자 가입 처리
-    * Method : POST
-    * URL : /register
-    * Method Name : adminRegister()
-    * */
+    // 관리자 가입 처리
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView adminRegister(@ModelAttribute Admin admin) {
         String hashPassword = BCrypt.hashpw(admin.getAdminPassword(), BCrypt.gensalt());
@@ -75,32 +55,16 @@ public class AdminController {
     }
 
 
-    /*
-    * 관리자 통합 페이지(미정)
-    * Method : GET
-    * URL : /
-    * */
+    // 관리자 통합 페이지(미정)
 
-
-    /*
-    * 관리자 프로필 페이지
-    * Method : GET
-    * URL : /profile
-    * Method Name : adminProfile()
-    * */
+    // 관리자 프로필 페이지
     @RequestMapping(value = "/profile/{adminId}", method = RequestMethod.GET)
     public String adminProfile(@PathVariable int adminId, Model model) {
         model.addAttribute("admin", adminService.getAdminById(adminId));
         return "/admin/profile";
     }
 
-
-    /*
-    * 관리자 닉네임 변경
-    * Method : POST
-    * URL : /profile/{adminId}/update/nickname
-    * Method Name : newAdminNickName()
-    * */
+    // 관리자 닉네임 변경
     @RequestMapping(value = "/profile/{adminId}/update/nickname", method = RequestMethod.POST)
     public String newAdminNickName(@PathVariable int adminId, @ModelAttribute Admin admin, HttpSession session) {
         // 관리자 닉네임 변경 처리
@@ -110,12 +74,7 @@ public class AdminController {
         return "redirect:/admin/profile/"+adminId;
     }
 
-    /*
-    * 관리자 비밀번호 변경
-    * Method : POST
-    * URL : /profile/{adminId}/update/password
-    * Method Name : newAdminPassword()
-    * */
+    // 관리자 비밀번호 변경
     @RequestMapping(value = "/profile/{adminId}/update/password", method = RequestMethod.POST)
     public ModelAndView newAdminPassword(@PathVariable int adminId, @ModelAttribute Admin admin, HttpSession session) {
         // 변경하려는 비밀번호를 암호화
@@ -132,12 +91,14 @@ public class AdminController {
         return mav;
     }
 
-    /*
-    * 관리자 탈퇴
-    * Method : POST
-    * URL : /profile/{adminId}/withdrawal
-    * Method Name : adminWithdraw()
-    * */
+    // 관리자 프로필 이미지 변경
+    @RequestMapping(value = "/profile/{adminId}/image/update", method = RequestMethod.POST)
+    public String newAdminProfileImage(@PathVariable int adminId, Admin admin, HttpServletRequest request, HttpSession session) throws IOException {
+        adminService.modifyAdminProfileImage(admin, request, session);
+        return "redirect:/admin/profile/"+adminId;
+    }
+
+    // 관리자 탈퇴
     @RequestMapping(value = "/profile/{adminId}/withdrawal", method = RequestMethod.POST)
     public ModelAndView adminWithdraw(@PathVariable int adminId, @ModelAttribute Admin admin, HttpSession session) {
         // 관리자 삭제 처리
@@ -151,37 +112,23 @@ public class AdminController {
         return mav;
     }
 
-
-    /*
-    * 관리자 비밀번호 확인
-    * Method : POST
-    * URL : /profile/password/check
-    * */
+    // 관리자 비밀번호 확인
     @RequestMapping(value = "/password/check", method = RequestMethod.POST)
     @ResponseBody
     public boolean userPwCheck(@RequestParam String adminEmail, @RequestParam String adminPassword) {
         return adminService.getPassword(adminEmail, adminPassword);
     }
 
-    /*
-    * 관리자 로그인 페이지
-    * Method : GET
-    * URL : /login
-    * */
+    // 관리자 로그인 페이지
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String adminLogin() {
         return "/admin/login";
     }
 
-    /*
-    * 관리자 로그인 처리
-    * Method : POST
-    * URL : /login
-    * */
+    // 관리자 로그인 처리
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView adminLogin(@ModelAttribute Admin admin, HttpSession session) {
         boolean result = adminService.login(admin, session);
-        System.out.println(result+"result========================================");
         ModelAndView mav = new ModelAndView();
         if (result) {
             adminService.modifyAdminLoginDate(admin.getAdminEmail());
@@ -193,11 +140,7 @@ public class AdminController {
         return mav;
     }
 
-    /*
-    * 관리자 로그아웃
-    * Method : GET
-    * URL : /logout
-    * */
+    // 관리자 로그아웃
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public ModelAndView adminLogout(HttpSession session) {
         adminService.logout(session);
@@ -207,11 +150,7 @@ public class AdminController {
         return mav;
     }
 
-    /*
-    * 관리자 목록
-    * Method : GET
-    * URL : /list
-    * */
+    // 관리자 목록
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String admins(Model model) {
         List<Admin> admins = adminService.getAdmins();

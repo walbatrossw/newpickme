@@ -35,14 +35,18 @@
                 <div class="col-md-3">
                     <div class="box box-primary">
                         <div class="box-body box-profile">
-                            <img class="profile-user-img img-responsive img-circle"
-                                 src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
-
+                            <c:choose>
+                                <c:when test="${admin.adminProfileImageName == ''}">
+                                    <img class="profile-user-img img-responsive img-circle" src="${path}/dist/img/default-user-image.jpg">
+                                </c:when>
+                                <c:otherwise>
+                                    <img class="profile-user-img img-responsive img-circle" src="${path}/dist/img/admins/profile${admin.adminProfileImageName}">
+                                </c:otherwise>
+                            </c:choose>
                             <h3 class="profile-username text-center">${admin.adminNickName}</h3>
-
-                            <p class="text-muted text-center">최근 로그인 일시 : <fmt:formatDate value="${admin.adminLoginDate}"
-                                                                                          pattern="yyyy-MM-dd a HH:mm:ss"/></p>
-
+                            <p class="text-muted text-center">최근 로그인 일시 : <fmt:formatDate
+                                    value="${admin.adminLoginDate}"
+                                    pattern="yyyy-MM-dd a HH:mm:ss"/></p>
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
                                     <strong><i class="fa fa-envelope-o margin-r-5"></i> 이메일 주소(로그인 아이디)</strong>
@@ -65,7 +69,8 @@
                                 <li class="list-group-item">
                                     <strong><i class="fa fa-pencil margin-r-5"></i> 프로필 수정일시</strong>
                                     <p class="text-muted">
-                                        <fmt:formatDate value="${admin.adminUpdateDate}" pattern="yyyy-MM-dd a HH:mm:ss"/>
+                                        <fmt:formatDate value="${admin.adminUpdateDate}"
+                                                        pattern="yyyy-MM-dd a HH:mm:ss"/>
                                     </p>
                                 </li>
                             </ul>
@@ -73,6 +78,8 @@
                             <div class="btn-group btn-group-justified">
                                 <a href="#" class="btn btn-primary" data-toggle="modal"
                                    data-target="#newNickNameModal">닉네임 변경</a>
+                                <a href="#" class="btn btn-primary" data-toggle="modal"
+                                   data-target="#profileImageUpdateModal">프로필 사진 변경</a>
                                 <a href="#" class="btn btn-primary" data-toggle="modal"
                                    data-target="#newPwModal">비밀번호 변경</a>
                                 <a href="#" class="btn btn-primary" data-toggle="modal"
@@ -90,15 +97,18 @@
                                             <h4 class="modal-title" id="nickNameUpdateModalLabel">닉네임 변경</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <form role="form" id="newNickNameForm" method="post" action="/admin/profile/${admin.adminId}/update/nickname">
+                                            <form role="form" id="newNickNameForm" method="post"
+                                                  action="/admin/profile/${admin.adminId}/update/nickname">
                                                 <div class="form-group">
                                                     <label>이메일(아이디)</label>
-                                                    <input type="text" class="form-control" name="adminEmail" id="adminEmail"
+                                                    <input type="text" class="form-control" name="adminEmail"
+                                                           id="adminEmail"
                                                            value="${admin.adminEmail}" readonly>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>이름</label>
-                                                    <input type="text" class="form-control" name="adminNickName" id="adminNickName"
+                                                    <input type="text" class="form-control" name="adminNickName"
+                                                           id="adminNickName"
                                                            value="${admin.adminNickName}" placeholder="이름을 입력해주세요">
                                                 </div>
                                                 <div class="form-group">
@@ -124,6 +134,59 @@
                                 </div>
                             </div>
 
+                            <%--프로필 사진 수정 modal--%>
+                            <div class="modal fade" id="profileImageUpdateModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="profileImageUpdateModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="profileImageUpdateModalLabel">프로필 사진 변경</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form role="form" id="profileImageUpdateForm" method="post" action="/admin/profile/${admin.adminId}/image/update" enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <input type="hidden" class="form-control" name="adminEmail" value="${admin.adminEmail}">
+                                                </div>
+                                                <div class="col-sm-12" align="center">
+                                                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                        <div class="fileinput-new thumbnail"
+                                                             style="width: 120px; height: 160px;">
+                                                            <img src="${path}/dist/img/default-user-image.jpg" alt="...">
+                                                        </div>
+                                                        <div class="fileinput-preview fileinput-exists thumbnail"
+                                                             style="width: 120px; height: 140px;"></div>
+                                                        <div>
+                                                            <span class="btn btn-default btn-file">
+                                                                <span class="fileinput-new">사진 선택</span>
+                                                                <span class="fileinput-exists">변경</span>
+                                                                <input type="file" id="adminProfileImage"
+                                                                       name="adminProfileImage">
+                                                            </span>
+                                                            <a href="#" class="btn btn-default fileinput-exists"
+                                                               data-dismiss="fileinput">삭제</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+
+                                            <div class="form-group" id="warningText" style="color: red">
+                                            </div>
+
+                                            <button type="button" class="btn btn-default pull-left"
+                                                    data-dismiss="modal">닫기
+                                            </button>
+                                            <button type="button" class="btn btn-primary" id="profileImageUpdateBtn">
+                                                프로필사진 수정
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <%--비밀번호 수정 modal--%>
                             <div class="modal fade" id="newPwModal" tabindex="-1" role="dialog"
                                  aria-labelledby="newPwModalLabel">
@@ -135,9 +198,11 @@
                                             <h4 class="modal-title" id="newPwModalLabel">비밀번호 수정</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <form role="form" id="newPasswordForm" method="post" action="/admin/profile/${admin.adminId}/update/password">
+                                            <form role="form" id="newPasswordForm" method="post"
+                                                  action="/admin/profile/${admin.adminId}/update/password">
                                                 <div class="form-group">
-                                                    <input type="hidden" class="form-control" name="adminEmail" id="adminEmailForNewPw"
+                                                    <input type="hidden" class="form-control" name="adminEmail"
+                                                           id="adminEmailForNewPw"
                                                            value="${admin.adminEmail}">
                                                 </div>
                                                 <div class="form-group">
@@ -185,9 +250,11 @@
                                             <h4 class="modal-title" id="withdrawModalLabel">탈퇴</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <form role="form" id="withdrawalForm" method="post" action="/admin/profile/${admin.adminId}/withdrawal">
+                                            <form role="form" id="withdrawalForm" method="post"
+                                                  action="/admin/profile/${admin.adminId}/withdrawal">
                                                 <div class="form-group">
-                                                    <input type="hidden" class="form-control" name="adminEmail" id="adminEmailForWithdraw"
+                                                    <input type="hidden" class="form-control" name="adminEmail"
+                                                           id="adminEmailForWithdraw"
                                                            value="${admin.adminEmail}">
                                                 </div>
                                                 <div class="form-group">
@@ -264,6 +331,12 @@
 <%@ include file="../include/js.jsp" %>
 <script>
     $(function () {
+
+        // 프로필 사진 수정
+        $("#profileImageUpdateBtn").on("click", function () {
+            $("#profileImageUpdateForm").submit();
+        });
+
         // 회원 닉네임 중복 확인
         $("#adminNickName").blur(function () {
             var nickName = "${admin.adminNickName}"; // 현재 닉네임
@@ -370,12 +443,12 @@
             $.ajax({
                 type: "post",
                 url: "${path}/admin/password/check",
-                header: {"Content-Type" : "application/json"},
+                header: {"Content-Type": "application/json"},
                 dataType: "text",
                 async: false,
                 data: {
-                    adminEmail : adminEmail,
-                    adminPassword : adminPassword
+                    adminEmail: adminEmail,
+                    adminPassword: adminPassword
                 },
                 success: function (data) {
                     if (data === "false") {

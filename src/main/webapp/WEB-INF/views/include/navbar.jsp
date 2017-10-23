@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
             <ul class="nav navbar-nav">
                 <li>
-                    <a>관리자권한으로 접속중...</a>
+                    <a>관리자권한으로 접속중 입니다...</a>
                 </li>
             </ul>
         </div>
@@ -162,19 +162,32 @@
                             </ul>
                         </li>
 
-
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="${path}/dist/img/default-user-image.jpg" class="user-image" alt="User Image">
+                                <c:choose>
+                                    <c:when test="${sessionScope.adminProfileImageName == ''}">
+                                        <img src="${path}/dist/img/default-user-image.jpg" class="user-image" alt="User Image">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img src="${path}/dist/img/admins/profile/${sessionScope.adminProfileImageName}" class="user-image" alt="User Image">
+                                    </c:otherwise>
+                                </c:choose>
                                 <span class="hidden-xs">${sessionScope.adminNickName}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <%-- User image --%>
                                 <li class="user-header">
-                                    <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
+                                    <c:choose>
+                                        <c:when test="${sessionScope.adminProfileImageName == ''}">
+                                            <img src="${path}/dist/img/default-user-image.jpg" class="img-circle" alt="User Image">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="${path}/dist/img/admins/profile/${sessionScope.adminProfileImageName}" class="img-circle" alt="User Image">
+                                        </c:otherwise>
+                                    </c:choose>
                                     <p>
-                                            ${sessionScope.adminNickName}
-                                        <small>수정요망</small>
+                                        ${sessionScope.adminNickName}
+                                            <small>Since : <fmt:formatDate value="${sessionScope.adminJoinDate}" pattern="yyyy-MM-dd"/></small>
                                     </p>
                                 </li>
                                 <%-- Menu Body --%>
@@ -357,7 +370,7 @@
                                         </c:otherwise>
                                     </c:choose>
                                     <p>
-                                            ${sessionScope.userNickName} 님
+                                        ${sessionScope.userNickName} 님
                                         <small>Since : <fmt:formatDate value="${sessionScope.userJoinDate}" pattern="yyyy-MM-dd"/></small>
                                     </p>
                                 </li>

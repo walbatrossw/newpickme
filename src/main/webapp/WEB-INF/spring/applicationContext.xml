@@ -4,10 +4,20 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!--dataSource 설정-->
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <!--원격서버-->
+    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
         <property name="url"
                   value="jdbc:log4jdbc:mysql://localhost:3306/newpickmedb?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false"/>
+        <property name="username" value="pickmetwo"/>
+        <property name="password" value="qazwsxdc8375!"/>
+    </bean>-->
+
+    <!--로컬서버-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+        <property name="url"
+                  value="jdbc:log4jdbc:mysql://localhost:3306/pickmetwo?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false"/>
         <property name="username" value="doubless"/>
         <property name="password" value="qazwsxdc8375!"/>
     </bean>
