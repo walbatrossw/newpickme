@@ -29,7 +29,9 @@ public class CoverLetterController {
 
     // 기본 자기소개서 작성 페이지
     @RequestMapping(value = "/create/default", method = RequestMethod.GET)
-    public String create() {
+    public String create(Model model) {
+        List<RecruitJob> recruitJobs = recruitService.getRecruitJobs();
+        model.addAttribute("recruitJobs", recruitJobs);
         return "/coverletter/create";
     }
 
@@ -47,8 +49,10 @@ public class CoverLetterController {
     public String create(@PathVariable int recruitId, @PathVariable int recruitJobId, Model model) {
         Recruit recruit = recruitService.getRecruitByRecruitId(recruitId);
         RecruitJob recruitJob = recruitService.getRecruitJobByRecruitJobId(recruitJobId);
+        List<RecruitJob> recruitJobs = recruitService.getRecruitJobs();
         model.addAttribute("recruit", recruit);
         model.addAttribute("recruitJob", recruitJob);
+        model.addAttribute("recruitJobs", recruitJobs);
         return "/coverletter/create";
     }
 

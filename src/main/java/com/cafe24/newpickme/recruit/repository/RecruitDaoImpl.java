@@ -51,6 +51,14 @@ public class RecruitDaoImpl implements RecruitDao{
         return sqlSession.selectList("recruit.selectRecruits");
     }
 
+    // 채용 직무 목록
+
+
+    @Override
+    public List<RecruitJob> selectRecruitJobs() {
+        return sqlSession.selectList("recruit.selectRecruitJobs");
+    }
+
     // 채용 달력 페이지
     @Override
     public List<Recruit> selectRecruits(int[] jobCategory1Id, int[] industryCategory1Id, String[] companyType, String[] recruitJobType, String[] recruitJobEdu) {

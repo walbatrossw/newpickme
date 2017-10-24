@@ -34,37 +34,39 @@
             <!-- 페이지 내용 -->
             <div class="row">
                 <section class="col-lg-12">
-                    관리자 목록 테이블
-                    <table id="adminsTable" class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th>번호</th>
-                            <th>관리자 아이디</th>
-                            <th>관리자 이름</th>
-                            <th>가입일자</th>
-                            <th>수정일자</th>
-                            <th>로그인일자</th>
-                            <th>수정/삭제</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="admins" varStatus="i" items="${admins}">
-                            <tr>
-                                <td>${i.index+1}</td>
-                                <td><a href="${path}/admin/profile/${admins.adminId}">${admins.adminEmail}</a></td>
-                                <td>${admins.adminNickName}</td>
-                                <td><fmt:formatDate value="${admins.adminJoinDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
-                                <td><fmt:formatDate value="${admins.adminUpdateDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
-                                <td><fmt:formatDate value="${admins.adminLoginDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
-                                <td>
-                                    <input type="button" class="btn btn-primary" value="수정">
-                                    <input type="button" class="btn btn-danger" value="삭제">
-                                </td>
-
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
+                    <div class="box box-primary">
+                        <div class="box-body">
+                            <table id="adminsTable" class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>관리자 아이디</th>
+                                    <th>관리자 이름</th>
+                                    <th>가입일자</th>
+                                    <th>수정일자</th>
+                                    <th>로그인일자</th>
+                                    <th>수정/삭제</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="admins" varStatus="i" items="${admins}">
+                                    <tr>
+                                        <td>${i.index+1}</td>
+                                        <td><a href="${path}/admin/profile/${admins.adminId}">${admins.adminEmail}</a></td>
+                                        <td>${admins.adminNickName}</td>
+                                        <td><fmt:formatDate value="${admins.adminJoinDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
+                                        <td><fmt:formatDate value="${admins.adminUpdateDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
+                                        <td><fmt:formatDate value="${admins.adminLoginDate}" pattern="yyyy-MM-dd a HH:mm:ss"/></td>
+                                        <td>
+                                            <input type="button" class="btn btn-primary" value="수정">
+                                            <input type="button" class="btn btn-danger" value="삭제">
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </section>
             </div>
         </section>
@@ -82,7 +84,22 @@
 <!-- 풋(JS) include-->
 <%@ include file="../include/js.jsp" %>
 <script>
-    $("#adminsTable").DataTable();
+    $("#adminsTable").DataTable({
+        "language": {
+            "lengthMenu": "_MENU_ 개씩 보기",
+            "zeroRecords": "내용이 없습니다.",
+            "info": "현재 _PAGE_ 페이지 / 전체 _PAGES_ 페이지",
+            "infoEmpty": "내용이 없습니다.",
+            "infoFiltered": "( _MAX_개의 전체 목록 중에서 검색된 결과)",
+            "search":         "검색:",
+            "paginate": {
+                "first":      "처음",
+                "last":       "마지막",
+                "next":       "다음",
+                "previous":   "이전"
+            }
+        }
+    });
 </script>
 </body>
 </html>

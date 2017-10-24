@@ -20,6 +20,9 @@ public interface RecruitService {
     // 채용 목록
     List<Recruit> getRecruits();
 
+    // 채용 직무 목록
+    List<RecruitJob> getRecruitJobs();
+
     // 채용 달력 페이지
     List<Recruit> getRecruits(int[] jobCategory1Id, int[] industryCategory1Id, String[] companyType, String[] recruitJobType, String[] recruitJobEdu);
 

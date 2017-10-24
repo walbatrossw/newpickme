@@ -24,6 +24,9 @@ public interface RecruitDao {
     // 채용 목록
     List<Recruit> selectRecruits();
 
+    // 채용 직무 목록
+    List<RecruitJob> selectRecruitJobs();
+
     // 채용 달력 페이지
     List<Recruit> selectRecruits(int[] jobCategory1Id, int[] industryCategory1Id, String[] companyType, String[] recruitJobType, String[] recruitJobEdu);
 

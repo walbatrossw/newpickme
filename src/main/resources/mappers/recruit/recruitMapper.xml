@@ -114,6 +114,37 @@
         ORDER BY REC.RECR_WRT_DT ASC
     </select>
 
+
+    <!--채용 직무 전체 목록, 현재시간을 기준-->
+    <select id="selectRecruitJobs" resultMap="recruitJobResultMap">
+        SELECT
+            REC.RECR_END_DT
+            , RCJ.RECR_JOB_ID
+            , RCJ.RECR_ID
+            , RCJ.JOB_CATE2_ID
+            , RCJ.RECR_JOB_TYPE
+            , RCJ.RECR_JOB_EDU
+            , RCJ.RECR_JOB_DETAIL
+            , JCT1.JOB_CATE1_NM
+            , JCT1.JOB_CATE1_ID
+            , JCT2.JOB_CATE2_NM
+            , CPY.COMP_NM
+        FROM
+            t_recruit AS REC
+            , t_recruit_job AS RCJ
+            , t_job_category1 AS JCT1
+            , t_job_category2 AS JCT2
+            , t_company AS CPY
+
+        WHERE
+            RCJ.JOB_CATE2_ID = JCT2.JOB_CATE2_ID
+            AND JCT2.JOB_CATE1_ID = JCT1.JOB_CATE1_ID
+            AND RCJ.RECR_ID = REC.RECR_ID
+            AND CPY.COMP_ID = REC.COMP_ID
+            AND REC.RECR_END_DT > NOW()
+        ORDER BY REC.RECR_END_DT ASC
+    </select>
+
     <!--채용 달력 검색-->
     <select id="selectRecruitsSearch" parameterType="hashmap" resultMap="recruitResultMap">
         SELECT

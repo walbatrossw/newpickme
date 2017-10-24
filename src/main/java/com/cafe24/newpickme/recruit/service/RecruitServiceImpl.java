@@ -67,6 +67,12 @@ public class RecruitServiceImpl implements RecruitService{
         return recruitDao.selectRecruits();
     }
 
+    // 채용 직무 목록
+    @Override
+    public List<RecruitJob> getRecruitJobs() {
+        return recruitDao.selectRecruitJobs();
+    }
+
     // 채용 달력 페이지
     @Override
     public List<Recruit> getRecruits(int[] jobCategory1Id, int[] industryCategory1Id, String[] companyType, String[] recruitJobType, String[] recruitJobEdu) {

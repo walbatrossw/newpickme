@@ -50,7 +50,7 @@
                             <a class="btn btn-app myCoverLetterBtn">
                                 <i class="fa fa-list"></i> 나의 자소서
                             </a>
-                            <a class="btn btn-app recruitJobListBtn">
+                            <a class="btn btn-app" data-toggle="modal" data-target="#recruitJobListModal">
                                 <i class="fa fa-list"></i> 채용직무 리스트
                             </a>
                             <a class="btn btn-app coverLetterSaveBtn">
@@ -263,6 +263,56 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="modal fade" id="recruitJobListModal" tabindex="-1" role="dialog"
+                     aria-labelledby="recruitJobListModalLabel">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="recruitJobListModalLabel">채용 직무별 리스트</h4>
+                            </div>
+                            <div class="modal-body">
+                                <table id="recruitJobTable" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>NO</th>
+                                        <th>기업명</th>
+                                        <th>D-DAY</th>
+                                        <th>형태</th>
+                                        <th>학력</th>
+                                        <th>직무</th>
+                                        <th>직무 상세</th>
+                                        <th>자소서</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach var="recruitJob" varStatus="i" items="${recruitJobs}">
+                                        <tr>
+                                            <td>${i.index+1}</td>
+                                            <td><a href="/coverletter/create/${recruitJob.recruitId}/${recruitJob.recruitJobId}">${recruitJob.recruit.company.companyName}</a></td>
+                                            <td><span id="dateView${i.index}"></span></td>
+                                            <td>${recruitJob.recruitJobType}</td>
+                                            <td>${recruitJob.recruitJobEdu}</td>
+                                            <td>${recruitJob.jobCategory2.jobCategory2Name}</td>
+                                            <td>${recruitJob.recruitJobDetail}</td>
+                                            <td><a href="/coverletter/create/${recruitJob.recruitId}/${recruitJob.recruitJobId}">자소서 쓰기</a></td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">닫기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -279,7 +329,51 @@
 <!-- 풋(JS) include-->
 <%@ include file="../include/js.jsp" %>
 <script>
+
     $(function () {
+
+        <c:forEach var="recruitJob" varStatus="i" items="${recruitJobs}">
+            dDayCount${i.index}();
+
+            function dDayCount${i.index}() {
+                var now = new Date();
+                var then = new Date("<fmt:formatDate value="${recruitJob.recruit.recruitEndDate}" pattern="yyyy-MM-dd HH:mm"/>");
+                var diff = then - now;
+
+                var currMin = 60 * 1000; // 초 * 밀리세컨
+                var currHour = 60 * 60 * 1000; // 분 * 초 * 밀리세컨
+                var currDay = 24 * 60 * 60 * 1000; // 시 * 분 * 초 * 밀리세컨
+
+                var day = parseInt(diff/currDay); //d-day 일
+                var hour = parseInt(diff/currHour); //d-day 시
+                var min = parseInt(diff/currMin); //d-day 분
+
+                var viewHour = hour-(day*24);
+                var viewMin = min-(hour*60);
+
+                var viewStr = "D-" + day+"일 "+viewHour+"시간 "+viewMin+"분";
+                $("#dateView${i.index}").html(viewStr);
+
+
+            }
+        </c:forEach>
+
+        $('#recruitJobTable').DataTable( {
+            "language": {
+                "lengthMenu": "_MENU_ 개씩 보기",
+                "zeroRecords": "내용이 없습니다.",
+                "info": "현재 _PAGE_ 페이지 / 전체 _PAGES_ 페이지",
+                "infoEmpty": "내용이 없습니다.",
+                "infoFiltered": "( _MAX_개의 전체 목록 중에서 검색된 결과)",
+                "search":         "검색:",
+                "paginate": {
+                    "first":      "처음",
+                    "last":       "마지막",
+                    "next":       "다음",
+                    "previous":   "이전"
+                }
+            }
+        });
 
         // 기본 자기소개서 내용 글자수 세기
         $("#userCoverLetterArticleContent").keyup(function (e) {

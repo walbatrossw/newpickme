@@ -124,7 +124,22 @@
             }
         </c:forEach>
 
-        $(".coverLettersTable").DataTable();
+        $(".coverLettersTable").DataTable({
+            "language": {
+                "lengthMenu": "_MENU_ 개씩 보기",
+                "zeroRecords": "내용이 없습니다.",
+                "info": "현재 _PAGE_ 페이지 / 전체 _PAGES_ 페이지",
+                "infoEmpty": "내용이 없습니다.",
+                "infoFiltered": "( _MAX_개의 전체 목록 중에서 검색된 결과)",
+                "search":         "검색:",
+                "paginate": {
+                    "first":      "처음",
+                    "last":       "마지막",
+                    "next":       "다음",
+                    "previous":   "이전"
+                }
+            }
+        });
     });
 </script>
 </body>
